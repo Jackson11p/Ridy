@@ -1,0 +1,13 @@
+# Dueños del código de Ridy.
+# Los cambios en estas carpetas necesitan la aprobación de uno de los dos socios
+# (que no sea el autor del cambio).
+
+# Por defecto, todo el repo
+*                        @Jackson11p @jasonmoyaB
+
+# Base de datos y seguridad (lo más delicado)
+/supabase/migrations/    @Jackson11p @jasonmoyaB
+/supabase/functions/     @Jackson11p @jasonmoyaB
+
+# Configuración del repo y del CI
+/.github/                @Jackson11p @jasonmoyaB
