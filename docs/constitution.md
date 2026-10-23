@@ -21,7 +21,7 @@ Regla: toda feature nueva se justifica contra este problema. Si no encaja → fa
 
 ## 3. Relación entre spec y código
 
-- Ningún código sin spec. Flujo: `docs/specs/TICKET-nombre/spec.md` → `plan.md` → `task.md` (escribe `planner`).
+- Ningún código sin spec. Flujo: `docs/specs/TICKET-nombre/spec.md` → `plan.md` → `task.md` (escribe `planner`). Longitud: `spec.md` 10–30 líneas, `plan.md` 20–50, `task.md` máx. 100 (1–2 líneas por tarea). Spec o plan > 50, o task > 100 → partir en sub-features (ver `Claude.md`).
 - `spec.md`: problema, objetivo, criterios de aceptación verificables, fuera de alcance, dudas.
 - Cada tarea de `task.md` = un test + cambio mínimo = un commit (`coder`).
 - Código y spec no divergen: si al implementar algo no encaja, se para y se actualiza la spec primero (vía `planner`).
