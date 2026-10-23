@@ -1,0 +1,12 @@
+# ─────────────────────────────────────────────
+# Ridy · .gitignore (monorepo: Expo + Vite + Supabase)
+# ─────────────────────────────────────────────
+
+# Dependencias
+node_modules/
+.pnpm-store/
+
+# Variables de entorno y secretos (NUNCA subir)
+.env
+.env.*
+!.env.example
