@@ -19,26 +19,29 @@ Transporte escolar seguro y sin llamadas. Padres ven la buseta en vivo y reciben
 - Botón único para iniciar/finalizar ruta (modo conducción).
 - Lista de paradas ordenada; si un padre marca "Hoy no va", la parada sale de la ruta.
 
-**Panel admin**
-- Alta de choferes, rutas y estudiantes.
+**Administración (dentro de la app, rol dueño)**
+- Alta de choferes, busetas, rutas y estudiantes.
+
+**Web pública**
+- Landing y directorio de transportistas que aceptan aparecer. Sin administración.
 
 ## Modelo de negocio
 
-- Padres: ~$4.50–5 USD/mes por estudiante (~₡2,500–3,000 CRC).
-- Chofer: gratis → es quien promueve Ridy entre los padres de su ruta.
+- B2B2C: los padres le pagan al transportista con nuestra tarifa incluida. Monto por confirmar (referencia previa: ~$4.50–5 USD/mes por estudiante, ~₡2,500–3,000 CRC).
+- El transportista nos hace un solo pago mensual. Sin pagos dentro de la app.
 
 ## Stack
 
 | Capa | Herramienta |
 |---|---|
-| App móvil (padres + chofer) | Expo (React Native) + TypeScript, una app con dos roles, Expo Router |
+| App móvil (padres, chofer, dueño) | Expo (React Native) + TypeScript, una app con todos los roles, Expo Router |
 | Datos y estado | TanStack Query + cliente Supabase |
 | GPS en segundo plano | `expo-location` + `expo-task-manager` (beta) |
 | Mapas | `react-native-maps` |
-| Backend | Supabase: Postgres + PostGIS, Auth (OTP SMS), Realtime, Edge Functions, pg_cron |
+| Backend | Supabase: Postgres + PostGIS, Auth (OTP WhatsApp, SMS de respaldo), Realtime, Edge Functions, pg_cron |
 | Push | Expo Notifications (FCM/APNs) desde Edge Function |
 | Rutas | Orden manual en beta; OSRM en VPS después |
-| Panel admin | React + Vite |
+| Web pública | Landing + directorio (framework por definir) |
 | Errores | Sentry |
 | CI | GitHub Actions: tsc + lint + pruebas RLS |
 
@@ -107,7 +110,7 @@ El schema cambia **solo por migraciones** commiteadas. Tras un `git pull` con mi
    New-NetFirewallRule -DisplayName "Supabase local" -Direction Inbound -Protocol TCP -LocalPort 54321-54324 -Action Allow -Profile Private
    ```
 
-3. El resto pone en `.env.local` `NEXT_PUBLIC_SUPABASE_URL=http://192.168.1.50:54321` y la Publishable key del host.
+3. El resto pone en `.env.local` `EXPO_PUBLIC_SUPABASE_URL=http://192.168.1.50:54321` y la Publishable key del host.
 4. Fuera de la misma red: usar Tailscale y la IP de Tailscale del host. Nunca abrir puertos en el router.
 
 Con la opción B, el PC del host tiene que estar encendido con Docker corriendo, y un `pnpm db:reset` del host borra los datos de todos.
