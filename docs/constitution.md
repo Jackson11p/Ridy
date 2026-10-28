@@ -8,6 +8,7 @@ Reglas no negociables. Todo agente (`planner`, `coder`, `reviwer`) y persona las
 ## 2. Stack
 - Expo (React Native) + TypeScript, una app con dos roles; Expo Router; TanStack Query + cliente Supabase; GPS beta `expo-location` + `expo-task-manager`; `react-native-maps`; Expo Notifications enviadas desde Edge Function; admin React + Vite; Sentry; CI GitHub Actions (tsc + lint + pruebas RLS).
 - Mínimas deps. Nueva dep, cambio de stack o API de pago por llamada (Google Directions/Matrix) = decisión del usuario, anotada aquí.
+- Decisiones tomadas: gestor **pnpm únicamente** (npm bloqueado vía `engines` + `.npmrc`); dev con Supabase local en Docker Desktop y CLI `supabase` como devDependency. RIDY-0001.
 ## 3. Spec y código
 - Sin spec no hay código (flujo y longitudes en `Claude.md`). Cada tarea = test + cambio mínimo = un commit. Si algo no encaja → se actualiza la spec primero; con agentes, `reviwer` verifica cada commit contra su spec.
 ## 4. Capas

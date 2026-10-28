@@ -1,0 +1,1 @@
+-- Datos de desarrollo. Se aplican con `pnpm db:reset`.
