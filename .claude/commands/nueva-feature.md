@@ -7,6 +7,10 @@ Pedido: $ARGUMENTS
 Trabaja de punta a punta sin pedirme confirmación. Lee antes docs/constitution.md (gana sobre
 cualquier spec) y Claude.md (flujo y longitudes de spec/plan/task).
 
+Si el pedido no trae número o nombre de ticket, invéntalo: número = siguiente RIDY-nn libre en
+docs/specs/ (RIDY-01 si no hay ninguno); nombre = 2–4 palabras kebab-case del pedido
+(p. ej. RIDY-03-hoy-no-va). Anótalo en "Supuestos" de spec.md.
+
 1. Usa la skill orchestration: lanza un worker Codex SOLO LECTURA que investigue el pedido y
    devuelva un reporte de máx 40 líneas con rutas reales: qué existe hoy (app Expo, panel admin,
    migraciones supabase/, tablas/RLS/RPC, Edge Functions), pantallas, hooks TanStack Query y
