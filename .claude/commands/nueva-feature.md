@@ -35,6 +35,6 @@ docs/specs/ (RIDY-01 si no hay ninguno); nombre = 2–4 palabras kebab-case del 
    - implementar algo fuera del MVP de la constitución (§1), o borrar datos.
 5. Nunca push, supabase db push ni cambios en Supabase remoto (MCP incluido). Al final: resumen
    con supuestos tomados y tabla por tarea (commit, review, estado).
-6. Jira al terminar todas las tareas: pasa el ticket a **En revisión** y deja un comentario con
+6. Jira al terminar todas las tareas: pasa el ticket a **Reviwer** (columna de revisión) y deja un comentario con
    rama, commits y supuestos. **Done** nunca lo pone Claude: llega al mergear el PR. En Jira solo
    transiciones y comentarios del ticket trabajado; nada más.
