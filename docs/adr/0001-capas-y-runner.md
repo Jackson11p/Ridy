@@ -46,4 +46,4 @@ apps/mobile/
 ## Consecuencias
 
 - Los agentes (`planner`, `coder`, `reviwer`, `refactorizador`) siguen citando `src/modules/`: corregir en ticket aparte.
-- `react-doctor.md` cita `vitest run`: pasa a `jest` cuando exista el script.
+- Agente y skill `react-doctor` adaptados a este ADR (ATDE-5-T05).
