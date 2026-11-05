@@ -12,7 +12,10 @@
     "db:status": "supabase status",
     "db:reset": "supabase db reset",
     "db:migration": "supabase migration new",
-    "db:diff": "supabase db diff -f"
+    "db:diff": "supabase db diff -f",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "lint": "pnpm -r --if-present lint",
+    "test": "pnpm -r --if-present test"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
