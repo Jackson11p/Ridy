@@ -43,7 +43,7 @@
 
 | # | Decisión | Por qué | Descartado | Estado |
 |---|---|---|---|---|
-| ADR-0001 | Capas `features/<f>/domain\|application\|infrastructure\|ui`; runner `jest-expo` + pgTAP (`supabase test db`) | Cumple §4 de la constitución; preset oficial Expo; pgTAP ya en el CLI | Carpetas planas, `src/modules/`, Vitest, RLS desde JS | Propuesto (ATDE-5) |
+| ADR-0001 | Capas `features/<f>/domain\|application\|infrastructure\|ui`; runner `jest-expo` + pgTAP (`supabase test db`) | Cumple §4 de la constitución; preset oficial Expo; pgTAP ya en el CLI | Carpetas planas, `src/modules/`, Vitest, RLS desde JS | Aceptado (ATDE-5, PR #2) |
 
 ## Abiertas
 
