@@ -30,7 +30,7 @@
 - Archivos < 150 líneas, funciones < 30. [PLAN]
 - Mínimas dependencias; nueva dep = decisión de socios. [IMPL: solo 3 deps]
 
-Capas: `apps/mobile/src/features/<f>/domain|application|infrastructure|ui` + `index.ts`; `ui → application → domain`, `infrastructure` implementa contratos (`docs/adr/0001-capas-y-runner.md`). [PLAN] — agentes aún citan `src/modules/` (corregir aparte).
+Capas: `apps/mobile/src/features/<f>/domain|application|infrastructure|ui` + `index.ts`; `ui → application → domain`, `infrastructure` implementa contratos (`docs/adr/0001-capas-y-runner.md`). [PLAN]
 
 ## Prohibido
 

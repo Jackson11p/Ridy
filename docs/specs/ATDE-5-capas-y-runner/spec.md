@@ -13,12 +13,12 @@ Una sola estructura de capas y un runner JS + SQL/RLS elegidos, escritos en un A
 1. ADR en `docs/adr/` con capas elegidas, runner elegido y lo descartado con su porqué.
 2. Constitución §4 y §5 sin `[POR DEFINIR]` de capas ni runner.
 3. `docs/contexto/convenciones.md` sin los `[PENDIENTE]` de capas y runner; `decisiones.md` y `arquitectura.md` coherentes.
-4. Aprobado por ambos socios en PR (fuera de este trabajo: no se hace push).
+4. Agentes (`planner`, `coder`, `reviwer`, `refactorizador`, `react-doctor`) apuntan a las capas y comandos del ADR; ninguno cita `AGENTS.md`, `src/modules/`, shadcn ni `pnpm validate` (pedido de socios, sin ticket aparte).
+5. Aprobado por ambos socios en PR (fuera de este trabajo: no se hace push).
 
 ## Fuera de alcance
 
 - Instalar deps o crear `apps/mobile` (ATDE-6).
-- Corregir agentes que citan `src/modules/`, `AGENTS.md`, `pnpm validate`, shadcn.
 - Framework web, proveedor OTP.
 
 ## Supuestos

@@ -31,7 +31,7 @@ Tras `git pull` con migraciones nuevas → `pnpm db:reset`.
 
 - [ ] Spec, plan y task existen; todas las tareas en `[x]`.
 - [ ] Criterios de aceptación de la spec verificados (con evidencia).
-- [ ] Tests en verde; bug fix incluye test que lo reproduce. [PENDIENTE: comando, `pnpm validate` no existe]
+- [ ] Tests en verde; bug fix incluye test que lo reproduce. `pnpm typecheck`, `pnpm lint`, `pnpm test`; `pnpm exec supabase test db` si se tocó `supabase/` (ADR-0001). [PLAN: scripts llegan con ATDE-6]
 - [ ] Tabla nueva → RLS activado + prueba RLS.
 - [ ] Escrituras sensibles por función SQL.
 - [ ] Sin secretos ni `service_role` en código; `.env.local` sin subir.

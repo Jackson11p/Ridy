@@ -13,7 +13,7 @@ Esta orquestación es **solo para tareas grandes y complejas** (criterios en `.c
 ## Regla de oro: solo lectura
 
 - **No editas, no escribes, no creas, no borras** ningún archivo: ni código, ni pruebas, ni `docs/specs/`, ni el scratchpad.
-- En Bash solo comandos de lectura: `git show`, `git diff`, `git log`, `grep`, `cat`, `wc -l`, `pnpm validate`, `pnpm test`.
+- En Bash solo comandos de lectura: `git show`, `git diff`, `git log`, `grep`, `cat`, `wc -l`, `pnpm typecheck`, `pnpm lint`, `pnpm test`, `pnpm exec supabase test db`.
 - Prohibido: `sed -i`, `mv`, `rm`, `cp`, redirecciones `>`/`>>`, `git checkout`, `git restore`, `git commit`, `git stash`, `pnpm install`, cualquier formateo con `--write`.
 - Si para comprobar algo necesitarías modificar un archivo, no lo hagas: confía en la evidencia de rojo que reporta coder y anótalo como hallazgo "no verificado".
 
@@ -21,11 +21,11 @@ Esta orquestación es **solo para tareas grandes y complejas** (criterios en `.c
 
 1. **Spec**: ¿el cambio cumple los criterios de aceptación de `spec.md` y la tarea de `task.md`? ¿Hace algo fuera de alcance?
 2. **TDD**: ¿hay prueba que habría fallado sin el cambio? ¿Prueba comportamiento, no implementación?
-3. **Capas / DDD**: reglas de negocio en `domain`, casos de uso en `application`, I/O en `infrastructure`; sin lógica de negocio en `src/components/landing/`; importaciones de módulos solo por `index.ts`; lenguaje ubicuo de la spec.
+3. **Capas / DDD** (`docs/adr/0001-capas-y-runner.md`): reglas de negocio en `domain`, casos de uso en `application`, I/O en `infrastructure`; sin lógica de negocio en `ui/`, `apps/mobile/app/` ni `apps/mobile/src/components/`; importaciones entre features solo por `index.ts`; lenguaje ubicuo de la spec.
 4. **SOLID, DRY, KISS, YAGNI**: responsabilidades mezcladas, duplicación real, abstracciones innecesarias, código muerto.
-5. **Datos**: validación en los límites, estados coherentes, errores manejados.
+5. **Datos**: validación en los límites, estados coherentes, errores manejados. Esquema solo por migración nueva; RLS en toda tabla con prueba pgTAP; ubicación de menores solo a padres de esa ruta con ruta activa; secretos fuera del repo.
 6. **Calidad**: archivos < 150 líneas, nombres claros, accesibilidad básica, seguridad, `any`/`@ts-ignore`/`eslint-disable`.
-7. **Validación**: ejecuta `pnpm validate` y reporta el resultado real.
+7. **Validación**: ejecuta `pnpm typecheck`, `pnpm lint`, `pnpm test` (y `pnpm exec supabase test db` si el cambio toca `supabase/`) y reporta el resultado real. Script que aún no exista → repórtalo.
 
 Solo reporta hallazgos que puedas señalar en una línea concreta. Sin estilo personal ni "podrías".
 
@@ -34,7 +34,7 @@ Solo reporta hallazgos que puedas señalar en una línea concreta. Sin estilo pe
 ```
 Revisión: TICKET-Tnn — <commit hash>
 Veredicto: APROBADO | CAMBIOS REQUERIDOS
-pnpm validate: OK | <fallo + salida>
+Validación: OK | <fallo + salida>
 Hallazgos:
 - [bloqueante|mejora] <archivo>:<línea> — <problema> — <por qué (principio/spec)>
 No verificado: <lista o "nada">

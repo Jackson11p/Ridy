@@ -45,5 +45,5 @@ apps/mobile/
 
 ## Consecuencias
 
-- Los agentes (`planner`, `coder`, `reviwer`, `refactorizador`) siguen citando `src/modules/`: corregir en ticket aparte.
+- Agentes `planner`, `coder`, `reviwer`, `refactorizador` apuntan a estas capas y a `pnpm typecheck|lint|test` (ATDE-5-T06).
 - Agente y skill `react-doctor` adaptados a este ADR (ATDE-5-T05).

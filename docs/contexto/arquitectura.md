@@ -59,7 +59,7 @@ Sin `apps/admin/`: la administración vive en la app (D9). [PENDIENTE: framework
 - `apps/`, `packages/`, `pnpm-workspace.yaml` (no es monorepo aún).
 - `supabase/migrations/`, `supabase/functions/`, `supabase/tests/`.
 - `.github/workflows/` (sin CI).
-- Runner de tests instalado (elegido en ADR-0001, se instala en ATDE-6), linter, typecheck, script `pnpm validate` (los agentes lo citan; no existe).
+- Runner de tests instalado (elegido en ADR-0001, se instala en ATDE-6), scripts `pnpm typecheck`, `pnpm lint`, `pnpm test` (los agentes los citan; llegan con ATDE-6).
 - `AGENTS.md` real (contiene solo `### TODO PATRICK`).
 - Proveedor de OTP: `auth.sms` y Twilio desactivados en `config.toml`.
 - Entorno cloud / producción.

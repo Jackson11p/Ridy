@@ -7,7 +7,7 @@
 1. **`stash@{0}` sigue guardado**: su contenido ya está commiteado (RIDY-0001). Borrarlo es irreversible: hacer `git stash drop` solo tras confirmar que no falta nada.
 2. **`.env.local` de cada dev** sigue con `NEXT_PUBLIC_*`: renombrar a mano a `EXPO_PUBLIC_*` (Expo solo expone ese prefijo). `.env.example` ya corregido.
 3. **`@supabase/ssr` instalada sin uso**: sirve solo a frameworks con SSR. [PENDIENTE: quitarla o no según framework de la web pública]
-4. **Agentes apuntan a cosas inexistentes**: `AGENTS.md` (solo `### TODO PATRICK`), `src/modules/`, `src/components/landing/`, `src/components/ui/` (shadcn), `pnpm validate`. Seguirlos al pie → errores.
+4. **Agentes citan scripts que aún no existen**: `pnpm typecheck`, `pnpm lint`, `pnpm test` llegan con ATDE-6; mientras tanto los agentes deben reportarlo, no inventarlos. `AGENTS.md` sigue con solo `### TODO PATRICK` (ya nadie lo cita).
 5. **`npm install` falla a propósito** (`EBADENGINE`). Usar `corepack enable` + pnpm.
 6. **Opción B (BD compartida)**: un `pnpm db:reset` del host borra los datos de todos. Credenciales locales son públicas (`postgres/postgres`): nunca a internet, nunca datos reales.
 7. **Auth local sin OTP por teléfono**: `[auth.sms] enable_signup = false`, Twilio desactivado; `site_url` apunta a `127.0.0.1:3000`. No se puede probar login por teléfono aún.
