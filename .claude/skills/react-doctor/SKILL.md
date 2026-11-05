@@ -8,9 +8,16 @@ version: "1.2.0"
 
 Scans React codebases for security, performance, correctness, and architecture issues. Outputs a 0–100 health score.
 
+## Ridy
+
+- Target: Expo / React Native app in `apps/mobile/`. No `apps/mobile/` yet → nothing to scan; say so and stop.
+- Always `pnpm dlx`, run from repo root. Never `npx`/`npm` (npm blocked by `engines` + `.npmrc`).
+- Fixes follow `docs/constitution.md` and `docs/adr/0001-capas-y-runner.md` (layers `features/<f>/domain|application|infrastructure|ui`, files < 150 lines, functions < 30, no business logic in UI). Never expose or log minors' location.
+- Keep the React Native rule category on. Full triage loop: `.claude/agents/react-doctor.md`.
+
 ## After making React code changes:
 
-Run `npx react-doctor@latest --verbose --scope changed` and check the score did not regress.
+Run `pnpm dlx react-doctor@latest --verbose --scope changed` and check the score did not regress.
 
 If the score dropped, fix the regressions before committing.
 
@@ -34,12 +41,12 @@ Pair it with the matching per-rule prompts at `https://www.react.doctor/prompts/
 
 ## Configuring or explaining rules
 
-When the user wants to understand a rule, disagrees with one, or wants to disable / tune which rules run (not fix code), read [references/explain.md](references/explain.md) and follow it. Start with `npx react-doctor@latest rules explain <rule>`, then apply the narrowest control via `npx react-doctor@latest rules disable|set|category|ignore-tag …`, which edits your `doctor.config.*` (or `package.json#reactDoctor`).
+When the user wants to understand a rule, disagrees with one, or wants to disable / tune which rules run (not fix code), read [references/explain.md](references/explain.md) and follow it. Start with `pnpm dlx react-doctor@latest rules explain <rule>`, then apply the narrowest control via `pnpm dlx react-doctor@latest rules disable|set|category|ignore-tag …`, which edits your `doctor.config.*` (or `package.json#reactDoctor`).
 
 ## Command
 
 ```bash
-npx react-doctor@latest --verbose --scope changed
+pnpm dlx react-doctor@latest --verbose --scope changed
 ```
 
 | Flag              | Purpose                                                          |

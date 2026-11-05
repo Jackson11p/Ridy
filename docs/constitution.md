@@ -12,8 +12,8 @@ Reglas no negociables. Todo agente (`planner`, `coder`, `reviwer`) y persona las
 ## 3. Spec y código
 - Sin spec no hay código (flujo y longitudes en `Claude.md`). Cada tarea = test + cambio mínimo = un commit. Si algo no encaja → se actualiza la spec primero; con agentes, `reviwer` verifica cada commit contra su spec.
 ## 4. Capas
-- Arquitectura [POR DEFINIR]. Mínimo fijo: cero lógica de negocio en componentes UI; I/O (Supabase, GPS, push) aislado tras contratos; archivos < 150 líneas, funciones < 30.
+- `apps/mobile/src/features/<f>/domain|application|infrastructure|ui` + `index.ts` como API pública; dependencias `ui → application → domain`, `infrastructure` implementa contratos de `domain` (ADR-0001, ATDE-5). Mínimo fijo: cero lógica de negocio en componentes UI; I/O (Supabase, GPS, push) aislado tras contratos; archivos < 150 líneas, funciones < 30.
 ## 5. Pruebas (TDD)
-- Rojo → verde → refactor. Sin test no hay commit; bug fix empieza con test que lo reproduce. Toda tabla con políticas RLS tiene prueba RLS. Runner de tests [POR DEFINIR].
+- Rojo → verde → refactor. Sin test no hay commit; bug fix empieza con test que lo reproduce. Toda tabla con políticas RLS tiene prueba RLS. Runner: `jest-expo` + `@testing-library/react-native` (JS/TS); pgTAP vía `supabase test db` en `supabase/tests/` (SQL/RLS) (ADR-0001).
 ## 6. Datos
 - Supabase: Postgres + PostGIS, Auth (OTP por WhatsApp, SMS de respaldo), Realtime, Edge Functions, RLS, pg_cron. Esquema solo por migraciones versionadas; RLS en toda tabla; validar en cada límite; secretos en env, nunca en repo. Ubicación de menores = dato sensible: solo la ven padres de esa ruta y solo con ruta activa. Sin fotos de niños. El chofer sí ve el teléfono de los encargados de sus viajes.

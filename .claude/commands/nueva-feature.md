@@ -11,6 +11,9 @@ Si el pedido no trae número o nombre de ticket, invéntalo: número = siguiente
 docs/specs/ (RIDY-01 si no hay ninguno); nombre = 2–4 palabras kebab-case del pedido
 (p. ej. RIDY-03-hoy-no-va). Anótalo en "Supuestos" de spec.md.
 
+0. Jira (solo si el ticket es de Jira, p. ej. `ATDE-6`; cloudId c5cbb5a6-9127-4de1-be4b-df6cd3d02c4b):
+   pasa el ticket a **In Progress** con el MCP de Atlassian (`transitionJiraIssue`) y crea la rama
+   `<TICKET>-<nombre>`. Si la transición falla, avisa en el resumen y sigue.
 1. Usa la skill orchestration: lanza un worker Codex SOLO LECTURA que investigue el pedido y
    devuelva un reporte de máx 40 líneas con rutas reales: qué existe hoy (app Expo, panel admin,
    migraciones supabase/, tablas/RLS/RPC, Edge Functions), pantallas, hooks TanStack Query y
@@ -32,3 +35,6 @@ docs/specs/ (RIDY-01 si no hay ninguno); nombre = 2–4 palabras kebab-case del 
    - implementar algo fuera del MVP de la constitución (§1), o borrar datos.
 5. Nunca push, supabase db push ni cambios en Supabase remoto (MCP incluido). Al final: resumen
    con supuestos tomados y tabla por tarea (commit, review, estado).
+6. Jira al terminar todas las tareas: pasa el ticket a **Reviwer** (columna de revisión) y deja un comentario con
+   rama, commits y supuestos. **Done** nunca lo pone Claude: llega al mergear el PR. En Jira solo
+   transiciones y comentarios del ticket trabajado; nada más.

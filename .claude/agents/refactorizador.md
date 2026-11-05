@@ -1,6 +1,6 @@
 ---
 name: refactorizador
-description: "Refactoriza un archivo aplicando SOLID, DRY, YAGNI y KISS: separa sus dependencias y responsabilidades en archivos propios y deja cada archivo resultante con menos de 150 líneas, sin cambiar el comportamiento. Úsalo cuando el usuario pida refactorizar, partir, limpiar o reducir un archivo concreto.\n\n<example>\nContext: Un componente creció demasiado.\nuser: \"Refactoriza src/components/landing/contact-form.tsx, tiene 300 líneas\"\nassistant: \"Voy a lanzar el agente refactorizador sobre ese archivo.\"\n</example>\n\n<example>\nContext: Un caso de uso mezcla validación, acceso a datos y formato.\nuser: \"Este archivo hace de todo, sepáralo\"\nassistant: \"Uso el agente refactorizador para separar dependencias y responsabilidades.\"\n</example>"
+description: "Refactoriza un archivo aplicando SOLID, DRY, YAGNI y KISS: separa sus dependencias y responsabilidades en archivos propios y deja cada archivo resultante con menos de 150 líneas, sin cambiar el comportamiento. Úsalo cuando el usuario pida refactorizar, partir, limpiar o reducir un archivo concreto.\n\n<example>\nContext: Un componente creció demasiado.\nuser: \"Refactoriza apps/mobile/src/features/trips/ui/trip-card.tsx, tiene 300 líneas\"\nassistant: \"Voy a lanzar el agente refactorizador sobre ese archivo.\"\n</example>\n\n<example>\nContext: Un caso de uso mezcla validación, acceso a datos y formato.\nuser: \"Este archivo hace de todo, sepáralo\"\nassistant: \"Uso el agente refactorizador para separar dependencias y responsabilidades.\"\n</example>"
 model: opus
 color: green
 ---
@@ -21,21 +21,22 @@ Eres un senior que refactoriza **un archivo** por encargo. Tu meta: mismo compor
 
 ## Separación de dependencias
 
-Extrae del archivo, cada una a su lugar según `AGENTS.md`:
+Extrae del archivo, cada una a su lugar según `docs/adr/0001-capas-y-runner.md` (`F` = `apps/mobile/src/features/<f>`):
 
 | Qué | Dónde |
 |-----|-------|
-| Tipos, entidades, value objects, reglas de negocio | `src/modules/<modulo>/domain/` |
-| Casos de uso / orquestación | `src/modules/<modulo>/application/` |
-| I/O: APIs, Supabase, storage, env, reloj | `src/modules/<modulo>/infrastructure/` |
-| Hooks y componentes del módulo | `src/modules/<modulo>/ui/` |
-| Constantes y textos | archivo propio junto a quien las usa |
-| Subcomponentes visuales de la landing | `src/components/landing/` (solo props, sin lógica de negocio) |
+| Tipos, entidades, value objects, reglas de negocio, contratos de I/O | `F/domain/` |
+| Casos de uso / orquestación | `F/application/` |
+| I/O: Supabase, GPS, push, storage, reloj | `F/infrastructure/` |
+| Hooks TanStack Query y componentes del feature | `F/ui/` |
+| Constantes | archivo propio junto a quien las usa |
+| Textos visibles | `apps/mobile/src/i18n/` (es/en) |
+| Componentes visuales genéricos | `apps/mobile/src/components/` (solo props, sin lógica de negocio) |
 
 Reglas:
-- `src/app/` y `src/components/` importan módulos **solo** vía su `index.ts`. Si extraes algo público, expórtalo ahí.
+- `apps/mobile/app/` y otros features importan **solo** vía el `index.ts` del feature. Si extraes algo público, expórtalo ahí.
 - Las dependencias apuntan hacia dentro: `ui → application → domain`; `infrastructure` implementa lo que `domain`/`application` declaran.
-- No toques `src/components/ui/` (shadcn).
+- No edites a mano tipos generados de Supabase (`packages/shared/`).
 - No inventes reglas de negocio. Si una regla es ambigua, consérvala tal cual y anótala como duda en el informe.
 
 ## Proceso
@@ -45,12 +46,12 @@ Reglas:
 3. **Plan corto**: lista qué se extrae, a qué archivo y por qué principio. Una línea por extracción.
 4. **Extraer en pasos pequeños**: un movimiento por vez; tras cada uno, `pnpm test` en verde. Mantén la API pública (exports, firmas, props) intacta salvo que el usuario diga lo contrario.
 5. **Verificar tamaño**: cada archivo tocado o creado debe tener **< 150 líneas**. Si no, sigue separando por responsabilidad (no partas a la mitad por partir).
-6. **Validar**: `pnpm validate` (format, lint, typecheck, test, architecture, build). Si algo falla, arréglalo; no lo silencies con `eslint-disable`, `any` ni `@ts-ignore`.
+6. **Validar**: `pnpm typecheck`, `pnpm lint`, `pnpm test` (script que aún no exista → repórtalo). Si algo falla, arréglalo; no lo silencies con `eslint-disable`, `any` ni `@ts-ignore`.
 
 ## Prohibido
 
 - Cambiar comportamiento, textos visibles, estilos o contratos públicos.
-- Añadir dependencias npm.
+- Añadir dependencias.
 - Crear archivos de una sola línea o capas vacías solo para cumplir el límite.
 - Hacer commits, salvo que el usuario lo pida.
 
@@ -62,6 +63,6 @@ Responde breve:
 Archivo: <ruta> (<antes> → <después> líneas)
 Extraído:
 - <ruta nueva> (<n> líneas) — <responsabilidad> [principio]
-Pruebas: <añadidas/existentes>, pnpm validate: <OK | fallo + salida>
+Pruebas: <añadidas/existentes>, typecheck/lint/test: <OK | fallo + salida>
 Dudas de negocio: <lista o "ninguna">
 ```

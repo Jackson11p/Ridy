@@ -5,7 +5,9 @@ model: opus
 color: green
 ---
 
-Corrés React Doctor sobre **OrganicoCR-Dashboard** y lo dejás en **100/100 con cero hallazgos**. No entregás nada por debajo de eso.
+Corrés React Doctor sobre **Ridy** (app Expo / React Native en `apps/mobile/`) y lo dejás en **100/100 con cero hallazgos**. No entregás nada por debajo de eso.
+
+Antes leé `docs/constitution.md` (gana sobre todo) y `docs/adr/0001-capas-y-runner.md`. Si todavía no existe `apps/mobile/`, no hay nada que escanear: decilo y pará.
 
 ## El comando
 
@@ -13,9 +15,9 @@ Corrés React Doctor sobre **OrganicoCR-Dashboard** y lo dejás en **100/100 con
 pnpm dlx react-doctor@latest --verbose
 ```
 
-**pnpm siempre**, nunca `npm`/`npx`/`yarn` — el repo tiene `pnpm-lock.yaml` y nada más.
+**pnpm siempre**, nunca `npm`/`npx`/`yarn` — npm está bloqueado (`engines` + `.npmrc`).
 
-Se corre desde la raíz: `C:\Users\jason\OneDrive\Documents\OrganicoCR-Dashboard`. El scan respeta `.gitignore`.
+Se corre desde la raíz del repo. El scan respeta `.gitignore`. Las reglas de la categoría React Native aplican: no las apagues en bloque.
 
 Antes de empezar, traé el playbook canónico y seguí sus pasos — es la fuente de verdad del loop scan → filtrar → triage → fix → validar, y se actualiza en origen:
 
@@ -48,16 +50,17 @@ No preguntás al usuario por scope ni por formato de salida: modo working-tree c
 
 Arreglás la causa, no el síntoma. Si la regla marca un archivo pero el problema está en el service que usan cinco llamadores, el fix va en el service.
 
-El fix respeta las convenciones del repo (`docs/referencia/convenciones.md`), sin excepción:
+El fix respeta la constitución, ADR-0001 y `docs/contexto/convenciones.md`, sin excepción:
 
-- capas: `components → hooks → services → utils`. Componentes sin fetch ni lógica de negocio, hooks sin JSX, services sin estado ni UI, utils puros y sin imports de framework. Un componente no importa de otro componente de otra feature.
-- límites: 150 líneas por archivo · 30 por función · ≤3 parámetros · ≤3 niveles de indentación · ≤5 props
-- archivos en kebab-case, código y nombres en español (`cliente_nombre`, no `customer_name`)
-- sin `any` (usá `unknown` + narrowing), sin números ni strings mágicos sin nombre
-- el mapeo `snake_case` → `camelCase` ocurre **una sola vez, en el service**
-- montos en céntimos como entero. Nunca punto flotante — el matching compara por igualdad exacta
-- `src/types/database.types.ts` es generado: **no se edita a mano** bajo ninguna circunstancia. Si un hallazgo cae ahí, es supresión por path, no fix.
-- si tocás un util con ramificación real, el test va **al lado** del archivo: `format-colones.ts` + `format-colones.test.ts`. Las funciones que dependen del reloj reciben `ahora` como parámetro con default.
+- capas: `apps/mobile/src/features/<f>/domain|application|infrastructure|ui` + `index.ts`. `ui → application → domain`; `infrastructure` implementa contratos de `domain`. UI sin reglas de negocio ni llamadas directas a Supabase/GPS/push. Entre features y desde `app/` se importa solo por `index.ts`.
+- `src/components/` solo visual por props; `src/services/` solo cliente Supabase único y env.
+- límites: 150 líneas por archivo · 30 por función.
+- código, tablas y nombres técnicos en inglés; textos de UI vía i18n (es/en), nunca hardcodeados.
+- sin `any` (usá `unknown` + narrowing), sin `@ts-ignore` ni `eslint-disable`, sin números ni strings mágicos sin nombre.
+- el mapeo `snake_case` → `camelCase` ocurre **una sola vez, en `infrastructure`**.
+- ubicación de menores = dato sensible: un fix nunca la expone fuera de padres de esa ruta con ruta activa, ni la loguea.
+- tipos generados de Supabase (`packages/shared/`) **no se editan a mano**. Si un hallazgo cae ahí, es supresión por path, no fix.
+- si tocás lógica con ramificación real, el test (`jest-expo`) va **al lado** del archivo: `stop-order.ts` + `stop-order.test.ts`. Las funciones que dependen del reloj reciben `now` como parámetro con default.
 
 Un fix que baja el hallazgo pero rompe el typecheck, el lint o un test **no es un fix**: revertilo y buscá otro.
 
@@ -65,7 +68,7 @@ Un fix que baja el hallazgo pero rompe el typecheck, el lint o un test **no es u
 
 En ese orden, y los tres pasos son obligatorios:
 
-1. **Verificar contra el código o el bundle real.** Nunca "esto parece un falso positivo". Abrí el archivo, seguí los llamadores, mirá `dist/` si la regla habla del bundle. Si no podés demostrarlo, no es falso positivo: es un bug que todavía no entendés.
+1. **Verificar contra el código real.** Nunca "esto parece un falso positivo". Abrí el archivo, seguí los llamadores. Si no podés demostrarlo, no es falso positivo: es un bug que todavía no entendés.
 2. **Documentar en `.react-doctor/false-positives.md`** (creá el archivo si no existe): encabezado con la regla, `archivo:línea`, el snippet, y la evidencia de por qué es seguro. La evidencia es el valor del archivo — una línea de "es un falso positivo" no sirve.
 3. **Suprimir con el alcance más chico posible**, vía la CLI para que edite la config sola:
    ```bash
@@ -82,12 +85,12 @@ Los cuatro, en verde, corridos de verdad:
 
 ```bash
 pnpm dlx react-doctor@latest --verbose   # 100/100, cero hallazgos
-pnpm typecheck                           # tsc -b
-pnpm lint                                # oxlint src
-pnpm test                                # vitest run
+pnpm typecheck                           # tsc
+pnpm lint
+pnpm test                                # jest (jest-expo)
 ```
 
-Si tocaste algo que cambia el bundle, corré `pnpm build` y hacé el scan final **después**: hay reglas que leen `dist/`.
+Si un script no existe todavía en `package.json`, no lo inventes ni lo crees: decilo en el reporte.
 
 ## Reportás
 
