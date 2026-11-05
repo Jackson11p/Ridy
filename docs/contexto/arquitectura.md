@@ -40,7 +40,7 @@ Versiones de libs futuras: [PENDIENTE: fijar al instalarlas; hoy no están en `p
 └─ README.md
 ```
 
-[PLAN] monorepo: `apps/mobile/` (rutas `(auth)`, `(parent)`, `(driver)`, `(manage)`; `src/features|components|services|theme|i18n`), `apps/web/` (web pública), `packages/shared/` (tipos Supabase, zod), `supabase/migrations|functions|tests/`, `.github/workflows/ci.yml`.
+[PLAN] monorepo: `apps/mobile/` (rutas `(auth)`, `(parent)`, `(driver)`, `(manage)`; `src/features/<f>/domain|application|infrastructure|ui`, `src/components|services|theme|i18n` según ADR-0001), `apps/web/` (web pública), `packages/shared/` (tipos Supabase, zod), `supabase/migrations|functions|tests/`, `.github/workflows/ci.yml`.
 Sin `apps/admin/`: la administración vive en la app (D9). [PENDIENTE: framework de `apps/web/`].
 
 ## Flujo de datos [PLAN]
@@ -59,7 +59,7 @@ Sin `apps/admin/`: la administración vive en la app (D9). [PENDIENTE: framework
 - `apps/`, `packages/`, `pnpm-workspace.yaml` (no es monorepo aún).
 - `supabase/migrations/`, `supabase/functions/`, `supabase/tests/`.
 - `.github/workflows/` (sin CI).
-- Runner de tests, linter, typecheck, script `pnpm validate` (los agentes lo citan; no existe).
+- Runner de tests instalado (elegido en ADR-0001, se instala en ATDE-6), linter, typecheck, script `pnpm validate` (los agentes lo citan; no existe).
 - `AGENTS.md` real (contiene solo `### TODO PATRICK`).
 - Proveedor de OTP: `auth.sms` y Twilio desactivados en `config.toml`.
 - Entorno cloud / producción.

@@ -30,7 +30,7 @@
 - Archivos < 150 líneas, funciones < 30. [PLAN]
 - Mínimas dependencias; nueva dep = decisión de socios. [IMPL: solo 3 deps]
 
-Capas: [PENDIENTE: constitución las deja `[POR DEFINIR]`; arquitectura propone `src/features|components|services`; agentes (`coder`, `planner`) asumen `src/modules/<m>/domain|application|infrastructure|ui`. Elegir una.]
+Capas: `apps/mobile/src/features/<f>/domain|application|infrastructure|ui` + `index.ts`; `ui → application → domain`, `infrastructure` implementa contratos (`docs/adr/0001-capas-y-runner.md`). [PLAN] — agentes aún citan `src/modules/` (corregir aparte).
 
 ## Prohibido
 
@@ -45,7 +45,7 @@ Capas: [PENDIENTE: constitución las deja `[POR DEFINIR]`; arquitectura propone 
 
 - TDD obligatorio: rojo → verde → refactor; sin test no hay commit; bug fix empieza con test. [PLAN]
 - Toda tabla con RLS tiene prueba RLS (`supabase/tests/`, job CI `test-rls`). [PLAN]
-- Runner: [PENDIENTE: elegir runner JS y de pruebas SQL/RLS]
+- Runner: `jest-expo` + `@testing-library/react-native` (JS/TS); pgTAP vía `supabase test db`, archivos `supabase/tests/*.test.sql` (ADR-0001). [PLAN: se instala en ATDE-6]
 - Excepción usada: RIDY-0001 sin código de dominio → verificación manual. [IMPL]
 
 ## Commits

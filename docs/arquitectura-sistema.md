@@ -231,9 +231,9 @@ ridy/
 │  │  │  ├─ (driver)/            hoy, modo conducción, paradas
 │  │  │  └─ (manage)/            administrar desde el celular (dueño)
 │  │  └─ src/
-│  │     ├─ features/            location, geofence, attendance, invites…
+│  │     ├─ features/            location, geofence, attendance, invites… (cada uno: domain/ application/ infrastructure/ ui/ index.ts, ADR-0001)
 │  │     ├─ components/          Button, Card, StatusBadge, StudentRow…
-│  │     ├─ services/            acceso a Supabase (consultas y RPC)
+│  │     ├─ services/            cliente Supabase único y env (consultas y RPC viven en features/<f>/infrastructure)
 │  │     ├─ theme/  i18n/
 │  └─ web/                       web pública: landing y directorio (framework por definir)
 ├─ packages/

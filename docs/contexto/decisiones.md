@@ -39,9 +39,14 @@
 | R2 | Supabase local en Docker, CLI como devDependency | Mismo schema + seed para todos | Instancia cloud compartida | [IMPL] |
 | R3 | Cada dev su BD (opción A); BD de un host por LAN/Tailscale (opción B) | Nadie pisa datos ajenos | Abrir puertos en router | [IMPL] (README) |
 
+## ADR
+
+| # | Decisión | Por qué | Descartado | Estado |
+|---|---|---|---|---|
+| ADR-0001 | Capas `features/<f>/domain\|application\|infrastructure\|ui`; runner `jest-expo` + pgTAP (`supabase test db`) | Cumple §4 de la constitución; preset oficial Expo; pgTAP ya en el CLI | Carpetas planas, `src/modules/`, Vitest, RLS desde JS | Propuesto (ATDE-5) |
+
 ## Abiertas
 
 - Marca: confirmar nombre libre en registro de marcas de Costa Rica → hoy `[NOMBRE_PRODUCTO]`. [ABIERTA]
 - Monto de tarifa al transportista: [PENDIENTE: ₡ por estudiante activo o fijo] (`subscriptions` dice "por estudiante activo").
 - Framework de la web pública: [PENDIENTE].
-- Capas del código (ver `convenciones.md`): [PENDIENTE].
