@@ -1,6 +1,6 @@
 # ADR-0001 — Capas del código y runner de tests
 
-- **Estado:** Propuesto (rige al aprobarlo ambos socios en el PR). Ticket ATDE-5.
+- **Estado:** Aceptado (PR #2 aprobado y mergeado, 2026-11-05). Ticket ATDE-5.
 - **Fecha:** 2026-11-04
 
 ## Contexto

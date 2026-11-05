@@ -7,12 +7,15 @@
 1. **`stash@{0}` sigue guardado**: su contenido ya está commiteado (RIDY-0001). Borrarlo es irreversible: hacer `git stash drop` solo tras confirmar que no falta nada.
 2. **`.env.local` de cada dev** sigue con `NEXT_PUBLIC_*`: renombrar a mano a `EXPO_PUBLIC_*` (Expo solo expone ese prefijo). `.env.example` ya corregido.
 3. **`@supabase/ssr` instalada sin uso**: sirve solo a frameworks con SSR. [PENDIENTE: quitarla o no según framework de la web pública]
-4. **Agentes citan scripts que aún no existen**: `pnpm typecheck`, `pnpm lint`, `pnpm test` llegan con ATDE-6; mientras tanto los agentes deben reportarlo, no inventarlos. `AGENTS.md` sigue con solo `### TODO PATRICK` (ya nadie lo cita).
+4. **`pnpm exec supabase test db` sin tests aún**: `pnpm typecheck|lint|test` ya existen (ATDE-6); pgTAP llega con la primera migración. `AGENTS.md` sigue con solo `### TODO PATRICK` (ya nadie lo cita).
 5. **`npm install` falla a propósito** (`EBADENGINE`). Usar `corepack enable` + pnpm.
 6. **Opción B (BD compartida)**: un `pnpm db:reset` del host borra los datos de todos. Credenciales locales son públicas (`postgres/postgres`): nunca a internet, nunca datos reales.
 7. **Auth local sin OTP por teléfono**: `[auth.sms] enable_signup = false`, Twilio desactivado; `site_url` apunta a `127.0.0.1:3000`. No se puede probar login por teléfono aún.
 8. **Diagramas embebidos perdidos**: mapa del sistema, turno de mañana (8 pasos) y fases salen como `[embedded content]` en el `.md`. [PENDIENTE: exportarlos]
 9. Nombre provisional en identificadores: paquete `ridy`, `project_id = "Ridy"`, tickets `RIDY-`, código de ruta `RDY-`. Renombrar cuando haya marca.
+10. **pnpm 11 y paquetes recién publicados**: `pnpm add pkg@<versión de hoy>` agrega solo `minimumReleaseAgeExclude` a `pnpm-workspace.yaml`. No commitearlo: pedir rango (`pkg@^N`) y dejar que elija una versión con antigüedad.
+11. **Build scripts bloqueados (pnpm 11)**: dep nueva con script → `ERR_PNPM_IGNORED_BUILDS`; decidir en `allowBuilds` de `pnpm-workspace.yaml` (true/false), con comentario del porqué.
+12. **Aviso de peer `react-dom` 19.3.1 vs `react` 19.3.0**: lo trae expo-router por web; sin web en la app no afecta. Revisar al subir de SDK.
 
 ## Seguridad y RLS [PLAN]
 

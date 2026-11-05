@@ -1,0 +1,6 @@
+{
+  "auth": { "title": "Iniciar sesión" },
+  "parent": { "title": "Mis hijos" },
+  "driver": { "title": "Mi ruta" },
+  "manage": { "title": "Administrar" }
+}

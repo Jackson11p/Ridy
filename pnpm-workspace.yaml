@@ -1,0 +1,6 @@
+packages:
+  - apps/*
+  - packages/*
+allowBuilds:
+  # binarios precompilados; no necesita su script de build
+  '@parcel/watcher': false
