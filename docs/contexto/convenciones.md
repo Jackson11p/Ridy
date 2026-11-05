@@ -45,7 +45,7 @@ Capas: `apps/mobile/src/features/<f>/domain|application|infrastructure|ui` + `in
 
 - TDD obligatorio: rojo → verde → refactor; sin test no hay commit; bug fix empieza con test. [PLAN]
 - Toda tabla con RLS tiene prueba RLS (`supabase/tests/`, job CI `test-rls`). [PLAN]
-- Runner: `jest-expo` + `@testing-library/react-native` (JS/TS); pgTAP vía `supabase test db`, archivos `supabase/tests/*.test.sql` (ADR-0001). [PLAN: se instala en ATDE-6]
+- Runner: `jest-expo` + `@testing-library/react-native` (JS/TS); pgTAP vía `supabase test db`, archivos `supabase/tests/*.test.sql` (ADR-0001). [IMPL jest-expo (ATDE-6); PLAN pgTAP]. Tests de rutas van en `apps/mobile/__tests__/`: dentro de `app/` Expo Router los tomaría como pantallas.
 - Excepción usada: RIDY-0001 sin código de dominio → verificación manual. [IMPL]
 
 ## Commits

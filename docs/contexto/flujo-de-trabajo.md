@@ -23,7 +23,7 @@ Tras `git pull` con migraciones nuevas → `pnpm db:reset`.
 4. **Tareas**: `task.md` con `- [ ] RIDY-NNNN-Tnn …`. [IMPL]
 5. **Agentes**: solo si el dev lo pide. Grande (varias capas, reglas de negocio, 4+ tareas) → `planner` → `coder` → `reviwer`. Pequeño → directo. [IMPL]
 6. **Rama**: [PENDIENTE: convención de ramas; hoy todo va directo a `main`]
-7. **Por tarea**: test rojo → cambio mínimo → verde → refactor → marcar `[x]` → un commit `<tipo>(<ámbito>): RIDY-NNNN-Tnn <desc>`. [PLAN: no hay runner]
+7. **Por tarea**: test rojo → cambio mínimo → verde → refactor → marcar `[x]` → un commit `<tipo>(<ámbito>): RIDY-NNNN-Tnn <desc>`. [IMPL: `pnpm test`]
 8. **BD**: `pnpm db:migration <nombre>` → escribir SQL con RLS + prueba RLS → `pnpm db:reset`. Si se tocó Studio: `pnpm db:diff <nombre>`. [IMPL scripts; PLAN pruebas]
 9. **PR**: revisión de un socio distinto al autor (`CODEOWNERS`). [IMPL archivo; PENDIENTE: protección de rama]
 
@@ -31,7 +31,7 @@ Tras `git pull` con migraciones nuevas → `pnpm db:reset`.
 
 - [ ] Spec, plan y task existen; todas las tareas en `[x]`.
 - [ ] Criterios de aceptación de la spec verificados (con evidencia).
-- [ ] Tests en verde; bug fix incluye test que lo reproduce. `pnpm typecheck`, `pnpm lint`, `pnpm test`; `pnpm exec supabase test db` si se tocó `supabase/` (ADR-0001). [PLAN: scripts llegan con ATDE-6]
+- [ ] Tests en verde; bug fix incluye test que lo reproduce. `pnpm typecheck`, `pnpm lint`, `pnpm test`; `pnpm exec supabase test db` si se tocó `supabase/` (ADR-0001). [IMPL JS; PLAN pgTAP sin tests aún]
 - [ ] Tabla nueva → RLS activado + prueba RLS.
 - [ ] Escrituras sensibles por función SQL.
 - [ ] Sin secretos ni `service_role` en código; `.env.local` sin subir.

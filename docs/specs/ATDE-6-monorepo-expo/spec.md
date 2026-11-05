@@ -30,5 +30,7 @@ No existen `apps/`, `packages/` ni `pnpm-workspace.yaml`. Sin la app base, ningu
 - Ticket Jira `ATDE-6`; rama y carpeta `ATDE-6-monorepo-expo`; tareas `ATDE-6-Tnn`.
 - Versiones: las que fija Expo SDK 58 (`create-expo-app` + `expo install`), no las `latest` sueltas.
 - i18n con `i18next` + `react-i18next` + `expo-localization` (lo más usado en Expo; pendiente aprobación).
-- Lint con `eslint` + `eslint-config-expo` (config oficial de Expo).
+- Lint con `eslint` + `eslint-config-expo` (config oficial de Expo). ESLint 9, no 10: los plugins de `eslint-config-expo` 58 se prueban con 9.
+- `expo-status-bar` y los módulos demo del template (web, reanimated, gestos, `@expo/ui`) se quitaron: nada los usa.
+- Pantallas `sign-in`, `children`, `my-route`, `manage` dentro de cada grupo (cuatro `index` chocarían en `/`); `/` redirige a `sign-in` hasta ATDE-15.
 - Las deps Supabase de la raíz se quedan donde están; moverlas a `apps/mobile` va con el ticket del cliente.
