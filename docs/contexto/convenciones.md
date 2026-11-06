@@ -22,6 +22,7 @@
 
 - **Spec antes de código**: `spec.md` (10–30 líneas) → `plan.md` (20–50) → `task.md` (máx. 100). [IMPL en RIDY-0001]
 - Seguridad en BD, no en app: RLS en toda tabla desde su migración creadora. [IMPL ATDE-8]
+- `profiles`: clientes listan columnas, nunca `select *` (falla con 42501: `push_token` no se lee). [IMPL ATDE-8]
 - Escrituras sensibles (aprobar solicitudes, mover estudiantes, cambiar chofer) por **funciones SQL**, no inserts directos. [PLAN]
 - Nada se borra físicamente: se desactiva (`active`). [IMPL ATDE-8: sin grants ni políticas delete]
 - Toda tabla de operación lleva `operator_id`; RLS filtra por él. [PLAN]

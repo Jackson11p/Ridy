@@ -2,7 +2,7 @@
 -- Empresa A: O owner, M1 driver activo, M2 driver inactivo.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(7);
+select plan(8);
 
 insert into auth.users (id, phone, raw_user_meta_data) values
   ('00000000-0000-0000-0000-0000000000d1', '50650000001', '{"full_name":"O"}'),
@@ -27,6 +27,7 @@ select throws_ok($$select push_token from public.profiles where id = '00000000-0
   '42501', null, 'push_token propio no se lee');
 select throws_ok($$select push_token from public.profiles where id = '00000000-0000-0000-0000-0000000000d2'$$,
   '42501', null, 'push_token ajeno no se lee');
+select throws_ok($$select * from public.profiles$$, '42501', null, 'contrato: listar columnas, nunca select *');
 reset role;
 
 -- M1: actualiza su token
