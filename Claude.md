@@ -2,6 +2,8 @@
 
 > Este archivo debe tener menos de 200 líneas. Si el proyecto crece, no sobrecargar este `CLAUDE.md` raíz: dividir la info en `CLAUDE.md` específicos por carpeta (p. ej. `app/CLAUDE.md`, `supabase/CLAUDE.md`) o referenciar docs externos (`@docs/archivo.md`).
 
+> **URGENTE — TEST antes que código:** antes de escribir código de producción, escribir el test (`jest-expo` en `apps/mobile/`, pgTAP en `supabase/tests/*.test.sql`, ver ADR-0001) y verlo fallar. Sin test rojo previo no se implementa.
+
 ## Flujo de trabajo obligatorio
 
 No se genera código, tickets ni tareas sin una spec. Las specs viven en `docs/specs/TICKET-nombre/`, donde `TICKET` es el número del ticket (p. ej. `docs/specs/RIDY-42-login/`). Así dos devs en paralelo nunca chocan de número. Las tareas se identifican como `TICKET-Tnn` (p. ej. `RIDY-42-T01`).
