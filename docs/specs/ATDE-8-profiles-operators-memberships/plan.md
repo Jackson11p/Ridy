@@ -26,3 +26,6 @@ Solo BD (sin app). Una migración por tarea, vía `pnpm db:migration <nombre>`. 
 ## Riesgos
 - `security definer` sin `search_path = ''` → secuestro de funciones. Todas lo fijan y califican nombres.
 - Updates de perfil que cambien `phone`/`active` → bloqueado por grants por columna, con prueba.
+
+## 5. Correcciones de review (T05–T07)
+- Migraciones nuevas (no se editan las de T01–T03). `push_token` sale del `select` de `authenticated` (grant por columnas): clientes listan columnas, nunca `select *`.
