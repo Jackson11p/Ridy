@@ -8,4 +8,4 @@
 ## Correcciones de review
 - [x] ATDE-8-T05 Sincronizar `profiles.phone` al cambiar `auth.users.phone`; alta con phone null no rompe
 - [x] ATDE-8-T06 Perfiles de miembros: solo memberships activas; `select` por columnas sin `push_token`
-- [ ] ATDE-8-T07 `has_role` y `create_operator` exigen `profiles.active`; `timezone` válida; pruebas faltantes (driver no edita empresa, owner inactivo pierde update, dos empresas propias)
+- [x] ATDE-8-T07 `has_role` y `create_operator` exigen `profiles.active`; `timezone` válida; pruebas faltantes (driver no edita empresa, owner inactivo pierde update, dos empresas propias)
