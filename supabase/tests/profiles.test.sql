@@ -1,7 +1,7 @@
 -- ATDE-8-T01: profiles, alta automática desde auth.users y RLS de perfil propio.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(14);
+select plan(17);
 
 insert into auth.users (id, phone, raw_user_meta_data) values
   ('00000000-0000-0000-0000-00000000000a', '50688880001', '{"full_name":"Ana"}'),
@@ -44,6 +44,15 @@ select is((select full_name from public.profiles where id = '00000000-0000-0000-
   'Beto', 'A no edita el perfil de B');
 select is((select full_name from public.profiles where id = '00000000-0000-0000-0000-00000000000a'),
   'Ana M', 'cambio de A persistido');
+
+-- T05: cambio de teléfono en auth.users se sincroniza
+update auth.users set phone = '50688889999' where id = '00000000-0000-0000-0000-00000000000a';
+select is((select phone from public.profiles where id = '00000000-0000-0000-0000-00000000000a'),
+  '50688889999', 'cambio de teléfono se refleja en el perfil');
+select lives_ok($$insert into auth.users (id, phone)
+  values ('00000000-0000-0000-0000-00000000000c', '50688880001')$$, 'otro usuario se registra con el teléfono viejo');
+select lives_ok($$insert into auth.users (id, phone) values ('00000000-0000-0000-0000-00000000000d', null)$$,
+  'alta sin teléfono no rompe');
 
 select * from finish();
 rollback;
