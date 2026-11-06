@@ -97,6 +97,18 @@ Copy-Item .env.example .env.local # y pegar la Publishable key de `pnpm db:statu
 
 El schema cambia **solo por migraciones** commiteadas. Tras un `git pull` con migraciones nuevas: `pnpm db:reset`.
 
+### Tests
+
+TDD: primero el test, verlo fallar (rojo), luego el código (verde). Runners en [ADR-0001](docs/adr/0001-capas-y-runner.md).
+
+| Suite | Comando | Archivos | Necesita |
+|---|---|---|---|
+| JS/TS (`jest-expo`) | `pnpm test` | `apps/mobile/**/*.test.ts(x)` | nada |
+| SQL/RLS (pgTAP) | `pnpm test:db` | `supabase/tests/*.test.sql` | `pnpm db:start` |
+
+- Toda tabla con políticas RLS lleva su prueba. Patrón a copiar: [`supabase/tests/rls-ejemplo.test.sql`](supabase/tests/rls-ejemplo.test.sql) (simula `anon` y usuarios `authenticated` con `set local role` + `request.jwt.claims`; todo dentro de `begin … rollback`).
+- Si `pnpm db:start` falla por puerto ocupado (`54322`), otro proyecto Supabase está arriba: `supabase stop --project-id <otro>`.
+
 ### Conexión del equipo
 
 **Opción A (recomendada): cada dev su propia BD.** Cada uno corre los pasos de "Primer arranque". El schema y el seed vienen de git, así que todos quedan iguales y nadie pisa los datos de otro.
