@@ -44,20 +44,21 @@ Tras `git pull` con migraciones nuevas → `pnpm db:reset`.
 
 ## CI [IMPL]
 
-`.github/workflows/ci.yml` corre en cada PR a `main`, 4 jobs en paralelo, sin secretos (ATDE-12):
+`.github/workflows/ci.yml` corre en cada PR a `main`, 5 jobs en paralelo, sin secretos (ATDE-12):
 
 | Job | Comando (reproducible local) |
 |---|---|
 | `typecheck` | `pnpm typecheck` |
 | `lint` | `pnpm lint` |
+| `test` | `pnpm test` |
 | `test-rls` | `pnpm db:start` + `pnpm test:db` |
 | `build` | `pnpm --filter mobile exec expo export --platform android` |
 
-**Protección de rama** (una vez, el dueño del repo, después del primer run del CI en un PR): `main` exige los 4 jobs en verde, rama al día, 1 aprobación de CODEOWNERS y aplica también a admins.
+**Protección de rama** (una vez, el dueño del repo, después del primer run del CI en un PR): `main` exige los 5 jobs en verde, rama al día, 1 aprobación de CODEOWNERS y aplica también a admins.
 
 ```bash
 gh api -X PUT repos/Jackson11p/Ridy/branches/main/protection --input - <<'EOF'
-{"required_status_checks":{"strict":true,"contexts":["typecheck","lint","test-rls","build"]},
+{"required_status_checks":{"strict":true,"contexts":["typecheck","lint","test","test-rls","build"]},
  "enforce_admins":true,
  "required_pull_request_reviews":{"required_approving_review_count":1,"require_code_owner_reviews":true},
  "restrictions":null}

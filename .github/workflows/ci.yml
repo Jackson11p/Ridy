@@ -1,4 +1,4 @@
-# CI de Ridy (ATDE-12). Corre en cada PR a main; la protección de rama exige estos 4 jobs.
+# CI de Ridy (ATDE-12). Corre en cada PR a main; la protección de rama exige estos 5 jobs.
 # Sin secretos: test-rls usa las claves demo del Supabase local que levanta el CLI.
 name: CI
 
@@ -33,6 +33,18 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
 
   test-rls:
     runs-on: ubuntu-latest
