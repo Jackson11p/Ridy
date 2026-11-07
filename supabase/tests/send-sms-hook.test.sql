@@ -2,7 +2,7 @@
 -- no queda secreto en Vault ni request en la cola de pg_net.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(13);
+select plan(17);
 
 -- Permisos: solo Supabase Auth ejecuta el hook
 select function_privs_are('public', 'send_sms_hook', array['jsonb'], 'anon', array[]::text[],
@@ -11,6 +11,10 @@ select function_privs_are('public', 'send_sms_hook', array['jsonb'], 'authentica
   'authenticated no ejecuta el hook');
 select function_privs_are('public', 'send_sms_hook', array['jsonb'], 'supabase_auth_admin', array['EXECUTE'],
   'supabase_auth_admin ejecuta el hook');
+select function_privs_are('public', 'send_sms_hook', array['jsonb'], 'service_role', array[]::text[],
+  'service_role no ejecuta el hook');
+select function_privs_are('public', 'send_sms_hook', array['jsonb'], 'public', array[]::text[],
+  'public no ejecuta el hook');
 select is_definer('public', 'send_sms_hook', array['jsonb'], 'hook es security definer');
 
 -- Sin secretos Meta: error claro y nada encolado
@@ -29,6 +33,10 @@ select function_privs_are('public', '_meta_wa_otp_body', array['text', 'text', '
   'anon no ejecuta el armado del body');
 select function_privs_are('public', '_meta_wa_otp_body', array['text', 'text', 'text'], 'authenticated', array[]::text[],
   'authenticated no ejecuta el armado del body');
+select function_privs_are('public', '_meta_wa_otp_body', array['text', 'text', 'text'], 'service_role', array[]::text[],
+  'service_role no ejecuta el armado del body');
+select function_privs_are('public', '_meta_wa_otp_body', array['text', 'text', 'text'], 'public', array[]::text[],
+  'public no ejecuta el armado del body');
 
 -- Con secretos (falsos, solo en esta transacción): encola el POST a Meta
 select vault.create_secret('token-falso', 'meta_wa_token');
