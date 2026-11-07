@@ -36,3 +36,4 @@
 - `pg_net` es asíncrono: Auth no sabe si Meta entregó. Aceptable en beta; fallo de entrega se resolverá con respaldo SMS.
 - Versión Graph `v23.0` fija en la función; revisar al pasar a producción.
 - Migración se aplica con `supabase migration up` (no `db reset`, que borra datos de la BD compartida).
+- Ajuste en implementación: dos migraciones (`atde14_send_sms_hook` en T02, `atde14_send_sms_hook_envio` en T03 con `create or replace`), porque la de T02 ya estaba aplicada y no se edita. `net.http_request_queue` (pg_net 0.20.4) sí se lee dentro de la transacción del test; `body` es `bytea` → `convert_from(body, 'utf8')::jsonb`.

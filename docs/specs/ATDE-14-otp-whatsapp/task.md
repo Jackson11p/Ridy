@@ -4,6 +4,7 @@
   - D8 [IMPL] local con Meta Cloud API; punto 7 y "Qué NO existe" actualizados
 - [x] ATDE-14-T02 Test pgTAP de permisos y respuesta de error sin secretos (rojo) → migración `send_sms_hook` mínima (verde)
   - Rojo: 6/6 fallan (`send_sms_hook(jsonb) does not exist`, `net.http_request_queue` no existe). Verde: `pnpm test:db` 11/11
-- [ ] ATDE-14-T03 Test pgTAP de envío con secretos: fila en `net.http_request_queue` con URL, header y body (rojo) → envío por `pg_net` (verde)
+- [x] ATDE-14-T03 Test pgTAP de envío con secretos: fila en `net.http_request_queue` con URL, header y body (rojo) → envío por `pg_net` (verde)
+  - Rojo: 6/13 fallan (`_meta_wa_otp_body` no existe; cola have 0 want 1). Verde: `pnpm test:db` 18/18; cola y Vault quedan en 0 tras rollback
 - [ ] ATDE-14-T04 `config.toml`: `enable_signup`, `max_frequency = "60s"`, `test_otp`, `[auth.hook.send_sms]`; verificar login con número de prueba vía API local
 - [ ] ATDE-14-T05 README: cargar secretos Meta en Vault, plantilla de autenticación, prueba con número real
