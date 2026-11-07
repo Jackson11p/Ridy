@@ -25,7 +25,7 @@ Tras `git pull` con migraciones nuevas → `pnpm db:reset`.
 6. **Rama**: [PENDIENTE: convención de ramas; hoy todo va directo a `main`]
 7. **Por tarea**: test rojo → cambio mínimo → verde → refactor → marcar `[x]` → un commit `<tipo>(<ámbito>): RIDY-NNNN-Tnn <desc>`. [IMPL: `pnpm test`]
 8. **BD**: `pnpm db:migration <nombre>` → escribir SQL con RLS + prueba RLS → `pnpm db:reset`. Si se tocó Studio: `pnpm db:diff <nombre>`. [IMPL scripts; PLAN pruebas]
-9. **PR**: revisión de un socio distinto al autor (`CODEOWNERS`). [IMPL archivo; PENDIENTE: protección de rama]
+9. **PR**: revisión de un socio distinto al autor (`CODEOWNERS`). Solo se mergea con CI en verde (ver [CI](#ci-impl)). [IMPL]
 
 ## Checklist de "terminado"
 
@@ -42,9 +42,27 @@ Tras `git pull` con migraciones nuevas → `pnpm db:reset`.
 - [ ] Docs afectados actualizados (`docs/arquitectura-sistema.md`, `docs/contexto/`).
 - [ ] Revisión aprobada por el otro socio (y `reviwer` si se usaron agentes).
 
-## CI [PLAN]
+## CI [IMPL]
 
-`.github/workflows/ci.yml`: typecheck · lint · `test-rls` · build. No existe todavía.
+`.github/workflows/ci.yml` corre en cada PR a `main`, 4 jobs en paralelo, sin secretos (ATDE-12):
+
+| Job | Comando (reproducible local) |
+|---|---|
+| `typecheck` | `pnpm typecheck` |
+| `lint` | `pnpm lint` |
+| `test-rls` | `pnpm db:start` + `pnpm test:db` |
+| `build` | `pnpm --filter mobile exec expo export --platform android` |
+
+**Protección de rama** (una vez, el dueño del repo, después del primer run del CI en un PR): `main` exige los 4 jobs en verde, rama al día, 1 aprobación de CODEOWNERS y aplica también a admins.
+
+```bash
+gh api -X PUT repos/Jackson11p/Ridy/branches/main/protection --input - <<'EOF'
+{"required_status_checks":{"strict":true,"contexts":["typecheck","lint","test-rls","build"]},
+ "enforce_admins":true,
+ "required_pull_request_reviews":{"required_approving_review_count":1,"require_code_owner_reviews":true},
+ "restrictions":null}
+EOF
+```
 
 ## Deploy
 
