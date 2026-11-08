@@ -120,6 +120,13 @@ Auth delega el envío del código en el hook `public.send_sms_hook`, que lo mand
 1. En [developers.facebook.com](https://developers.facebook.com) crea una app de tipo Business y agrega el producto WhatsApp. Meta te da un número de prueba y su **Phone number ID**.
 2. En *API Setup* registra los destinatarios (máx. 5) y genera un token de acceso (el temporal dura 24 h; para uno fijo, usuario del sistema en Business Manager).
 3. En *WhatsApp Manager → Plantillas* crea una plantilla categoría **Autenticación**, idioma **Español (es)**, con botón "Copiar código". Anota su nombre.
+   - Si Meta responde `Cannot Create Message Template — This WhatsApp business account does not have permission to create message template`: Meta exige **verificación del negocio** (Business Manager → Centro de seguridad) para plantillas de autenticación. Sin empresa verificada no hay OTP real; seguir con `test_otp` (ver errores conocidos, punto 7).
+   - Mientras tanto, para comprobar token, Phone number ID y destinatario a $0, envía la plantilla preaprobada `hello_world` (no lleva código, solo prueba la conexión):
+
+     ```powershell
+     $h = @{ Authorization = "Bearer <token>" }
+     Invoke-RestMethod -Method Post -Uri https://graph.facebook.com/v23.0/<phone number id>/messages -Headers $h -ContentType "application/json" -Body '{"messaging_product":"whatsapp","to":"5068XXXXXXX","type":"template","template":{"name":"hello_world","language":{"code":"en_US"}}}'
+     ```
 4. Carga los tres secretos en el Vault local (Studio → SQL Editor, http://127.0.0.1:54323). Nunca los pongas en archivos del repo:
 
    ```sql

@@ -16,3 +16,5 @@
   - Rojo: 5/21 fallan (have `{}` want 400; cola have 3 want 0). Verde: `pnpm test:db` 26/26; conteos filtrados por `graph.facebook.com` / URL `111222333`
 - [x] ATDE-14-T08 (review MENOR-3) errores-conocidos punto 7: `config.toml` (Twilio de relleno + hook) no se empuja tal cual al remoto; revisar en ticket de beta
   - Nota añadida al final del punto 7
+- [x] ATDE-14-T09 Documentar bloqueo Meta: plantilla de autenticación exige negocio verificado; README con prueba `hello_world`
+  - README paso 3 y errores-conocidos punto 7
