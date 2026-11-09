@@ -1,19 +1,16 @@
 import { StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { Screen } from './screen';
 import { ScreenTitle } from './screen-title';
-import { lightPalette as colors } from '@/theme';
 
 type PlaceholderScreenProps = { title: string };
 
 export function PlaceholderScreen({ title }: PlaceholderScreenProps) {
   return (
-    <SafeAreaView style={styles.container}>
+    <Screen contentStyle={styles.centered}>
       <ScreenTitle text={title} />
-    </SafeAreaView>
+    </Screen>
   );
 }
 
-const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.background },
-});
+const styles = StyleSheet.create({ centered: { alignItems: 'center', justifyContent: 'center' } });
