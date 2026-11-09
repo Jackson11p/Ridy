@@ -109,6 +109,46 @@ TDD: primero el test, verlo fallar (rojo), luego el código (verde). Runners en 
 - Toda tabla con políticas RLS lleva su prueba. Patrón a copiar: [`supabase/tests/rls-ejemplo.test.sql`](supabase/tests/rls-ejemplo.test.sql) (simula `anon` y usuarios `authenticated` con `set local role` + `request.jwt.claims`; todo dentro de `begin … rollback`).
 - Si `pnpm db:start` falla por puerto ocupado (`54322`), otro proyecto Supabase está arriba: `supabase stop --project-id <otro>`.
 
+### Login por teléfono (OTP por WhatsApp)
+
+Auth delega el envío del código en el hook `public.send_sms_hook`, que lo manda por la API de WhatsApp Cloud de Meta (D8, ATDE-14). Espera mínima entre reenvíos: 60 s; tope: 30 envíos/hora.
+
+**Sin nada que configurar ($0):** los números de `[auth.sms.test_otp]` en `supabase/config.toml` (`50670000001`, `50670000002`, `50670000003`) entran con el código `123456` y no envían nada.
+
+**Contra un número real (número de prueba de Meta, gratis):**
+
+1. En [developers.facebook.com](https://developers.facebook.com) crea una app de tipo Business y agrega el producto WhatsApp. Meta te da un número de prueba y su **Phone number ID**.
+2. En *API Setup* registra los destinatarios (máx. 5) y genera un token de acceso (el temporal dura 24 h; para uno fijo, usuario del sistema en Business Manager).
+3. En *WhatsApp Manager → Plantillas* crea una plantilla categoría **Autenticación**, idioma **Español (es)**, con botón "Copiar código". Anota su nombre.
+   - Si Meta responde `Cannot Create Message Template — This WhatsApp business account does not have permission to create message template`: Meta exige **verificación del negocio** (Business Manager → Centro de seguridad) para plantillas de autenticación. Sin empresa verificada no hay OTP real; seguir con `test_otp` (ver errores conocidos, punto 7).
+   - Mientras tanto, para comprobar token, Phone number ID y destinatario a $0, envía la plantilla preaprobada `hello_world` (no lleva código, solo prueba la conexión):
+
+     ```powershell
+     $h = @{ Authorization = "Bearer <token>" }
+     Invoke-RestMethod -Method Post -Uri https://graph.facebook.com/v23.0/<phone number id>/messages -Headers $h -ContentType "application/json" -Body '{"messaging_product":"whatsapp","to":"5068XXXXXXX","type":"template","template":{"name":"hello_world","language":{"code":"en_US"}}}'
+     ```
+4. Carga los tres secretos en el Vault local (Studio → SQL Editor, http://127.0.0.1:54323). Nunca los pongas en archivos del repo:
+
+   ```sql
+   select vault.create_secret('<token>', 'meta_wa_token');
+   select vault.create_secret('<phone number id>', 'meta_wa_phone_number_id');
+   select vault.create_secret('<nombre de la plantilla>', 'meta_wa_template');
+   -- cambiar uno: select vault.update_secret((select id from vault.secrets where name = 'meta_wa_token'), '<nuevo>');
+   ```
+
+5. Prueba con tu número registrado (código de país sin `+`, p. ej. `5068XXXXXXX`), con la Publishable key de `pnpm db:status`:
+
+   ```powershell
+   $h = @{ apikey = "<publishable key>" }
+   Invoke-RestMethod -Method Post -Uri http://127.0.0.1:54321/auth/v1/otp -Headers $h -ContentType "application/json" -Body '{"phone":"5068XXXXXXX"}'
+   Invoke-RestMethod -Method Post -Uri http://127.0.0.1:54321/auth/v1/verify -Headers $h -ContentType "application/json" -Body '{"phone":"5068XXXXXXX","token":"<código>","type":"sms"}'
+   ```
+
+- Sin los tres secretos, `/otp` responde 500 "Meta WhatsApp no configurado" y no envía nada.
+- El envío es asíncrono (`pg_net`): Auth responde `{}` aunque Meta rechace. Si no llega el WhatsApp: `select status_code, content from net._http_response order by id desc limit 5;`
+- Los secretos del Vault **se pierden con `pnpm db:reset`**: vuelve a cargarlos.
+- Twilio aparece `enabled = true` con valores de relleno solo porque el CLI apaga el login por teléfono sin proveedor; con el hook activo nunca se usa.
+
 ### Conexión del equipo
 
 **Opción A (recomendada): cada dev su propia BD.** Cada uno corre los pasos de "Primer arranque". El schema y el seed vienen de git, así que todos quedan iguales y nadie pisa los datos de otro.

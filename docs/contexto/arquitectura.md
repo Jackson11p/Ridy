@@ -64,5 +64,5 @@ Sin `apps/admin/`: la administración vive en la app (D9). [PENDIENTE: framework
 - `supabase/migrations/`, `supabase/functions/`, `supabase/tests/`.
 - `.github/workflows/` (sin CI, ATDE-12).
 - `AGENTS.md` real (contiene solo `### TODO PATRICK`).
-- Proveedor de OTP: `auth.sms` y Twilio desactivados en `config.toml`.
+- OTP en producción y SMS de respaldo: hoy OTP por WhatsApp solo local (hook `public.send_sms_hook` → Meta Cloud API, D8, ATDE-14).
 - Entorno cloud / producción.

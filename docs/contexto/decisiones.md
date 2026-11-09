@@ -14,7 +14,7 @@
 | D5 | **"Hoy no va"** vale hasta que el chofer inicia la ruta | Después la parada ya está en curso | Hora fija | [PLAN] |
 | D6 | **Cambio de dirección**: lo propone el padre, lo aprueba el transportista | Control sobre el recorrido | Padre edita su pin libremente | [PLAN] |
 | D7 | **Sin fotos de niños** | Un dato sensible menos (Ley 8968) | Foto opcional | [PLAN] |
-| D8 | **OTP por WhatsApp**, SMS de respaldo | WhatsApp suele salir más barato en la región | Solo SMS | [PLAN] — proveedor [PENDIENTE] |
+| D8 | **OTP por WhatsApp** vía **Meta WhatsApp Cloud API directo** (hook `send_sms` de Supabase Auth como función Postgres + `pg_net`); SMS de respaldo pospuesto a beta | WhatsApp suele salir más barato en la región; Meta directo sin intermediario; dev a $0 con `test_otp` + número de prueba de Meta | Solo SMS; Twilio/BSP intermediario (cuesta desde el día 1); Edge Function (sin pgTAP) | [IMPL] local (ATDE-14) — respaldo SMS [PENDIENTE] beta |
 | D9 | **Administración toda en la app**; web solo pública (landing + directorio de transportistas que aceptan aparecer) | Un solo lugar de gestión | Panel web React + Vite | [PLAN] |
 
 ## Del documento de arquitectura
