@@ -1,6 +1,6 @@
 import { StyleSheet, Text } from 'react-native';
 
-import { colors } from '@/theme/colors';
+import { lightPalette as colors } from '@/theme';
 
 type ScreenTitleProps = { text: string };
 

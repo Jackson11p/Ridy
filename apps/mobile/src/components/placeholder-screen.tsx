@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ScreenTitle } from './screen-title';
-import { colors } from '@/theme/colors';
+import { lightPalette as colors } from '@/theme';
 
 type PlaceholderScreenProps = { title: string };
 
