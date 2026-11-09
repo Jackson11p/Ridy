@@ -1,8 +1,8 @@
--- ATDE-9-T05: chofer habitual validado también para clientes autenticados.
+-- ATDE-9-T05/T06: chofer habitual validado para clientes autenticados; solo si el valor cambia.
 -- Empresa A: O owner, S staff, D y D2 drivers, Z staff (no driver).
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(5);
+select plan(9);
 
 insert into auth.users (id, phone) values
   ('00000000-0000-0000-0000-0000000005a1', '50630000011'),  -- O
@@ -40,6 +40,22 @@ select lives_ok($$insert into public.vehicles (operator_id, plate, capacity, def
   values ('00000000-0000-0000-0000-00000005aaaa', 'V3', 10, '00000000-0000-0000-0000-0000000005a3')$$,
   'owner crea buseta con chofer válido');
 reset role;
+
+-- T06: solo valida si el chofer cambia; exige perfil activo
+update public.memberships set active = false where profile_id = '00000000-0000-0000-0000-0000000005a4';
+update public.profiles set active = false where id = '00000000-0000-0000-0000-0000000005a3';
+set local role authenticated;
+set local request.jwt.claims = '{"sub":"00000000-0000-0000-0000-0000000005a1","role":"authenticated"}';
+select lives_ok($$update public.vehicles set plate = 'V1', capacity = 22, active = true,
+  default_driver_id = '00000000-0000-0000-0000-0000000005a4'
+  where id = '00000000-0000-0000-0000-0000000051a1'$$, 'update con fila completa sin cambiar chofer ya inactivo');
+select throws_ok($$insert into public.vehicles (operator_id, plate, capacity, default_driver_id)
+  values ('00000000-0000-0000-0000-00000005aaaa', 'V4', 10, '00000000-0000-0000-0000-0000000005a3')$$,
+  '23514', null, 'chofer con perfil inactivo rechazado al crear');
+select throws_ok($$update public.vehicles set default_driver_id = '00000000-0000-0000-0000-0000000005a3'
+  where id = '00000000-0000-0000-0000-0000000051a1'$$, '23514', null, 'chofer con perfil inactivo rechazado al cambiar');
+reset role;
+select has_index('public', 'vehicles', 'vehicles_default_driver_id_idx', 'índice por chofer habitual');
 
 select * from finish();
 rollback;
