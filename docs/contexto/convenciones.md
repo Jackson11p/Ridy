@@ -11,7 +11,7 @@
 
 ## Naming
 
-- Tablas en inglés, plural, snake_case: `route_stops`, `trip_events`, `notifications_log`. [PLAN]
+- Tablas en inglés, plural, snake_case: `vehicles`, `schools`, `routes`, `route_stops`, `trip_events`. [IMPL ATDE-9]
 - Roles de membresía: `owner`, `driver`, `staff`. [PLAN]
 - Specs: `docs/specs/TICKET-nombre/` (ej. `RIDY-0001-conectar-docker`). Tareas: `TICKET-Tnn`. [IMPL]
 - Scripts BD: prefijo `db:` (`db:start`, `db:reset`, …). [IMPL]
@@ -25,7 +25,8 @@
 - `profiles`: clientes listan columnas, nunca `select *` (falla con 42501: `push_token` no se lee). [IMPL ATDE-8]
 - Escrituras sensibles (aprobar solicitudes, mover estudiantes, cambiar chofer) por **funciones SQL**, no inserts directos. [PLAN]
 - Nada se borra físicamente: se desactiva (`active`). [IMPL ATDE-8: sin grants ni políticas delete]
-- Toda tabla de operación lleva `operator_id`; RLS filtra por él. [PLAN]
+- Toda tabla de operación lleva `operator_id`; RLS filtra por él. [IMPL ATDE-9]
+- Referencias entre tablas de operación con FK compuesta `(x_id, operator_id)` → `unique (id, operator_id)`: imposible mezclar empresas. [IMPL ATDE-9]
 - UUID como llave visible; fechas en UTC (`timestamptz`). [IMPL ATDE-8]
 - I/O (Supabase, GPS, push) aislado tras contratos; cero lógica de negocio en UI. [PLAN]
 - Archivos < 150 líneas, funciones < 30. [PLAN]

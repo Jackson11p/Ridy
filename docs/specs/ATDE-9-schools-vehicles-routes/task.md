@@ -6,4 +6,5 @@
   - Rojo: `relation "public.schools" does not exist`; verde: `pnpm test:db` 9 archivos, 156 pruebas PASS.
 - [x] ATDE-9-T03 `route_shift`, `routes` con FKs compuestas, código `RDY-` generado + RLS owner/staff/driver; select de `schools` para driver; prueba `supabase/tests/routes.test.sql`
   - Rojo: `relation "public.routes" does not exist`; verde: `pnpm test:db` 10 archivos, 195 pruebas PASS.
-- [ ] ATDE-9-T04 `docs/contexto/convenciones.md`: marcadores [IMPL ATDE-9]
+- [x] ATDE-9-T04 `docs/contexto/convenciones.md`: marcadores [IMPL ATDE-9]
+  - Solo docs (sin prueba): tablas plural snake_case, `operator_id` en tablas de operación y FKs compuestas.
