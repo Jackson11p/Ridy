@@ -23,6 +23,7 @@ Solo BD (sin app). Una migración por tarea vía `pnpm db:migration <nombre>`; n
 - Enum `route_shift` (`am`, `pm`). Columnas: `school_id`, `vehicle_id` (FKs compuestas), `shift`, `code text unique not null default private.generate_route_code()` con `check (code ~ '^RDY-[A-Z0-9]{6}$')`.
 - `private.generate_route_code()`: `RDY-` + 6 caracteres de alfabeto sin ambiguos (sin 0/O/1/I), aleatorio con `gen_random_bytes`; colisión → violación de `unique` (probabilidad despreciable en beta).
 - Políticas chofer (select): `routes` activas cuya buseta es visible para él (subconsulta a `vehicles` bajo su RLS); `schools` activas referenciadas por una ruta visible para él. Sin ciclos de RLS: vehicles ← routes ← schools.
+- Ajuste T03: las políticas chofer filtran explícito `v.active and v.default_driver_id = auth.uid()` en la subconsulta (no dependen de que la persona tenga además rol owner/staff en otra empresa); `school_id` y `vehicle_id` `not null`; `generate_route_code` con `execute` a `authenticated` (lo evalúa el `default` del insert).
 
 ## 4. Docs (T04)
 - `docs/contexto/convenciones.md`: marcar [IMPL ATDE-9] "toda tabla de operación lleva `operator_id`", tablas plural snake_case y FKs compuestas por empresa.

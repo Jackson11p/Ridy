@@ -4,5 +4,6 @@
   - Rojo: `relation "public.vehicles" does not exist`; verde: `pnpm test:db` 8 archivos, 134 pruebas PASS.
 - [x] ATDE-9-T02 `schools` (geografía, radio de geocerca, GIST) + RLS owner/staff; prueba `supabase/tests/schools.test.sql`
   - Rojo: `relation "public.schools" does not exist`; verde: `pnpm test:db` 9 archivos, 156 pruebas PASS.
-- [ ] ATDE-9-T03 `route_shift`, `routes` con FKs compuestas, código `RDY-` generado + RLS owner/staff/driver; select de `schools` para driver; prueba `supabase/tests/routes.test.sql`
+- [x] ATDE-9-T03 `route_shift`, `routes` con FKs compuestas, código `RDY-` generado + RLS owner/staff/driver; select de `schools` para driver; prueba `supabase/tests/routes.test.sql`
+  - Rojo: `relation "public.routes" does not exist`; verde: `pnpm test:db` 10 archivos, 195 pruebas PASS.
 - [ ] ATDE-9-T04 `docs/contexto/convenciones.md`: marcadores [IMPL ATDE-9]
