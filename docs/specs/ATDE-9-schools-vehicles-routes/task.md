@@ -10,6 +10,7 @@
   - Solo docs (sin prueba): tablas plural snake_case, `operator_id` en tablas de operación y FKs compuestas.
 
 ## Correcciones de review
-- [ ] ATDE-9-T05 Pruebas: "driver no edita rutas" con valor distinto; partir `routes.test.sql` (< 150 líneas); casos faltantes: `vehicle_id` de otra empresa en update, staff cambia chofer habitual, trigger rechaza como owner, persona owner en B + driver en A
+- [x] ATDE-9-T05 Pruebas: "driver no edita rutas" con valor distinto; partir `routes.test.sql` (< 150 líneas); casos faltantes: `vehicle_id` de otra empresa en update, staff cambia chofer habitual, trigger rechaza como owner, persona owner en B + driver en A
+  - Solo pruebas (verde directo, el código ya cumplía). Sensibilidad: con política temporal de update para todos, fallan "driver no edita rutas/colegios" (have pm/"por driver"). `routes.test.sql` + `routes-driver.test.sql` + `vehicles-default-driver.test.sql`; 12 archivos, 209 PASS.
 - [ ] ATDE-9-T06 Trigger chofer habitual solo si el valor cambia y exige `profiles.active`; índice por `default_driver_id`
 - [ ] ATDE-9-T07 Placa única por empresa sin distinguir mayúsculas ni espacios; check de `code` igual al alfabeto del generador
