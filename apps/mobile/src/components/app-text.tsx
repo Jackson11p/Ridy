@@ -2,7 +2,7 @@ import { Text, type TextProps } from 'react-native';
 
 import { useTheme, type TypographyVariant } from '@/theme';
 
-export type AppTextTone = 'text' | 'muted' | 'danger' | 'onAction';
+export type AppTextTone = 'text' | 'muted' | 'danger' | 'onAction' | 'action';
 
 type AppTextProps = TextProps & { variant?: TypographyVariant; tone?: AppTextTone };
 
