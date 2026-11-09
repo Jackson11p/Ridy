@@ -22,7 +22,7 @@ describe('AppText', () => {
     expect(screen.getByText('Hola')).toHaveStyle(typography[variant]);
   });
 
-  it.each(['muted', 'danger', 'onAction'] as const)('renders the %s tone', async (tone) => {
+  it.each(['muted', 'danger', 'onAction', 'action'] as const)('renders the %s tone', async (tone) => {
     await render(<AppText tone={tone}>Hola</AppText>);
 
     expect(screen.getByText('Hola')).toHaveStyle({ color: lightPalette[tone] });

@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-native';
 
-import { darkPalette, lightPalette, radius, sizes, spacing, typography, useTheme } from '@/theme';
+import { borders, darkPalette, lightPalette, radius, sizes, spacing, typography, useTheme } from '@/theme';
 
 const mockScheme = jest.fn<'light' | 'dark' | null, []>(() => 'light');
 jest.mock('react-native/Libraries/Utilities/useColorScheme', () => ({
@@ -20,6 +20,7 @@ describe('theme tokens', () => {
     expect(typography.caption).toEqual({ fontSize: 13, lineHeight: 20, fontWeight: '400' });
     expect(spacing).toEqual({ xs: 4, sm: 8, md: 12, lg: 16, xl: 20, xxl: 24, xxxl: 32 });
     expect(radius.control).toBe(14);
+    expect(borders.control).toBe(1);
     expect(sizes).toMatchObject({ button: 56, touchTarget: 48, screenGutter: 20 });
   });
 });

@@ -33,11 +33,12 @@ function containerStyle(theme: Theme, colors: VariantColors) {
   const pick = (key: keyof Palette | 'transparent') => (key === 'transparent' ? key : theme.colors[key]);
   return {
     height: theme.sizes.button,
+    minHeight: theme.sizes.touchTarget,
     borderRadius: theme.radius.control,
     paddingHorizontal: theme.spacing.xxl,
     backgroundColor: pick(colors.background),
     borderColor: colors.border ? theme.colors[colors.border] : 'transparent',
-    borderWidth: colors.border ? StyleSheet.hairlineWidth : 0,
+    borderWidth: colors.border ? theme.borders.control : 0,
   };
 }
 
