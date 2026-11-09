@@ -1,8 +1,8 @@
--- ATDE-9-T03/T05: rutas (routes), código RDY- generado, FKs por empresa y RLS owner/staff.
+-- ATDE-9-T03/T05/T07: rutas (routes), código RDY- generado, FKs por empresa y RLS owner/staff.
 -- Visibilidad del chofer en routes-driver.test.sql. Empresa A: O owner, S staff. Empresa B: X owner.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(30);
+select plan(31);
 
 insert into auth.users (id, phone) values
   ('00000000-0000-0000-0000-0000000007a1', '50610000001'),  -- O
@@ -53,6 +53,9 @@ select throws_ok($$insert into public.routes (operator_id, school_id, vehicle_id
 select throws_ok($$insert into public.routes (operator_id, school_id, vehicle_id, shift, code) values
   ('00000000-0000-0000-0000-00000007aaaa', '00000000-0000-0000-0000-0000000072a1',
    '00000000-0000-0000-0000-0000000071a1', 'am', 'RDY-abc')$$, '23514', null, 'código con formato inválido rechazado');
+select throws_ok($$insert into public.routes (operator_id, school_id, vehicle_id, shift, code) values
+  ('00000000-0000-0000-0000-00000007aaaa', '00000000-0000-0000-0000-0000000072a1',
+   '00000000-0000-0000-0000-0000000071a1', 'am', 'RDY-O0I1AB')$$, '23514', null, 'código con caracteres ambiguos rechazado');
 
 -- FKs compuestas: colegio y buseta de la misma empresa
 select throws_ok($$insert into public.routes (operator_id, school_id, vehicle_id, shift) values

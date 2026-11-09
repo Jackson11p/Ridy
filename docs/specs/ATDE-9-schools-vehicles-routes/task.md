@@ -14,4 +14,5 @@
   - Solo pruebas (verde directo, el código ya cumplía). Sensibilidad: con política temporal de update para todos, fallan "driver no edita rutas/colegios" (have pm/"por driver"). `routes.test.sql` + `routes-driver.test.sql` + `vehicles-default-driver.test.sql`; 12 archivos, 209 PASS.
 - [x] ATDE-9-T06 Trigger chofer habitual solo si el valor cambia y exige `profiles.active`; índice por `default_driver_id`
   - Rojo: update con fila completa murió 23514; perfil inactivo "no exception" (x2); índice ausente. Verde: 12 archivos, 213 PASS.
-- [ ] ATDE-9-T07 Placa única por empresa sin distinguir mayúsculas ni espacios; check de `code` igual al alfabeto del generador
+- [x] ATDE-9-T07 Placa única por empresa sin distinguir mayúsculas ni espacios; check de `code` igual al alfabeto del generador
+  - Rojo: placas 'aaa111'/'AAA 111'/mezcla/update "no exception", índice ausente, código 'RDY-O0I1AB' aceptado. Verde: 13 archivos, 221 PASS.
