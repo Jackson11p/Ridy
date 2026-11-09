@@ -16,6 +16,7 @@
 | D7 | **Sin fotos de niños** | Un dato sensible menos (Ley 8968) | Foto opcional | [PLAN] |
 | D8 | **OTP por WhatsApp** vía **Meta WhatsApp Cloud API directo** (hook `send_sms` de Supabase Auth como función Postgres + `pg_net`); SMS de respaldo pospuesto a beta | WhatsApp suele salir más barato en la región; Meta directo sin intermediario; dev a $0 con `test_otp` + número de prueba de Meta | Solo SMS; Twilio/BSP intermediario (cuesta desde el día 1); Edge Function (sin pgTAP) | [IMPL] local (ATDE-14) — respaldo SMS [PENDIENTE] beta |
 | D9 | **Administración toda en la app**; web solo pública (landing + directorio de transportistas que aceptan aparecer) | Un solo lugar de gestión | Panel web React + Vite | [PLAN] |
+| D10 | **Prototipo Figma canónico**: [`pFcHPqTQVk7p0DrUnNdPvU`](https://www.figma.com/design/pFcHPqTQVk7p0DrUnNdPvU) (página claro `0:1`, oscuro `25:172`); guía en `figma.md` | Misma línea visual en todas las pantallas | Diseñar en código pantalla a pantalla | [IMPL] tokens y componentes base (ATDE-64) |
 
 ## Del documento de arquitectura
 
@@ -50,3 +51,4 @@
 - Marca: confirmar nombre libre en registro de marcas de Costa Rica → hoy `[NOMBRE_PRODUCTO]`. [ABIERTA]
 - Monto de tarifa al transportista: [PENDIENTE: ₡ por estudiante activo o fijo] (`subscriptions` dice "por estudiante activo").
 - Framework de la web pública: [PENDIENTE].
+- Fuente **Inter** del prototipo: requiere `expo-font` + archivos de fuente (dep nueva = decisión del usuario); hoy fuente del sistema con mismos tamaños, pesos e interlineados (ATDE-64). [ABIERTA]

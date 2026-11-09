@@ -6,5 +6,5 @@
 - [x] ATDE-64-T04 `Button` primario/secundario/peligro/texto, deshabilitado y cargando (sin `onPress`, `accessibilityState`), alto 56; tests
 - [x] ATDE-64-T05 `TextField` con etiqueta, error (texto y borde danger, anunciado) y deshabilitado; tests
 - [x] ATDE-64-T06 `Screen` (SafeArea, fondo del tema, margen 20, scroll opcional); migrar `ScreenTitle` y `PlaceholderScreen` sin literales; tests verdes
-- [ ] ATDE-64-T07 Docs: D10 en `decisiones.md`, Inter en Abiertas, `docs/contexto/figma.md` (link, páginas, receta para pedir pantallas), `.mcp.json` con Figma; `arquitectura.md` marca `theme/` y `components/` [IMPL]
-- [ ] ATDE-64-T08 `pnpm typecheck`, `pnpm lint`, `pnpm test` en verde; sin colores ni tamaños literales en `app/` y `src/components/` (grep)
+- [x] ATDE-64-T07 Docs: D10 en `decisiones.md`, Inter en Abiertas, `docs/contexto/figma.md` (link, páginas, receta para pedir pantallas), `.mcp.json` con Figma; `arquitectura.md` marca `theme/` y `components/` [IMPL]
+- [x] ATDE-64-T08 `pnpm typecheck`, `pnpm lint`, `pnpm test` en verde; sin colores ni tamaños literales en `app/` y `src/components/` (grep)

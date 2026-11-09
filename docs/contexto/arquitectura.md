@@ -45,6 +45,7 @@ Versiones exactas: constitución §2 y `apps/mobile/package.json`. Libs futuras:
 ```
 
 [PLAN] monorepo: `apps/mobile/` (rutas `(auth)`, `(parent)`, `(driver)`, `(manage)`; `src/features/<f>/domain|application|infrastructure|ui`, `src/components|services|theme|i18n` según ADR-0001), `apps/web/` (web pública), `packages/shared/` (tipos Supabase, zod), `supabase/migrations|functions|tests/`, `.github/workflows/ci.yml`.
+[IMPL] `apps/mobile/src/theme/` (tokens Figma claro/oscuro + `useTheme`) y `src/components/` (`AppText`, `Button`, `TextField`, `Screen`) — ATDE-64, D10, guía en `figma.md`.
 Sin `apps/admin/`: la administración vive en la app (D9). [PENDIENTE: framework de `apps/web/`].
 
 ## Flujo de datos [PLAN]
