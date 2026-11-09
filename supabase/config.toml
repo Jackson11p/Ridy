@@ -267,9 +267,9 @@ max_frequency = "60s"
 
 # Números CR ficticios con código fijo: login local sin enviar nada (ATDE-14).
 [auth.sms.test_otp]
-50688880001 = "123456"
-50688880002 = "123456"
-50688880003 = "123456"
+50670000001 = "123456"
+50670000002 = "123456"
+50670000003 = "123456"
 
 # OTP por WhatsApp: Auth delega el envío en public.send_sms_hook → Meta Cloud API (D8, ATDE-14).
 [auth.hook.send_sms]

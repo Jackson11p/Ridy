@@ -113,7 +113,7 @@ TDD: primero el test, verlo fallar (rojo), luego el código (verde). Runners en 
 
 Auth delega el envío del código en el hook `public.send_sms_hook`, que lo manda por la API de WhatsApp Cloud de Meta (D8, ATDE-14). Espera mínima entre reenvíos: 60 s; tope: 30 envíos/hora.
 
-**Sin nada que configurar ($0):** los números de `[auth.sms.test_otp]` en `supabase/config.toml` (`50688880001`, `50688880002`, `50688880003`) entran con el código `123456` y no envían nada.
+**Sin nada que configurar ($0):** los números de `[auth.sms.test_otp]` en `supabase/config.toml` (`50670000001`, `50670000002`, `50670000003`) entran con el código `123456` y no envían nada.
 
 **Contra un número real (número de prueba de Meta, gratis):**
 

@@ -18,3 +18,5 @@
   - Nota añadida al final del punto 7
 - [x] ATDE-14-T09 Documentar bloqueo Meta: plantilla de autenticación exige negocio verificado; README con prueba `hello_world`
   - README paso 3 y errores-conocidos punto 7
+- [x] ATDE-14-T10 Números `test_otp` → `5067000000{1..3}`: los de antes chocaban con teléfonos fijos de `profiles.test.sql` (ATDE-8)
+  - Tras merge con main: `profiles.test.sql` falla con `duplicate key` si un número de `test_otp` ya inició sesión en local

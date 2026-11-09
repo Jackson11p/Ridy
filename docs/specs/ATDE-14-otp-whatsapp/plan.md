@@ -15,7 +15,7 @@
 
 ### 2. Config Auth (`supabase/config.toml`)
 - `[auth.sms] enable_signup = true`, `max_frequency = "60s"` (antes `5s`).
-- `[auth.sms.test_otp]` con 3 números CR ficticios `5068888000{1..3} = "123456"` (no envían nada).
+- `[auth.sms.test_otp]` con 3 números CR ficticios `5067000000{1..3} = "123456"` (no envían nada).
 - `[auth.hook.send_sms] enabled = true`, `uri = "pg-functions://postgres/public/send_sms_hook"`.
 - `[auth.rate_limit] sms_sent` se queda en 30/h (beta 1–2 busetas). Twilio sigue `enabled = false`.
 
