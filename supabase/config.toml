@@ -257,17 +257,24 @@ otp_expiry = 3600
 
 [auth.sms]
 # Allow/disallow new user signups via SMS to your project.
-enable_signup = false
+enable_signup = true
 # If enabled, users need to confirm their phone number before signing in.
 enable_confirmations = false
 # Template for sending OTP to users
 template = "Your code is {{ .Code }}"
 # Controls the minimum amount of time that must pass before sending another sms otp.
-max_frequency = "5s"
+max_frequency = "60s"
 
-# Use pre-defined map of phone number to OTP for testing.
-# [auth.sms.test_otp]
-# 4152127777 = "123456"
+# Números CR ficticios con código fijo: login local sin enviar nada (ATDE-14).
+[auth.sms.test_otp]
+50670000001 = "123456"
+50670000002 = "123456"
+50670000003 = "123456"
+
+# OTP por WhatsApp: Auth delega el envío en public.send_sms_hook → Meta Cloud API (D8, ATDE-14).
+[auth.hook.send_sms]
+enabled = true
+uri = "pg-functions://postgres/public/send_sms_hook"
 
 # Configure logged in session timeouts.
 # [auth.sessions]
@@ -287,12 +294,14 @@ max_frequency = "5s"
 # uri = "pg-functions://<database>/<schema>/<hook_name>"
 
 # Configure one of the supported SMS providers: `twilio`, `twilio_verify`, `messagebird`, `textlocal`, `vonage`.
+# Twilio NO envía nada: el CLI apaga el login por teléfono si no hay proveedor habilitado,
+# aunque exista [auth.hook.send_sms]. Con el hook activo, Auth usa el hook y nunca llama a Twilio.
+# Valores de relleno, no son credenciales (ATDE-14).
 [auth.sms.twilio]
-enabled = false
-account_sid = ""
-message_service_sid = ""
-# DO NOT commit your Twilio auth token to git. Use environment variable substitution instead:
-auth_token = "env(SUPABASE_AUTH_SMS_TWILIO_AUTH_TOKEN)"
+enabled = true
+account_sid = "unused-send-sms-hook"
+message_service_sid = "unused-send-sms-hook"
+auth_token = "unused-send-sms-hook"
 
 # Multi-factor-authentication is available to Supabase Pro plan.
 [auth.mfa]
