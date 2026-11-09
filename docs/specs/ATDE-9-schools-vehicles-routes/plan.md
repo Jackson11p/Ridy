@@ -13,6 +13,7 @@ Solo BD (sin app). Una migración por tarea vía `pnpm db:migration <nombre>`; n
 - `plate text` no vacía, `unique (operator_id, plate)`; `capacity int check 1..60`; `default_driver_id uuid → profiles` nullable.
 - Trigger `before insert or update` → `private.check_default_driver()` (`security definer`, `search_path = ''`): si hay chofer, debe tener membership `driver` activa en esa empresa; si no, error `23514`.
 - Política chofer (select): `active and default_driver_id = auth.uid() and has_role(operator_id, '{driver}')`.
+- Ajuste T01: trigger solo en `insert or update of default_driver_id, operator_id` (editar placa de una buseta cuyo chofer se desactivó no falla); sin índice aparte por `operator_id`: lo cubre `unique (operator_id, plate)`.
 
 ## 2. `schools` (T02)
 - `name text` no vacío; `location extensions.geography(Point, 4326) not null`; `geofence_radius_m int default 200 check 50..2000`; índice GIST en `location`.
