@@ -8,3 +8,8 @@
   - Rojo: `relation "public.routes" does not exist`; verde: `pnpm test:db` 10 archivos, 195 pruebas PASS.
 - [x] ATDE-9-T04 `docs/contexto/convenciones.md`: marcadores [IMPL ATDE-9]
   - Solo docs (sin prueba): tablas plural snake_case, `operator_id` en tablas de operación y FKs compuestas.
+
+## Correcciones de review
+- [ ] ATDE-9-T05 Pruebas: "driver no edita rutas" con valor distinto; partir `routes.test.sql` (< 150 líneas); casos faltantes: `vehicle_id` de otra empresa en update, staff cambia chofer habitual, trigger rechaza como owner, persona owner en B + driver en A
+- [ ] ATDE-9-T06 Trigger chofer habitual solo si el valor cambia y exige `profiles.active`; índice por `default_driver_id`
+- [ ] ATDE-9-T07 Placa única por empresa sin distinguir mayúsculas ni espacios; check de `code` igual al alfabeto del generador

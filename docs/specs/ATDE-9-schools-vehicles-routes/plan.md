@@ -28,6 +28,9 @@ Solo BD (sin app). Una migración por tarea vía `pnpm db:migration <nombre>`; n
 ## 4. Docs (T04)
 - `docs/contexto/convenciones.md`: marcar [IMPL ATDE-9] "toda tabla de operación lleva `operator_id`", tablas plural snake_case y FKs compuestas por empresa.
 
+## 5. Correcciones de review (T05–T07)
+- Migraciones nuevas (no se editan las de T01–T03). Trigger con `when (old.default_driver_id is distinct from new.default_driver_id or old.operator_id is distinct from new.operator_id)` en update. Placa: índice único `(operator_id, upper(regexp_replace(plate, '\s', '', 'g')))` en lugar del `unique` actual. `code` check `^RDY-[A-HJ-NP-Z2-9]{6}$`.
+
 ## Riesgos
 - Fuga entre empresas por FK a fila de otra empresa → FKs compuestas + prueba.
 - Chofer escalando a escritura → sin políticas de escritura para driver + prueba.

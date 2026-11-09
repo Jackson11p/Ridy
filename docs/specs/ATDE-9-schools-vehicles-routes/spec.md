@@ -23,7 +23,7 @@ Para operar un día de transporte hace falta la plantilla fija de cada empresa: 
 ## Supuestos
 - Ticket Jira `ATDE-9`; rama `ATDE-9-schools-vehicles-routes`; tareas `ATDE-9-Tnn`.
 - "Lo de sus viajes" del chofer = hoy, rutas cuya buseta lo tiene como chofer habitual (aún no existe `trips`); al llegar `trips` se amplía al chofer del viaje de hoy. Chofer solo ve filas activas.
-- Alta y edición directas con RLS para dueño/staff (no son escrituras sensibles de la arquitectura).
+- Alta y edición directas con RLS para dueño/staff (no son escrituras sensibles de la arquitectura); incluye el chofer habitual: el "cambiar chofer" sensible es el del viaje de hoy, que no toca la plantilla.
 - Código de ruta lo genera la BD (`RDY-` + 6 caracteres sin ambiguos), único global (lo usarán padres en Camino B); prefijo provisional (errores-conocidos #9).
 - Placa única por empresa; capacidad 1–60; radio de geocerca por defecto 200 m, rango 50–2000 m.
 - Turno como enum `am`/`pm`.
