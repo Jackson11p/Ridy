@@ -1,17 +1,11 @@
-import { StyleSheet, Text } from 'react-native';
-
-import { colors } from '@/theme/colors';
+import { AppText } from './app-text';
 
 type ScreenTitleProps = { text: string };
 
 export function ScreenTitle({ text }: ScreenTitleProps) {
   return (
-    <Text accessibilityRole="header" style={styles.title}>
+    <AppText variant="display" accessibilityRole="header">
       {text}
-    </Text>
+    </AppText>
   );
 }
-
-const styles = StyleSheet.create({
-  title: { fontSize: 24, fontWeight: '600', color: colors.text },
-});
