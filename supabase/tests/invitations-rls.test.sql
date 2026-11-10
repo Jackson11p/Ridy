@@ -71,7 +71,7 @@ select throws_ok($$insert into public.invitations (operator_id, phone, student_i
   '42501', null, 'owner no invita en otra empresa');
 select throws_ok($$insert into public.invitations (operator_id, phone, student_id, relationship) values
   ('00000000-0000-0000-0000-00000014aaaa', '50654100022', '00000000-0000-0000-0000-0000000142b1', 'father')$$,
-  '23503', null, 'owner no invita a estudiante de otra empresa');
+  '42501', null, 'owner no invita a estudiante de otra empresa (no lo ve; FK en invitations.test.sql)');
 select lives_ok($$update public.invitations set active = false
   where id = '00000000-0000-0000-0000-0000000143a1'$$, 'owner desactiva invitación');
 select throws_ok($$update public.invitations set phone = '50654100099'$$, '42501', null, 'nadie cambia el teléfono');
