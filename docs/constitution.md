@@ -11,6 +11,7 @@ Reglas no negociables. Todo agente (`planner`, `coder`, `reviwer`) y persona las
 - Decisiones tomadas: gestor **pnpm únicamente** (npm bloqueado vía `engines` + `.npmrc`); dev con Supabase local en Docker Desktop y CLI `supabase` como devDependency. RIDY-0001.
 - Deps aprobadas (ATDE-6, `apps/mobile`): Expo SDK 58 (`expo` ~58.0.23, `expo-router` ~58.0.30, `expo-localization` ~58.0.5 y módulos que fija el SDK), `react` 19.3.0, `react-native` 0.88.1, `typescript` ~6.0.3; i18n `i18next` ^26.7.1 + `react-i18next` ^17.1.12; tests `jest` ^30.5.2 + `jest-expo` ~58.0.14 + `@testing-library/react-native` ^14.1.0; lint `eslint` ^9.39.5 + `eslint-config-expo` ~58.0.4.
 - Deps aprobadas (ATDE-64-T10, solo previsualizar en navegador durante el desarrollo; la app sigue siendo móvil): `react-native-web` ^0.21.4, `react-dom` 19.3.0, `@expo/metro-runtime` ~58.0.17.
+- Deps aprobadas (ATDE-13, solo `packages/shared`): `zod` ^4 (validación en los límites; aprobado 2026-11-10). Repite `typescript` ~6.0.3 y `@types/jest` ^30.0.0.
 ## 3. Spec y código
 - Sin spec no hay código (flujo y longitudes en `Claude.md`). Cada tarea = test + cambio mínimo = un commit. Si algo no encaja → se actualiza la spec primero; con agentes, `reviwer` verifica cada commit contra su spec.
 ## 4. Capas
