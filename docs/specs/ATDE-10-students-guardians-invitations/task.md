@@ -8,3 +8,8 @@
   - Rojo: 20/20 y 30/30 (`invitations-rls.test.sql`) fallan (`relation "public.invitations" does not exist`). Verde: 18 archivos / 347 PASS. Mutación: índice sin `nulls not distinct` → fallan 2.
 - [x] ATDE-10-T04 `docs/contexto/convenciones.md`: marcadores [IMPL ATDE-10]
   - Solo docs (sin prueba): tablas nuevas en naming, "sin datos sensibles de niños" y vínculos/invitaciones de rol fuera del cliente pasan a [IMPL ATDE-10].
+
+## Correcciones de review
+- [ ] ATDE-10-T05 `invitations`: update de owner/staff solo en invitaciones de estudiante (`role is null` en using y with check); insert solo con estudiante activo; pruebas: staff/owner no (des)activan invitación de rol, invitación a estudiante inactivo rechazada
+- [ ] ATDE-10-T06 `guardians`: padre no ve ni edita su vínculo con estudiante inactivo; prueba ajustada
+- [ ] ATDE-10-T07 Pruebas faltantes: política `role is null` aislada del grant, trigger de avisos con staff, padre de empresa B no ve niños ni vínculos de A, chofer no ve perfil de encargado

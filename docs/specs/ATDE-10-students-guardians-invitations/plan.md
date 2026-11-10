@@ -28,6 +28,9 @@ Solo BD. Una migración por tarea vía `pnpm db:migration atde10_<nombre>`; nunc
 ## 4. Docs (T04)
 - `docs/contexto/convenciones.md`: [IMPL ATDE-10] "sin fotos ni datos sensibles de niños" y escrituras sensibles (vínculos) fuera del cliente.
 
+## 5. Correcciones de review (T05–T07)
+- Migraciones nuevas. `invitations`: recrear política update con `role is null` en `using`/`with check`; política insert exige estudiante activo (subconsulta a `students` bajo RLS de owner/staff). `guardians`: política select/update del padre exige estudiante activo (vía helper `security definer` o subconsulta sin ciclo). Política `role is null` se prueba aislada (p. ej. update de `active` sobre invitación de rol creada como postgres).
+
 ## Riesgos
 - Fuga de niños entre empresas o entre familias → FKs compuestas, helper con `auth.uid()`, pruebas con dos familias y dos empresas.
 - Staff escalando con invitación de rol owner → insert de rol prohibido + prueba.

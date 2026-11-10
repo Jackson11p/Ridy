@@ -22,7 +22,8 @@ Para cargar niños, invitar padres y que el padre vea a su hijo al entrar (Camin
 - Ticket Jira `ATDE-10`; rama `ATDE-10-students-guardians-invitations`; tareas `ATDE-10-Tnn`.
 - `guardians` sin insert desde clientes: lo crea `accept-invite` o la aprobación (tickets propios). Owner/staff solo desactivan; padre solo cambia "recibe avisos".
 - Invitaciones directas desde cliente solo de estudiante (owner/staff); las de rol las crea la función de ATDE-17 (evita que staff invite a un owner). `invited_by` lo pone la BD; vence a 14 días.
-- El invitado no lee su invitación por RLS; la resuelve `accept-invite` del lado servidor.
+- El invitado no lee su invitación por RLS; la resuelve `accept-invite` del lado servidor. Pendiente vencida sigue bloqueando duplicado hasta desactivarla; `accept-invite` (ATDE-27) valida vencimiento y estudiante activo.
+- Estudiante inactivo: padre no ve ni el niño ni su vínculo; no se invita a encargados de un estudiante inactivo.
 - Chofer no ve estudiantes hasta `route_stops`/`trips`; padre aún no ve colegio ni buseta (ATDE-29).
 - Relación como enum (`mother`, `father`, `grandparent`, `legal_guardian`, `other`); teléfono solo dígitos, 8–15, como `profiles.phone`.
 - Owner/staff ven perfil (nombre, teléfono) de encargados activos de sus estudiantes.
