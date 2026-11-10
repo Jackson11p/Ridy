@@ -16,6 +16,8 @@ Solo BD. Una migración por tarea vía `pnpm db:migration atde10_<nombre>`; nunc
 - Sin insert desde clientes. Owner/staff: select + update (`active`). Padre: select de su fila (`profile_id = auth.uid()`, activa) + update solo `receives_notifications` (grant por columna; política `using/with check profile_id = auth.uid()`).
 - Política padre en `students`: activo y existe `guardians` activo propio. Helper `private.is_guardian_of(student uuid)` (`security definer`, `search_path=''`, exige `profiles.active`) para evitar recursión students ↔ guardians.
 - Política extra `profiles` (select): owner/staff ven perfiles con vínculo `guardians` activo en su empresa.
+- Ajuste T02: los grants por columna son por rol (`authenticated`), no por política. `update (active, receives_notifications)` + trigger `guardians_guard_notifications` (42501 si un cliente cambia los avisos de un vínculo que no es suyo) + `with check (... and active)` en la política del padre (no se desactiva).
+- Pruebas partidas: `guardians.test.sql` (owner/staff/driver/otra empresa) y `guardians-parent.test.sql` (familias).
 
 ## 3. `invitations` (T03)
 - `phone text check '^[0-9]{8,15}$'`; `role membership_role null`; `student_id null` FK compuesta; `relationship guardian_relationship null`; `check (num_nonnulls(role, student_id) = 1)`; `check ((student_id is null) = (relationship is null))`.
