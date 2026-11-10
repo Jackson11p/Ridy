@@ -7,6 +7,7 @@
   - Rojo: `src/index.test.ts` → jest `Cannot find module './index'` y tsc TS2307. Verde: `pnpm db:types` genera el archivo (LF vía `.gitattributes`), 2 suites/16 PASS en shared, typecheck OK. Lint: ningún linter cubre `packages/shared` hoy (eslint solo en mobile), así que no hace falta exclusión.
 - [x] ATDE-13-T04 `apps/mobile` depende de `@ridy/shared` (`workspace:*`); test en mobile importa esquema y `Database` por nombre de paquete; `tsc` y `expo export --platform android` verdes (depende de T03)
   - Rojo: `__tests__/shared.test.ts` → jest `Cannot find module '@ridy/shared'` y tsc TS2307. Verde: typecheck/lint OK, `pnpm test` 11 suites/55 PASS, `expo export --platform android` OK (también con un import temporal de `@ridy/shared` en `app/_layout.tsx`, revertido: Metro resuelve el paquete).
-- [ ] ATDE-13-T05 CI: en `test-rls` regenerar tipos y `git diff --exit-code` del archivo generado; probar local que un cambio sin regenerar falla (depende de T03)
+- [x] ATDE-13-T05 CI: en `test-rls` regenerar tipos y `git diff --exit-code` del archivo generado; probar local que un cambio sin regenerar falla (depende de T03)
+  - Rojo: archivo generado alterado y en índice (`plate: number`) → `pnpm db:types` + `git diff --exit-code` sale 1. Verde: restaurado → mismo par sale 0. Paso añadido tras `pnpm test:db` en `test-rls`.
 - [ ] ATDE-13-T06 Docs: `arquitectura.md` `packages/shared` [IMPL], instrucción `pnpm db:types` tras cada migración en `docs/contexto/flujo-de-trabajo.md` o `convenciones.md`
 - [ ] ATDE-13-T07 `pnpm typecheck`, `pnpm lint`, `pnpm test`, `pnpm test:db` verdes
