@@ -38,14 +38,15 @@ Versiones exactas: constitución §2 y `apps/mobile/package.json`. Libs futuras:
 │  ├─ specs/RIDY-0001-…, RIDY-0002-…
 │  └─ contexto/                 estos docs
 ├─ apps/mobile/           Expo: app/ rutas (auth|parent|driver|manage), src/ capas ADR-0001
-├─ packages/              vacío (.gitkeep)
+├─ packages/shared/       `@ridy/shared`: tipos Supabase generados + esquemas zod
 ├─ supabase/config.toml, seed.sql (vacío)
 ├─ package.json, pnpm-workspace.yaml, pnpm-lock.yaml, .npmrc, .env.example
 └─ README.md
 ```
 
-[PLAN] monorepo: `apps/mobile/` (rutas `(auth)`, `(parent)`, `(driver)`, `(manage)`; `src/features/<f>/domain|application|infrastructure|ui`, `src/components|services|theme|i18n` según ADR-0001), `apps/web/` (web pública), `packages/shared/` (tipos Supabase, zod), `supabase/migrations|functions|tests/`, `.github/workflows/ci.yml`.
+[PLAN] monorepo: `apps/mobile/` (rutas `(auth)`, `(parent)`, `(driver)`, `(manage)`; `src/features/<f>/domain|application|infrastructure|ui`, `src/components|services|theme|i18n` según ADR-0001), `apps/web/` (web pública), `supabase/migrations|functions|tests/`, `.github/workflows/ci.yml`.
 [IMPL] `apps/mobile/src/theme/` (tokens Figma claro/oscuro + `useTheme`) y `src/components/` (`AppText`, `Button`, `TextField`, `Screen`) — ATDE-64, D10, guía en `figma.md`.
+[IMPL] `packages/shared/` (`@ridy/shared`, TS fuente sin build): `database.types.ts` generado con `pnpm db:types` (no editar) y esquemas zod (`phoneSchema`, E.164). Mobile lo importa por nombre de paquete; sus tests corren en la config jest de mobile — ATDE-13.
 Sin `apps/admin/`: la administración vive en la app (D9). [PENDIENTE: framework de `apps/web/`].
 
 ## Flujo de datos [PLAN]

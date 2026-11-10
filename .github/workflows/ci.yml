@@ -58,6 +58,9 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm db:start
       - run: pnpm test:db
+      # tipos de BD al día con las migraciones (ATDE-13)
+      - run: pnpm db:types
+      - run: git diff --exit-code -- packages/shared/src/database.types.ts
 
   build:
     runs-on: ubuntu-latest

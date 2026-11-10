@@ -13,6 +13,7 @@
     "db:reset": "supabase db reset",
     "db:migration": "supabase migration new",
     "db:diff": "supabase db diff -f",
+    "db:types": "supabase gen types typescript --local > packages/shared/src/database.types.ts",
     "typecheck": "pnpm -r --if-present typecheck",
     "lint": "pnpm -r --if-present lint",
     "test": "pnpm -r --if-present test",
