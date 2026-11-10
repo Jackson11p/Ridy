@@ -24,7 +24,7 @@ Tras `git pull` con migraciones nuevas → `pnpm db:reset`.
 5. **Agentes**: solo si el dev lo pide. Grande (varias capas, reglas de negocio, 4+ tareas) → `planner` → `coder` → `reviwer`. Pequeño → directo. [IMPL]
 6. **Rama**: [PENDIENTE: convención de ramas; hoy todo va directo a `main`]
 7. **Por tarea**: test rojo → cambio mínimo → verde → refactor → marcar `[x]` → un commit `<tipo>(<ámbito>): RIDY-NNNN-Tnn <desc>`. [IMPL: `pnpm test`]
-8. **BD**: `pnpm db:migration <nombre>` → escribir SQL con RLS + prueba RLS → `pnpm db:reset`. Si se tocó Studio: `pnpm db:diff <nombre>`. [IMPL scripts; PLAN pruebas]
+8. **BD**: `pnpm db:migration <nombre>` → escribir SQL con RLS + prueba RLS → `pnpm db:reset` → `pnpm db:types` y commitear `packages/shared/src/database.types.ts` (CI falla si queda desfasado). Si se tocó Studio: `pnpm db:diff <nombre>`. [IMPL scripts; PLAN pruebas]
 9. **PR**: revisión de un socio distinto al autor (`CODEOWNERS`). Solo se mergea con CI en verde (ver [CI](#ci-impl)). [IMPL]
 
 ## Checklist de "terminado"
@@ -51,7 +51,7 @@ Tras `git pull` con migraciones nuevas → `pnpm db:reset`.
 | `typecheck` | `pnpm typecheck` |
 | `lint` | `pnpm lint` |
 | `test` | `pnpm test` |
-| `test-rls` | `pnpm db:start` + `pnpm test:db` |
+| `test-rls` | `pnpm db:start` + `pnpm test:db` + `pnpm db:types` sin diff |
 | `build` | `pnpm --filter mobile exec expo export --platform android` |
 
 **Protección de rama** (una vez, el dueño del repo, después del primer run del CI en un PR): `main` exige los 5 jobs en verde, rama al día, 1 aprobación de CODEOWNERS y aplica también a admins.

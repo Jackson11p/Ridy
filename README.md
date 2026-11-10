@@ -94,6 +94,7 @@ Copy-Item .env.example .env.local # y pegar la Publishable key de `pnpm db:statu
 | `pnpm db:reset` | Borra la BD local y reaplica migraciones + seed |
 | `pnpm db:migration <nombre>` | Crea `supabase/migrations/<timestamp>_<nombre>.sql` |
 | `pnpm db:diff <nombre>` | Genera una migración desde cambios hechos en Studio |
+| `pnpm db:types` | Regenera `packages/shared/src/database.types.ts` (correr tras cada migración) |
 
 El schema cambia **solo por migraciones** commiteadas. Tras un `git pull` con migraciones nuevas: `pnpm db:reset`.
 
