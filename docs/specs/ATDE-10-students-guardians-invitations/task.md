@@ -12,5 +12,6 @@
 ## Correcciones de review
 - [x] ATDE-10-T05 `invitations`: update de owner/staff solo en invitaciones de estudiante (`role is null` en using y with check); insert solo con estudiante activo; pruebas: staff/owner no (des)activan invitación de rol, invitación a estudiante inactivo rechazada
   - Rojo: `invitations-guards.test.sql` falla 5/6 (staff reactiva rol owner, owner desactiva rol, estudiante inactivo aceptado). Verde: 19 archivos / 353 PASS. Ajuste: en `invitations-rls.test.sql` el estudiante de otra empresa ahora lo frena RLS (42501) antes que la FK (23503 sigue probado en `invitations.test.sql`).
-- [ ] ATDE-10-T06 `guardians`: padre no ve ni edita su vínculo con estudiante inactivo; prueba ajustada
+- [x] ATDE-10-T06 `guardians`: padre no ve ni edita su vínculo con estudiante inactivo; prueba ajustada
+  - Rojo: `guardians-parent.test.sql` falla 3/22 (ve 3 vínculos, ve y edita el de S6 inactivo). Verde: `private.is_guardian_of` exige estudiante activo (definer, sin recursión); 19 archivos / 355 PASS.
 - [ ] ATDE-10-T07 Pruebas faltantes: política `role is null` aislada del grant, trigger de avisos con staff, padre de empresa B no ve niños ni vínculos de A, chofer no ve perfil de encargado

@@ -3,7 +3,7 @@
 -- P5 perfil inactivo con vínculo activo a S5.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(20);
+select plan(22);
 
 insert into auth.users (id, phone)
 select ('00000000-0000-0000-0000-0000000012a' || n)::uuid, '5065300000' || n
@@ -31,7 +31,9 @@ select results_eq('select full_name from public.students order by full_name', $$
   'padre ve solo a sus hijos activos');
 select is_empty($$select 1 from public.guardians where profile_id <> '00000000-0000-0000-0000-0000000012a1'$$,
   'padre no ve el vínculo del otro encargado de su hijo');
-select is((select count(*) from public.guardians), 3::bigint, 'padre ve sus propios vínculos');
+select is((select count(*) from public.guardians), 2::bigint, 'padre ve sus vínculos con hijos activos');
+select is_empty($$select 1 from public.guardians where student_id = '00000000-0000-0000-0000-0000000122a6'$$,
+  'padre no ve su vínculo con estudiante inactivo');
 select is_empty($$select 1 from public.profiles where id = '00000000-0000-0000-0000-0000000012a3'$$,
   'padre no ve el perfil del otro encargado');
 select lives_ok($$update public.guardians set receives_notifications = false
@@ -48,6 +50,8 @@ select throws_ok('delete from public.guardians', '42501', null, 'padre no borra 
 update public.guardians set receives_notifications = false
   where profile_id = '00000000-0000-0000-0000-0000000012a3';
 update public.students set full_name = 'tomado';
+update public.guardians set receives_notifications = false
+  where student_id = '00000000-0000-0000-0000-0000000122a6';
 reset role;
 
 -- P2: un hijo
@@ -87,6 +91,8 @@ select is((select receives_notifications from public.guardians where student_id 
 select is((select bool_and(active) from public.guardians where profile_id = '00000000-0000-0000-0000-0000000012a1'),
   true, 'vínculos del padre siguen activos');
 select is((select count(*) from public.students where full_name = 'tomado'), 0::bigint, 'padre no edita estudiantes');
+select is((select receives_notifications from public.guardians where student_id = '00000000-0000-0000-0000-0000000122a6'),
+  true, 'padre no edita su vínculo con estudiante inactivo');
 
 select * from finish();
 rollback;
