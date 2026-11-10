@@ -7,7 +7,7 @@
 Paquete de workspace `@ridy/shared` (ya cubierto por `packages/*` en `pnpm-workspace.yaml`) que exporta TypeScript fuente desde `src/index.ts`. Sin paso de build: menos piezas y Metro/jest ya transforman TS.
 
 ## Módulos
-1. **`packages/shared/`** — `package.json` (`@ridy/shared`, privado, `main`/`types` a `src/index.ts`, dep `zod`, scripts `typecheck` y `test`), `tsconfig.json` estricto propio.
+1. **`packages/shared/`** — `package.json` (`@ridy/shared`, privado, `main`/`types` a `src/index.ts`, dep `zod`, script `typecheck`), `tsconfig.json` estricto propio. Sus tests los corre la config jest de `apps/mobile` (`roots`).
 2. **Teléfono** — `src/phone.ts`: esquema zod que recorta, quita separadores, exige E.164 y devuelve el número normalizado con `+`; exporta también el tipo inferido. Test `src/phone.test.ts`.
 3. **Tipos de BD** — `src/database.types.ts` generado por el CLI de Supabase contra la BD local; nunca se edita a mano. Script de raíz `db:types` lo regenera. `src/index.ts` reexporta `Database` y el esquema de teléfono.
 4. **Consumo en mobile** — `apps/mobile` declara `@ridy/shared` como `workspace:*`; un test en mobile importa esquema y tipo por el nombre del paquete (prueba que la resolución funciona en jest y en `tsc`).

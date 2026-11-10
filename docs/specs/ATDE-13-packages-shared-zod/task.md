@@ -13,3 +13,7 @@
   - Solo docs (sin prueba): `arquitectura.md` [IMPL] `packages/shared`; `flujo-de-trabajo.md` paso BD + fila `test-rls`; README fila `db:types`.
 - [x] ATDE-13-T07 `pnpm typecheck`, `pnpm lint`, `pnpm test`, `pnpm test:db` verdes
   - Verificación (sin prueba nueva): typecheck (shared + mobile) y lint OK; `pnpm test` 11 suites/55 PASS; `pnpm test:db` 13 archivos/221 PASS; `pnpm db:types` sin diff.
+
+## Correcciones de review
+- [x] ATDE-13-T08 Docs: plan alineado (shared sin script `test`, tests vía `roots` de mobile); `convenciones.md` exime archivos generados de 150 líneas y lint
+  - Solo docs. Resto de hallazgos de reviwer = mejoras sin acción (sin bloqueantes).
