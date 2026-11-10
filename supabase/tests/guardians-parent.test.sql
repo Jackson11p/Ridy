@@ -74,7 +74,7 @@ select is_empty('select 1 from public.students', 'perfil inactivo: no ve al niñ
 select is_empty('select 1 from public.guardians', 'perfil inactivo: no ve el vínculo');
 reset role;
 
--- P3 intenta cambiar los avisos de P1
+-- P3 intenta cambiar los avisos de P1: RLS le oculta la fila (el trigger se prueba con owner/staff en guardians.test.sql)
 set local role authenticated;
 set local request.jwt.claims = '{"sub":"00000000-0000-0000-0000-0000000012a3","role":"authenticated"}';
 update public.guardians set receives_notifications = not receives_notifications

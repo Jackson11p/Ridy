@@ -2,7 +2,7 @@
 -- Empresa A: O owner, S staff; SA activo, SI inactivo; IR1 invitación de rol owner inactiva, IR2 de rol driver activa.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(6);
+select plan(7);
 
 insert into auth.users (id, phone) values
   ('00000000-0000-0000-0000-0000000015a1', '50654200001'),  -- O
@@ -45,6 +45,15 @@ update public.invitations set active = false where id = '00000000-0000-0000-0000
 select throws_ok($$insert into public.invitations (operator_id, phone, student_id, relationship) values
   ('00000000-0000-0000-0000-00000015aaaa', '50654200022', '00000000-0000-0000-0000-0000000152a2', 'father')$$,
   '42501', null, 'owner no invita encargado de estudiante inactivo');
+reset role;
+
+-- política aislada: con grant de role y estudiante activo, solo "role is null" rechaza (RLS va antes que los checks)
+grant insert (role) on public.invitations to authenticated;
+set local role authenticated;
+set local request.jwt.claims = '{"sub":"00000000-0000-0000-0000-0000000015a2","role":"authenticated"}';
+select throws_ok($$insert into public.invitations (operator_id, phone, role, student_id, relationship) values
+  ('00000000-0000-0000-0000-00000015aaaa', '50654200030', 'owner', '00000000-0000-0000-0000-0000000152a1', 'mother')$$, '42501', null,
+  'política rechaza invitación de rol aunque exista el grant');
 reset role;
 
 -- resultados de escrituras

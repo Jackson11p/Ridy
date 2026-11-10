@@ -3,7 +3,7 @@
 -- Empresa A: O owner, S staff, D driver, P1 encargado activo de SA, P2 vínculo inactivo con SA. Empresa B: X owner, PB.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(31);
+select plan(35);
 
 insert into auth.users (id, phone) values
   ('00000000-0000-0000-0000-0000000011a1', '50652000001'),  -- O
@@ -95,6 +95,16 @@ set local request.jwt.claims = '{"sub":"00000000-0000-0000-0000-0000000011a2","r
 select is((select count(*) from public.guardians), 2::bigint, 'staff ve vínculos de su empresa');
 select lives_ok($$update public.guardians set active = true
   where id = '00000000-0000-0000-0000-0000000113a2'$$, 'staff reactiva vínculo');
+select throws_ok($$update public.guardians set receives_notifications = false
+  where id = '00000000-0000-0000-0000-0000000113a2'$$, '42501', null, 'staff no cambia los avisos del encargado');
+reset role;
+
+-- PB: padre de B
+set local role authenticated;
+set local request.jwt.claims = '{"sub":"00000000-0000-0000-0000-0000000011b2","role":"authenticated"}';
+select results_eq('select full_name from public.students', $$values ('SB')$$, 'padre de B no ve niños de A');
+select is_empty($$select 1 from public.guardians
+  where operator_id = '00000000-0000-0000-0000-00000011aaaa'$$, 'padre de B no ve vínculos de A');
 reset role;
 
 -- X: owner de B
@@ -111,6 +121,8 @@ set local role authenticated;
 set local request.jwt.claims = '{"sub":"00000000-0000-0000-0000-0000000011a3","role":"authenticated"}';
 select is_empty('select 1 from public.students', 'driver no ve estudiantes');
 select is_empty('select 1 from public.guardians', 'driver no ve vínculos');
+select is_empty($$select 1 from public.profiles where id = '00000000-0000-0000-0000-0000000011a5'$$,
+  'driver no ve el perfil del encargado activo');
 reset role;
 
 -- resultados de escrituras

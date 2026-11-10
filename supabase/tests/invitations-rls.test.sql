@@ -91,7 +91,7 @@ select lives_ok($$insert into public.invitations (operator_id, phone, student_id
   ('00000000-0000-0000-0000-00000014aaaa', '50654100030', '00000000-0000-0000-0000-0000000142a1', 'grandparent')$$,
   'staff invita encargado de un estudiante');
 select throws_ok($$insert into public.invitations (operator_id, phone, role) values
-  ('00000000-0000-0000-0000-00000014aaaa', '50654100031', 'owner')$$, '42501', null, 'staff no invita a un owner');
+  ('00000000-0000-0000-0000-00000014aaaa', '50654100031', 'owner')$$, '42501', null, 'staff no invita a un owner (sin grant de role)');
 select is((select count(*) from public.invitations), 3::bigint, 'staff ve invitaciones de su empresa');
 reset role;
 
