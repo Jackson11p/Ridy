@@ -1,0 +1,2 @@
+# Generado por `pnpm db:types`: LF fijo para que el diff de CI no dé falso positivo en Windows.
+packages/shared/src/database.types.ts text eol=lf
