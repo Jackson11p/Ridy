@@ -30,3 +30,4 @@ Que toda pantalla nueva salga del mismo tema y de componentes base fieles al pro
 - Prototipo: `https://www.figma.com/design/pFcHPqTQVk7p0DrUnNdPvU` (página claro `0:1`, oscuro `25:172`).
 - Inter exige `expo-font` + archivos de fuente (dep nueva = decisión del usuario): se usa fuente del sistema con los mismos tamaños, pesos e interlineados; Inter queda [ABIERTA].
 - Tokens sin variable en Figma (escala de espaciado, deshabilitado claro, alto de campo) se toman de las medidas de los frames.
+- Previsualizar en navegador agregado a pedido del usuario (2026-11-10, T10): solo herramienta de desarrollo; no hay versión web de la app.

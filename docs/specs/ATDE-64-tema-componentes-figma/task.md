@@ -9,3 +9,4 @@
 - [x] ATDE-64-T07 Docs: D10 en `decisiones.md`, Inter en Abiertas, `docs/contexto/figma.md` (link, páginas, receta para pedir pantallas), `.mcp.json` con Figma; `arquitectura.md` marca `theme/` y `components/` [IMPL]
 - [x] ATDE-64-T08 `pnpm typecheck`, `pnpm lint`, `pnpm test` en verde; sin colores ni tamaños literales en `app/` y `src/components/` (grep)
 - [x] ATDE-64-T09 Review: token `borderWidth` usado en Button y TextField; `touchTarget` como `minHeight` o quitarlo; test tema oscuro en Button/TextField/Screen; test tono `action`; `...rest` de TextField no pisa props de accesibilidad
+- [x] ATDE-64-T10 Previsualizar en navegador (`w`): `react-native-web`, `react-dom`, `@expo/metro-runtime` aprobadas por el usuario y anotadas en constitución §2; `expo export --platform web` compila
