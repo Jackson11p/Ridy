@@ -4,6 +4,7 @@
   "main": "expo-router/entry",
   "dependencies": {
     "@expo/metro-runtime": "~58.0.17",
+    "@ridy/shared": "workspace:*",
     "expo": "~58.0.23",
     "expo-constants": "~58.0.15",
     "expo-linking": "~58.0.16",
@@ -40,7 +41,11 @@
     "test": "jest"
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "roots": [
+      "<rootDir>",
+      "<rootDir>/../../packages/shared/src"
+    ]
   },
   "private": true
 }

@@ -56,3 +56,4 @@ Capas: `apps/mobile/src/features/<f>/domain|application|infrastructure|ui` + `in
 - Realidad del historial: mezcla (`docs: llenar constitución…`, `mejorando md`). [PENDIENTE: exigir formato desde ya]
 - Commits con IA llevan `Co-Authored-By`. [IMPL en `ae9bf3e`]
 - Cambios necesitan aprobación de un socio distinto al autor (`CODEOWNERS`). [IMPL, requiere protección de rama en GitHub — PENDIENTE: confirmar activa]
+- Archivos generados (`packages/shared/src/database.types.ts`, por `pnpm db:types`) no se editan a mano y quedan exentos del límite de 150 líneas y de lint/formato. [IMPL ATDE-13]
