@@ -23,7 +23,71 @@ export type Database = {
           }
         },"public": {
           Tables: {
-            "memberships": {
+            "guardians": {
+                  Row: {
+                    "active": boolean,"created_at": string,"id": string,"operator_id": string,"profile_id": string,"receives_notifications": boolean,"relationship": Database["public"]['Enums']["guardian_relationship"],"student_id": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "active"?: boolean,"created_at"?: string,"id"?: string,"operator_id": string,"profile_id": string,"receives_notifications"?: boolean,"relationship": Database["public"]['Enums']["guardian_relationship"],"student_id": string,"updated_at"?: string
+                  }
+                  Update: {
+                    "active"?: boolean,"created_at"?: string,"id"?: string,"operator_id"?: string,"profile_id"?: string,"receives_notifications"?: boolean,"relationship"?: Database["public"]['Enums']["guardian_relationship"],"student_id"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "guardians_operator_id_fkey"
+      columns: ["operator_id"]
+isOneToOne: false
+      referencedRelation: "operators"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "guardians_profile_id_fkey"
+      columns: ["profile_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "guardians_student_id_operator_id_fkey"
+      columns: ["student_id","operator_id"]
+isOneToOne: false
+      referencedRelation: "students"
+      referencedColumns: ["id","operator_id"]
+    }
+                  ]
+                },"invitations": {
+                  Row: {
+                    "accepted_at": string | null,"active": boolean,"created_at": string,"expires_at": string,"id": string,"invited_by": string,"operator_id": string,"phone": string,"relationship": Database["public"]['Enums']["guardian_relationship"] | null,"role": Database["public"]['Enums']["membership_role"] | null,"student_id": string | null,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "accepted_at"?: string | null,"active"?: boolean,"created_at"?: string,"expires_at"?: string,"id"?: string,"invited_by"?: string,"operator_id": string,"phone": string,"relationship"?: Database["public"]['Enums']["guardian_relationship"] | null,"role"?: Database["public"]['Enums']["membership_role"] | null,"student_id"?: string | null,"updated_at"?: string
+                  }
+                  Update: {
+                    "accepted_at"?: string | null,"active"?: boolean,"created_at"?: string,"expires_at"?: string,"id"?: string,"invited_by"?: string,"operator_id"?: string,"phone"?: string,"relationship"?: Database["public"]['Enums']["guardian_relationship"] | null,"role"?: Database["public"]['Enums']["membership_role"] | null,"student_id"?: string | null,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "invitations_invited_by_fkey"
+      columns: ["invited_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "invitations_operator_id_fkey"
+      columns: ["operator_id"]
+isOneToOne: false
+      referencedRelation: "operators"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "invitations_student_id_operator_id_fkey"
+      columns: ["student_id","operator_id"]
+isOneToOne: false
+      referencedRelation: "students"
+      referencedColumns: ["id","operator_id"]
+    }
+                  ]
+                },"memberships": {
                   Row: {
                     "active": boolean,"created_at": string,"id": string,"operator_id": string,"profile_id": string,"role": Database["public"]['Enums']["membership_role"],"updated_at": string
                   }
@@ -129,6 +193,32 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"students": {
+                  Row: {
+                    "active": boolean,"created_at": string,"full_name": string,"id": string,"operator_id": string,"school_id": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "active"?: boolean,"created_at"?: string,"full_name": string,"id"?: string,"operator_id": string,"school_id": string,"updated_at"?: string
+                  }
+                  Update: {
+                    "active"?: boolean,"created_at"?: string,"full_name"?: string,"id"?: string,"operator_id"?: string,"school_id"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "students_operator_id_fkey"
+      columns: ["operator_id"]
+isOneToOne: false
+      referencedRelation: "operators"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "students_school_id_operator_id_fkey"
+      columns: ["school_id","operator_id"]
+isOneToOne: false
+      referencedRelation: "schools"
+      referencedColumns: ["id","operator_id"]
+    }
+                  ]
                 },"vehicles": {
                   Row: {
                     "active": boolean,"capacity": number,"created_at": string,"default_driver_id": string | null,"id": string,"operator_id": string,"plate": string,"updated_at": string
@@ -172,7 +262,7 @@ isOneToOne: false
                            }
           }
           Enums: {
-            "membership_role": "owner"|"driver"|"staff","route_shift": "am"|"pm"
+            "guardian_relationship": "mother"|"father"|"grandparent"|"legal_guardian"|"other","membership_role": "owner"|"driver"|"staff","route_shift": "am"|"pm"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -292,7 +382,7 @@ export const Constants = {
           }
         },"public": {
           Enums: {
-            "membership_role": ["owner", "driver", "staff"],"route_shift": ["am", "pm"]
+            "guardian_relationship": ["mother", "father", "grandparent", "legal_guardian", "other"],"membership_role": ["owner", "driver", "staff"],"route_shift": ["am", "pm"]
           }
         }
 } as const
