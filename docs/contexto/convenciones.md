@@ -11,7 +11,7 @@
 
 ## Naming
 
-- Tablas en inglés, plural, snake_case: `vehicles`, `schools`, `routes`, `route_stops`, `trip_events`. [IMPL ATDE-9]
+- Tablas en inglés, plural, snake_case: `vehicles`, `schools`, `routes`, `students`, `guardians`, `invitations`, `route_stops`, `trip_events`. [IMPL ATDE-9, ATDE-10]
 - Roles de membresía: `owner`, `driver`, `staff`. [PLAN]
 - Specs: `docs/specs/TICKET-nombre/` (ej. `RIDY-0001-conectar-docker`). Tareas: `TICKET-Tnn`. [IMPL]
 - Scripts BD: prefijo `db:` (`db:start`, `db:reset`, …). [IMPL]
@@ -23,7 +23,7 @@
 - **Spec antes de código**: `spec.md` (10–30 líneas) → `plan.md` (20–50) → `task.md` (máx. 100). [IMPL en RIDY-0001]
 - Seguridad en BD, no en app: RLS en toda tabla desde su migración creadora. [IMPL ATDE-8]
 - `profiles`: clientes listan columnas, nunca `select *` (falla con 42501: `push_token` no se lee). [IMPL ATDE-8]
-- Escrituras sensibles (aprobar solicitudes, mover estudiantes, cambiar chofer) por **funciones SQL**, no inserts directos. [PLAN]
+- Escrituras sensibles (aprobar solicitudes, mover estudiantes, cambiar chofer) por **funciones SQL** o del servidor, no inserts directos. [PLAN; IMPL ATDE-10: vínculos `guardians` sin insert desde el cliente; invitaciones de rol solo desde el servidor; `invited_by` y vencimiento los pone la BD]
 - Nada se borra físicamente: se desactiva (`active`). [IMPL ATDE-8: sin grants ni políticas delete]
 - Toda tabla de operación lleva `operator_id`; RLS filtra por él. [IMPL ATDE-9]
 - Referencias entre tablas de operación con FK compuesta `(x_id, operator_id)` → `unique (id, operator_id)`: imposible mezclar empresas. [IMPL ATDE-9]
@@ -41,7 +41,7 @@ Capas: `apps/mobile/src/features/<f>/domain|application|infrastructure|ui` + `in
 - `service_role` en app o repo; solo en Edge Functions. [PLAN]
 - Subir `.env*` (salvo `.env.example`). [IMPL vía `.gitignore`]
 - Silenciar errores con `any`, `@ts-ignore`, `eslint-disable` (`coder.md`). [PLAN]
-- Fotos de niños, fechas de nacimiento, cédulas, datos médicos. [PLAN]
+- Fotos de niños, fechas de nacimiento, cédulas, datos médicos. [IMPL ATDE-10: `students` solo nombre, colegio y estado; prueba `columns_are`]
 
 ## Tests
 
