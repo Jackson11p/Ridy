@@ -1,15 +1,20 @@
 import { fireEvent, renderRouter, screen } from 'expo-router/testing-library';
 
-import type { Session } from '@/features/auth';
-import { authWrapper } from '@/features/auth/testing/auth-wrapper';
+import type { AuthGateway, Session } from '@/features/auth';
 import { createFakeGateway } from '@/features/auth/testing/fake-gateway';
 import { i18n } from '@/i18n';
 
 const SESSION: Session = { userId: 'user-1', phone: '+50670000001' };
 
+// app/_layout.tsx monta el gateway real: aquí la fábrica devuelve el falso del test
+const mockGateway: { current?: AuthGateway } = {};
+jest.mock('@/features/auth/infrastructure/supabase-auth-gateway', () => ({
+  createSupabaseAuthGateway: () => mockGateway.current,
+}));
+
 function renderApp(initialUrl: string, session: Session | null = null) {
-  const { gateway } = createFakeGateway(session);
-  return renderRouter('./app', { initialUrl, wrapper: authWrapper(gateway) });
+  mockGateway.current = createFakeGateway(session).gateway;
+  return renderRouter('./app', { initialUrl });
 }
 
 // fuera de app/: Expo Router trataría el test como una ruta
