@@ -15,6 +15,18 @@
       "invalid_code": "El código no es válido o ya venció.",
       "too_soon": "Espera un momento antes de pedir otro código.",
       "unknown": "No pudimos conectar. Inténtalo de nuevo."
+    },
+    "verify": {
+      "back": "Volver",
+      "header": "Verificar número",
+      "title": "Ingresa el código",
+      "retryTitle": "Inténtalo de nuevo",
+      "sentTo": "Lo enviamos por WhatsApp al {{phone}}.",
+      "codeLabel": "Código de 6 dígitos",
+      "submit": "Verificar",
+      "resendIn": "Reenviar código en {{time}}",
+      "resend": "Solicitar otro código",
+      "changePhone": "Cambiar número"
     }
   },
   "parent": {

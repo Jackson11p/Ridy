@@ -13,7 +13,7 @@ export default function SignIn() {
   const { t } = useTranslation();
   const router = useRouter();
   const { spacing } = useTheme();
-  const form = usePhoneForm((phone) => router.push({ pathname: './verify', params: { phone } }));
+  const form = usePhoneForm((phone) => router.push({ pathname: '/verify', params: { phone } }));
 
   return (
     <Screen scroll contentStyle={{ gap: spacing.xxl, paddingVertical: spacing.xxl }}>

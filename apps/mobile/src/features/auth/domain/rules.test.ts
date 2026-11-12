@@ -1,5 +1,5 @@
 import { AuthError, errorCodeOf } from './auth-error';
-import { isValidCode, RESEND_SECONDS, secondsUntilResend } from './rules';
+import { formatCountdown, formatPhone, isValidCode, RESEND_SECONDS, secondsUntilResend } from './rules';
 
 describe('isValidCode', () => {
   it.each(['123456', '000000'])('accepts %s', (code) => {
@@ -38,5 +38,26 @@ describe('AuthError', () => {
     expect(error.code).toBe('invalid_code');
     expect(errorCodeOf(error)).toBe('invalid_code');
     expect(errorCodeOf(new Error('network'))).toBe('unknown');
+  });
+});
+
+describe('formatPhone', () => {
+  it('groups a Costa Rica number as +506 8888 0000', () => {
+    expect(formatPhone('+50688880000')).toBe('+506 8888 0000');
+  });
+
+  it('leaves any other value untouched', () => {
+    expect(formatPhone('+15551234567')).toBe('+15551234567');
+  });
+});
+
+describe('formatCountdown', () => {
+  it.each([
+    [60, '01:00'],
+    [30, '00:30'],
+    [5, '00:05'],
+    [0, '00:00'],
+  ])('shows %i s as %s', (seconds, text) => {
+    expect(formatCountdown(seconds)).toBe(text);
   });
 });

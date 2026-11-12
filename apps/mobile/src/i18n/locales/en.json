@@ -15,6 +15,18 @@
       "invalid_code": "The code is invalid or has expired.",
       "too_soon": "Wait a moment before requesting another code.",
       "unknown": "We couldn’t connect. Try again."
+    },
+    "verify": {
+      "back": "Back",
+      "header": "Verify number",
+      "title": "Enter the code",
+      "retryTitle": "Try again",
+      "sentTo": "We sent it by WhatsApp to {{phone}}.",
+      "codeLabel": "6-digit code",
+      "submit": "Verify",
+      "resendIn": "Resend code in {{time}}",
+      "resend": "Request another code",
+      "changePhone": "Change number"
     }
   },
   "parent": {
