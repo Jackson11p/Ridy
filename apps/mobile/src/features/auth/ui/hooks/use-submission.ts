@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 
-import { errorCodeOf, type AuthErrorCode } from '../domain/auth-error';
+import { errorCodeOf, type AuthErrorCode } from '../../domain/auth-error';
 
 // estado común de los formularios: enviando, error y una sola acción en vuelo
 export function useSubmission() {

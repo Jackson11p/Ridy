@@ -17,9 +17,11 @@ apps/mobile/
    │  ├─ domain/        tipos, reglas puras, contratos de I/O (sin RN, Expo ni Supabase)
    │  ├─ application/   casos de uso; dependen solo de domain
    │  ├─ infrastructure/ implementan contratos: Supabase, GPS, push
-   │  ├─ ui/            componentes y hooks TanStack Query del feature; sin reglas
+   │  ├─ ui/            componentes del feature; sin reglas
+   │  │  └─ hooks/      custom hooks del feature (estado, TanStack Query)
    │  └─ index.ts       API pública del feature
    ├─ components/       visuales genéricos, solo props
+   ├─ hooks/            custom hooks genéricos (p. ej. `useTheme`)
    ├─ services/         cliente Supabase único y env
    ├─ theme/  i18n/
 ```
@@ -27,6 +29,7 @@ apps/mobile/
 - Dependencias hacia dentro: `ui → application → domain`; `infrastructure` implementa lo que declara `domain`.
 - Entre features y desde `app/` se importa solo por `index.ts`.
 - Un feature crea solo las carpetas que usa (YAGNI).
+- Todo custom hook vive en un directorio `hooks/`: los del feature en `ui/hooks/`, los genéricos en `src/hooks/` (regla del usuario, ATDE-15-T16).
 
 ## Decisión: runner
 

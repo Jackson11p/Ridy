@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import type { AuthErrorCode } from '../domain/auth-error';
+import type { AuthErrorCode } from '../../domain/auth-error';
 
 export function useErrorText(code: AuthErrorCode | null): string | undefined {
   const { t } = useTranslation();

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { secondsUntilResend } from '../domain/rules';
+import { secondsUntilResend } from '../../domain/rules';
 
 const TICK_MS = 1000;
 

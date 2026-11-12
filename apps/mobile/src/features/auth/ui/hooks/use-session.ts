@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import type { Session } from '../domain/auth-gateway';
-import { useAuthGateway } from './auth-gateway-context';
+import type { Session } from '../../domain/auth-gateway';
+import { useAuthGateway } from './use-auth-gateway';
 
 type SessionState = { loading: boolean; session: Session | null };
 

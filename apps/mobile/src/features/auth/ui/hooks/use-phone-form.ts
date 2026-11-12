@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import { requestCode } from '../application/request-code';
-import { useAuthGateway } from './auth-gateway-context';
+import { requestCode } from '../../application/request-code';
+import { useAuthGateway } from './use-auth-gateway';
 import { useSubmission } from './use-submission';
 
 export function usePhoneForm(onSent: (phone: string) => void) {

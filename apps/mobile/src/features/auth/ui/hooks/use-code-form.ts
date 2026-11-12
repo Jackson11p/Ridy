@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import { requestCode } from '../application/request-code';
-import { verifyCode } from '../application/verify-code';
-import { useAuthGateway } from './auth-gateway-context';
+import { requestCode } from '../../application/request-code';
+import { verifyCode } from '../../application/verify-code';
+import { useAuthGateway } from './use-auth-gateway';
 import { useResendCountdown } from './use-resend-countdown';
 import { useSubmission } from './use-submission';
 
