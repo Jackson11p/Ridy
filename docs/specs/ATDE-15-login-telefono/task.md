@@ -7,7 +7,8 @@
   - Rojo: `domain/rules.test.ts` → jest `Cannot find module './auth-error'`. Verde: 12 PASS (código 6 dígitos, cuenta regresiva redondea arriba y no baja de 0, `AuthError` con código); contrato `AuthGateway` + `Session` en `auth-gateway.ts` (solo tipos); typecheck/lint OK.
 - [x] ATDE-15-T04 `features/auth/application`: `requestCode` y `verifyCode` con gateway falso; tests (depende de T03)
   - Rojo: `application/use-cases.test.ts` → jest `Cannot find module './request-code'`. Verde: 12 PASS (8 dígitos con espacios/guiones → `+506…` vía `phoneSchema` + regla CR; inválido o código ≠ 6 dígitos → `AuthError` sin llamar al gateway); `createFakeGateway` (doble de pruebas reutilizable); typecheck/lint OK.
-- [ ] ATDE-15-T05 `features/auth/infrastructure`: gateway Supabase y mapeo de errores, cliente simulado; tests (depende de T02, T03)
+- [x] ATDE-15-T05 `features/auth/infrastructure`: gateway Supabase y mapeo de errores, cliente simulado; tests (depende de T02, T03)
+  - Rojo: `infrastructure/supabase-auth-gateway.test.ts` → jest `Cannot find module './supabase-auth-gateway'`. Verde: 11 PASS con `auth` simulado (`signInWithOtp`/`verifyOtp` tipo sms, sesión mapeada a `+`, errores `otp_expired`/`invalid_credentials`→invalid_code, `over_*_rate_limit`→too_soon, `validation_failed`→invalid_phone, resto→unknown, suscripción con unsubscribe); cliente se pide perezoso vía `getSupabase`; typecheck/lint OK.
 - [ ] ATDE-15-T06 `features/auth/ui`: `useSession`, `usePhoneForm`, `useCodeForm` (cuenta regresiva 60 s); `index.ts`; tests (depende de T04)
 - [ ] ATDE-15-T07 Pantalla `sign-in` (A01) + i18n es/en; tests de render, número inválido y navegación a `verify` (depende de T06)
 - [ ] ATDE-15-T08 Pantalla `verify` (A02/A03) + i18n; tests de código correcto/incorrecto, reenviar bloqueado y cambiar número (depende de T06)
