@@ -4,12 +4,13 @@ import { useTranslation } from 'react-i18next';
 import { BackHeader } from '@/components/back-header';
 import { Button } from '@/components/button';
 import { ScreenIntro } from '@/components/screen-intro';
-import { AuthScreen, CodeField, formatPhone, ResendAction, useCodeForm, useErrorText } from '@/features/auth';
+import { AuthScreen, CodeField, formatPhone, parseCostaRicaPhone, ResendAction, useCodeForm, useErrorText } from '@/features/auth';
 
 export default function Verify() {
   const { t } = useTranslation();
   const router = useRouter();
-  const { phone = '' } = useLocalSearchParams<{ phone?: string }>();
+  const params = useLocalSearchParams<{ phone?: string }>();
+  const phone = parseCostaRicaPhone(params.phone ?? '') ?? '';
   const toSignIn = () => router.replace('/sign-in');
   const form = useCodeForm(phone, () => router.replace('/children'));
   const error = useErrorText(form.error);

@@ -77,6 +77,13 @@ describe('verify screen (A02/A03)', () => {
     expect(router.getPathname()).toBe('/sign-in');
   });
 
+  it.each(['/verify', '/verify?phone=123'])('sends %s without a valid phone back to sign-in', async (initialUrl) => {
+    const { gateway } = createFakeGateway();
+    const router = await renderRouter(routes, { initialUrl, wrapper: authWrapper(gateway) });
+
+    expect(router.getPathname()).toBe('/sign-in');
+  });
+
   it('has the same keys in Spanish and English', () => {
     const keys = (lng: string) => Object.keys(i18n.getResourceBundle(lng, 'translation').auth.verify).sort();
 

@@ -32,6 +32,13 @@ describe('verifyCode', () => {
     expect(gateway.verifyCode).toHaveBeenCalledWith('+50670000001', '123456');
   });
 
+  it.each(['', 'abc', '+15551234567'])('rejects the phone "%s" without calling the gateway', async (phone) => {
+    const { gateway } = createFakeGateway();
+
+    await expect(verifyCode(gateway, phone, '123456')).rejects.toEqual(new AuthError('invalid_phone'));
+    expect(gateway.verifyCode).not.toHaveBeenCalled();
+  });
+
   it.each(['', '12345', '12a456'])('rejects "%s" without calling the gateway', async (code) => {
     const { gateway } = createFakeGateway();
 

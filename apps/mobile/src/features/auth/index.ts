@@ -1,5 +1,6 @@
 export type { AuthErrorCode } from './domain/auth-error';
 export type { AuthGateway, Session } from './domain/auth-gateway';
+export { parseCostaRicaPhone } from './domain/phone';
 export { formatPhone } from './domain/rules';
 export { AuthGatewayProvider } from './ui/auth-gateway-context';
 export { AuthScreen } from './ui/auth-screen';
