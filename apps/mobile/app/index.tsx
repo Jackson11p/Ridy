@@ -1,6 +1,10 @@
 import { Redirect } from 'expo-router';
 
-// shortcut: siempre a (auth); la vista por rol llega con ATDE-15
+import { useSession } from '@/features/auth';
+
+// /children provisional: ATDE-16 decide la vista por rol
 export default function Index() {
-  return <Redirect href="/sign-in" />;
+  const { loading, session } = useSession();
+  if (loading) return null;
+  return <Redirect href={session ? '/children' : '/sign-in'} />;
 }
