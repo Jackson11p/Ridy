@@ -17,7 +17,6 @@
       "unknown": "We couldn’t connect. Try again."
     },
     "verify": {
-      "back": "Back",
       "header": "Verify number",
       "title": "Enter the code",
       "retryTitle": "Try again",

@@ -17,7 +17,6 @@
       "unknown": "No pudimos conectar. Inténtalo de nuevo."
     },
     "verify": {
-      "back": "Volver",
       "header": "Verificar número",
       "title": "Ingresa el código",
       "retryTitle": "Inténtalo de nuevo",

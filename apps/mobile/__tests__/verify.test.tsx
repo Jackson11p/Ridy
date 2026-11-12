@@ -25,7 +25,7 @@ describe('verify screen (A02/A03)', () => {
   it('renders the A02 copy with the formatted phone and the countdown, without SMS', async () => {
     await renderVerify();
 
-    expect(button('auth.verify.back')).toBeTruthy();
+    expect(button('auth.verify.header')).toBeTruthy();
     expect(screen.getByRole('header', { name: t('auth.verify.title') })).toBeTruthy();
     expect(screen.getByText(t('auth.verify.sentTo', { phone: '+506 7000 0001' }))).toBeTruthy();
     expect(button('auth.verify.submit')).toBeTruthy();
@@ -69,7 +69,7 @@ describe('verify screen (A02/A03)', () => {
     expect(screen.getByText(t('auth.verify.resendIn', { time: '01:00' }))).toBeTruthy();
   });
 
-  it.each(['auth.verify.changePhone', 'auth.verify.back'])('%s goes back to sign-in', async (key) => {
+  it.each(['auth.verify.changePhone', 'auth.verify.header'])('%s goes back to sign-in', async (key) => {
     const { router } = await renderVerify();
 
     await fireEvent.press(button(key));

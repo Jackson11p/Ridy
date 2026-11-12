@@ -1,7 +1,11 @@
 export type { AuthErrorCode } from './domain/auth-error';
 export type { AuthGateway, Session } from './domain/auth-gateway';
-export { CODE_LENGTH, formatCountdown, formatPhone } from './domain/rules';
+export { formatPhone } from './domain/rules';
 export { AuthGatewayProvider } from './ui/auth-gateway-context';
+export { AuthScreen } from './ui/auth-screen';
+export { CodeField } from './ui/code-field';
+export { ResendAction } from './ui/resend-action';
 export { useCodeForm } from './ui/use-code-form';
+export { useErrorText } from './ui/use-error-text';
 export { usePhoneForm } from './ui/use-phone-form';
 export { useSession } from './ui/use-session';
