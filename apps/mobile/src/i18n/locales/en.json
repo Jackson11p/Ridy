@@ -1,6 +1,29 @@
 {
-  "auth": { "title": "Sign in" },
-  "parent": { "title": "My children" },
-  "driver": { "title": "My route" },
-  "manage": { "title": "Manage" }
+  "auth": {
+    "signIn": {
+      "welcome": "Welcome",
+      "title": "Your number is your key",
+      "subtitle": "Follow your children’s route, no calls needed.",
+      "phoneLabel": "Phone number",
+      "prefix": "CR +506",
+      "phonePlaceholder": "8888 0000",
+      "submit": "Get code on WhatsApp",
+      "legal": "By continuing you accept the terms and the privacy policy."
+    },
+    "errors": {
+      "invalid_phone": "Enter the 8 digits of your number.",
+      "invalid_code": "The code is invalid or has expired.",
+      "too_soon": "Wait a moment before requesting another code.",
+      "unknown": "We couldn’t connect. Try again."
+    }
+  },
+  "parent": {
+    "title": "My children"
+  },
+  "driver": {
+    "title": "My route"
+  },
+  "manage": {
+    "title": "Manage"
+  }
 }

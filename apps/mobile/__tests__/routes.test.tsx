@@ -8,7 +8,7 @@ describe('app routes', () => {
     const router = await renderRouter('./app');
 
     expect(router.getPathname()).toBe('/sign-in');
-    expect(screen.getByRole('header', { name: i18n.t('auth.title') })).toBeTruthy();
+    expect(screen.getByRole('header', { name: i18n.t('auth.signIn.title') })).toBeTruthy();
   });
 
   it.each([

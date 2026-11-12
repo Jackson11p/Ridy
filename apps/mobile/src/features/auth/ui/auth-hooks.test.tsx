@@ -2,7 +2,7 @@ import { act, renderHook } from '@testing-library/react-native';
 import type { ReactNode } from 'react';
 
 import { AuthError } from '../domain/auth-error';
-import { createFakeGateway } from '../application/fake-gateway';
+import { createFakeGateway } from '../testing/fake-gateway';
 import { AuthGatewayProvider } from './auth-gateway-context';
 import { useCodeForm } from './use-code-form';
 import { usePhoneForm } from './use-phone-form';

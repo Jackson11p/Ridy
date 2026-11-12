@@ -1,5 +1,5 @@
 import { AuthError } from '../domain/auth-error';
-import { createFakeGateway } from './fake-gateway';
+import { createFakeGateway } from '../testing/fake-gateway';
 import { requestCode } from './request-code';
 import { verifyCode } from './verify-code';
 
