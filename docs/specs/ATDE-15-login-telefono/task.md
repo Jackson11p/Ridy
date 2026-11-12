@@ -5,7 +5,8 @@
   - Rojo: `src/services/supabase.test.ts` → jest `Cannot find module './supabase'`. Verde: 2 PASS (sin env lanza error claro; con env un único cliente que lee sesión de AsyncStorage); mock oficial vía `moduleNameMapper` en la config jest; `expo install` fijó async-storage 2.2.0; sin cambios en `pnpm-workspace.yaml`; typecheck/lint OK, `pnpm test` 12 suites/57 PASS.
 - [x] ATDE-15-T03 `features/auth/domain`: tipos, contrato `AuthGateway`, errores, regla código 6 dígitos y segundos para reenviar; tests
   - Rojo: `domain/rules.test.ts` → jest `Cannot find module './auth-error'`. Verde: 12 PASS (código 6 dígitos, cuenta regresiva redondea arriba y no baja de 0, `AuthError` con código); contrato `AuthGateway` + `Session` en `auth-gateway.ts` (solo tipos); typecheck/lint OK.
-- [ ] ATDE-15-T04 `features/auth/application`: `requestCode` y `verifyCode` con gateway falso; tests (depende de T03)
+- [x] ATDE-15-T04 `features/auth/application`: `requestCode` y `verifyCode` con gateway falso; tests (depende de T03)
+  - Rojo: `application/use-cases.test.ts` → jest `Cannot find module './request-code'`. Verde: 12 PASS (8 dígitos con espacios/guiones → `+506…` vía `phoneSchema` + regla CR; inválido o código ≠ 6 dígitos → `AuthError` sin llamar al gateway); `createFakeGateway` (doble de pruebas reutilizable); typecheck/lint OK.
 - [ ] ATDE-15-T05 `features/auth/infrastructure`: gateway Supabase y mapeo de errores, cliente simulado; tests (depende de T02, T03)
 - [ ] ATDE-15-T06 `features/auth/ui`: `useSession`, `usePhoneForm`, `useCodeForm` (cuenta regresiva 60 s); `index.ts`; tests (depende de T04)
 - [ ] ATDE-15-T07 Pantalla `sign-in` (A01) + i18n es/en; tests de render, número inválido y navegación a `verify` (depende de T06)
