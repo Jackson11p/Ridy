@@ -16,6 +16,7 @@
 10. **pnpm 11 y paquetes recién publicados**: `pnpm add pkg@<versión de hoy>` agrega solo `minimumReleaseAgeExclude` a `pnpm-workspace.yaml`. No commitearlo: pedir rango (`pkg@^N`) y dejar que elija una versión con antigüedad.
 11. **Build scripts bloqueados (pnpm 11)**: dep nueva con script → `ERR_PNPM_IGNORED_BUILDS`; decidir en `allowBuilds` de `pnpm-workspace.yaml` (true/false), con comentario del porqué.
 12. **Aviso de peer `react-dom` 19.3.1 vs `react` 19.3.0**: lo trae expo-router por web; sin web en la app no afecta. Revisar al subir de SDK.
+13. **`.env.local` en la raíz no se carga**: Expo solo lee `.env*` de `apps/mobile/` (ATDE-15). Quien lo tenga en la raíz debe moverlo a `apps/mobile/.env.local`; si define dos veces la misma variable (local y remoto) gana la última.
 
 ## Seguridad y RLS [PLAN]
 

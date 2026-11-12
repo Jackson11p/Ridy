@@ -26,7 +26,7 @@ describe('getSupabase', () => {
 
     const { getSupabase } = loadFresh();
 
-    expect(() => getSupabase()).toThrow(/EXPO_PUBLIC_SUPABASE_URL/);
+    expect(() => getSupabase()).toThrow(/EXPO_PUBLIC_SUPABASE_URL.*apps\/mobile\/\.env\.local/);
   });
 
   it('creates one client that persists the session in AsyncStorage', async () => {
