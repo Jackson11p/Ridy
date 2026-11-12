@@ -54,6 +54,39 @@ describe('usePhoneForm', () => {
   });
 });
 
+describe('double submit', () => {
+  it('ignores a second submit while the first is still sending', async () => {
+    const fake = createFakeGateway();
+    let finish = () => {};
+    fake.gateway.requestCode.mockImplementationOnce(() => new Promise<void>((resolve) => (finish = resolve)));
+    const { result } = await renderHook(() => usePhoneForm(jest.fn()), { wrapper: wrapperFor(fake) });
+    await act(async () => result.current.setValue('70000001'));
+
+    await act(async () => {
+      void result.current.submit();
+      void result.current.submit();
+    });
+    expect(result.current.submitting).toBe(true);
+    await act(async () => finish());
+
+    expect(fake.gateway.requestCode).toHaveBeenCalledTimes(1);
+    expect(result.current.submitting).toBe(false);
+  });
+
+  it('ignores a second verify while the first is still sending', async () => {
+    const fake = createFakeGateway();
+    const { result } = await renderHook(() => useCodeForm('+50670000001', jest.fn()), { wrapper: wrapperFor(fake) });
+    await act(async () => result.current.setCode('123456'));
+
+    await act(async () => {
+      void result.current.verify();
+      void result.current.verify();
+    });
+
+    expect(fake.gateway.verifyCode).toHaveBeenCalledTimes(1);
+  });
+});
+
 describe('useCodeForm', () => {
   beforeEach(() => jest.useFakeTimers());
   afterEach(() => jest.useRealTimers());

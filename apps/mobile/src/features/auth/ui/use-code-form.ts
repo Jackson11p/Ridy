@@ -2,32 +2,19 @@ import { useState } from 'react';
 
 import { requestCode } from '../application/request-code';
 import { verifyCode } from '../application/verify-code';
-import { errorCodeOf, type AuthErrorCode } from '../domain/auth-error';
 import { useAuthGateway } from './auth-gateway-context';
 import { useResendCountdown } from './use-resend-countdown';
+import { useSubmission } from './use-submission';
 
 export function useCodeForm(phone: string, onVerified: () => void) {
   const gateway = useAuthGateway();
-  const countdown = useResendCountdown();
+  const { secondsLeft, restart } = useResendCountdown();
+  const { submitting, error, clearError, run } = useSubmission();
   const [code, setRawCode] = useState('');
-  const [error, setError] = useState<AuthErrorCode | null>(null);
-  const [submitting, setSubmitting] = useState(false);
-
-  const run = async (action: () => Promise<void>) => {
-    setSubmitting(true);
-    setError(null);
-    try {
-      await action();
-    } catch (caught) {
-      setError(errorCodeOf(caught));
-    } finally {
-      setSubmitting(false);
-    }
-  };
 
   const setCode = (next: string) => {
     setRawCode(next);
-    setError(null);
+    clearError();
   };
 
   const verify = () => run(async () => {
@@ -35,13 +22,11 @@ export function useCodeForm(phone: string, onVerified: () => void) {
     onVerified();
   });
 
-  const resend = async () => {
-    if (countdown.secondsLeft > 0) return;
-    await run(async () => {
-      await requestCode(gateway, phone);
-      countdown.restart();
-    });
-  };
+  const resend = () => run(async () => {
+    if (secondsLeft > 0) return;
+    await requestCode(gateway, phone);
+    restart();
+  });
 
-  return { code, setCode, error, submitting, verify, resend, secondsLeft: countdown.secondsLeft };
+  return { code, setCode, error, submitting, verify, resend, secondsLeft };
 }
