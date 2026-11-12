@@ -16,7 +16,7 @@ Entrar con número + código OTP (WhatsApp, D8) sin contraseñas, con sesión qu
 7. `profile` creado solo visible para su dueño (prueba RLS existente de ATDE-8 lo cubre).
 
 ## Fuera de alcance
-- Botones y flujo SMS (beta), selector de vista por rol (ATDE-16), cerrar sesión, logo/imágenes, términos con enlace, OTP real por WhatsApp (bloqueado por verificación de Meta).
+- Botones y flujo SMS (beta), selector de vista por rol y guard de sesión en `(parent)`, `(driver)`, `(manage)` (ATDE-16), cerrar sesión, logo/imágenes, términos con enlace, OTP real por WhatsApp (bloqueado por verificación de Meta).
 
 ## Supuestos
 - Ticket Jira `ATDE-15`; rama y carpeta `ATDE-15-login-telefono`; tareas `ATDE-15-Tnn`.
