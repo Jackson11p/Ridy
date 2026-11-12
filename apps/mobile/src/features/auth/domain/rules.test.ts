@@ -1,4 +1,4 @@
-import { AuthError, isAuthError } from './auth-error';
+import { AuthError, errorCodeOf } from './auth-error';
 import { isValidCode, RESEND_SECONDS, secondsUntilResend } from './rules';
 
 describe('isValidCode', () => {
@@ -36,7 +36,7 @@ describe('AuthError', () => {
 
     expect(error).toBeInstanceOf(Error);
     expect(error.code).toBe('invalid_code');
-    expect(isAuthError(error)).toBe(true);
-    expect(isAuthError(new Error('x'))).toBe(false);
+    expect(errorCodeOf(error)).toBe('invalid_code');
+    expect(errorCodeOf(new Error('network'))).toBe('unknown');
   });
 });

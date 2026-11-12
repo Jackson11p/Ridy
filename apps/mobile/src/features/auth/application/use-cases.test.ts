@@ -8,6 +8,7 @@ describe('requestCode', () => {
     ['70000001', '+50670000001'],
     ['8888 0000', '+50688880000'],
     ['8888-0000', '+50688880000'],
+    ['+506 8888 0000', '+50688880000'],
   ])('sends %s as %s and returns the normalized phone', async (typed, phone) => {
     const { gateway } = createFakeGateway();
 
@@ -15,7 +16,7 @@ describe('requestCode', () => {
     expect(gateway.requestCode).toHaveBeenCalledWith(phone);
   });
 
-  it.each(['', '8888', '888800001', 'abcdefgh', '+50688880000'])('rejects "%s" without calling the gateway', async (typed) => {
+  it.each(['', '8888', '888800001', 'abcdefgh', '+15551234567', '+506888800001'])('rejects "%s" without calling the gateway', async (typed) => {
     const { gateway } = createFakeGateway();
 
     await expect(requestCode(gateway, typed)).rejects.toEqual(new AuthError('invalid_phone'));

@@ -7,6 +7,6 @@ export class AuthError extends Error {
   }
 }
 
-export function isAuthError(error: unknown): error is AuthError {
-  return error instanceof AuthError;
+export function errorCodeOf(error: unknown): AuthErrorCode {
+  return error instanceof AuthError ? error.code : 'unknown';
 }
