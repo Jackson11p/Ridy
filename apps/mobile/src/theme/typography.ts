@@ -4,6 +4,8 @@ type TextToken = Required<Pick<TextStyle, 'fontSize' | 'lineHeight' | 'fontWeigh
 
 export const typography = {
   display: { fontSize: 40, lineHeight: 48, fontWeight: '700' },
+  title: { fontSize: 28, lineHeight: 34, fontWeight: '700' },
+  heading: { fontSize: 20, lineHeight: 28, fontWeight: '600' },
   body: { fontSize: 16, lineHeight: 24, fontWeight: '400' },
   label: { fontSize: 16, lineHeight: 24, fontWeight: '600' },
   button: { fontSize: 18, lineHeight: 24, fontWeight: '600' },

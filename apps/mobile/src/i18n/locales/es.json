@@ -1,6 +1,40 @@
 {
-  "auth": { "title": "Iniciar sesión" },
-  "parent": { "title": "Mis hijos" },
-  "driver": { "title": "Mi ruta" },
-  "manage": { "title": "Administrar" }
+  "auth": {
+    "signIn": {
+      "welcome": "Bienvenido",
+      "title": "Tu número es tu acceso",
+      "subtitle": "Sigue la ruta de tus hijos, sin llamadas.",
+      "phoneLabel": "Número de teléfono",
+      "prefix": "CR +506",
+      "phonePlaceholder": "8888 0000",
+      "submit": "Recibir código por WhatsApp",
+      "legal": "Al continuar aceptas los términos y la política de privacidad."
+    },
+    "errors": {
+      "invalid_phone": "Ingresa los 8 dígitos de tu número.",
+      "invalid_code": "El código no es válido o ya venció.",
+      "too_soon": "Espera un momento antes de pedir otro código.",
+      "unknown": "No pudimos conectar. Inténtalo de nuevo."
+    },
+    "verify": {
+      "header": "Verificar número",
+      "title": "Ingresa el código",
+      "retryTitle": "Inténtalo de nuevo",
+      "sentTo": "Lo enviamos por WhatsApp al {{phone}}.",
+      "codeLabel": "Código de 6 dígitos",
+      "submit": "Verificar",
+      "resendIn": "Reenviar código en {{time}}",
+      "resend": "Solicitar otro código",
+      "changePhone": "Cambiar número"
+    }
+  },
+  "parent": {
+    "title": "Mis hijos"
+  },
+  "driver": {
+    "title": "Mi ruta"
+  },
+  "manage": {
+    "title": "Administrar"
+  }
 }

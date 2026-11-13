@@ -74,7 +74,7 @@ corepack enable
 pnpm install
 pnpm db:start                     # primera vez descarga imágenes (tarda)
 pnpm db:reset                     # aplica migraciones + supabase/seed.sql
-Copy-Item .env.example .env.local # y pegar la Publishable key de `pnpm db:status`
+Copy-Item apps/mobile/.env.example apps/mobile/.env.local # pegar la Publishable key de `pnpm db:status`
 ```
 
 | Servicio | URL |
@@ -163,7 +163,7 @@ Auth delega el envío del código en el hook `public.send_sms_hook`, que lo mand
    New-NetFirewallRule -DisplayName "Supabase local" -Direction Inbound -Protocol TCP -LocalPort 54321-54324 -Action Allow -Profile Private
    ```
 
-3. El resto pone en `.env.local` `EXPO_PUBLIC_SUPABASE_URL=http://192.168.1.50:54321` y la Publishable key del host.
+3. El resto pone en `apps/mobile/.env.local` `EXPO_PUBLIC_SUPABASE_URL=http://192.168.1.50:54321` y la Publishable key del host.
 4. Fuera de la misma red: usar Tailscale y la IP de Tailscale del host. Nunca abrir puertos en el router.
 
 Con la opción B, el PC del host tiene que estar encendido con Docker corriendo, y un `pnpm db:reset` del host borra los datos de todos.

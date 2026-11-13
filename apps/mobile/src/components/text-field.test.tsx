@@ -44,6 +44,13 @@ describe('TextField', () => {
     });
   });
 
+  it('shows a fixed prefix box before the input', async () => {
+    await render(<TextField label="Teléfono" prefix="CR +506" />);
+
+    expect(screen.getByText('CR +506')).toBeTruthy();
+    expect(screen.getByTestId('text-field-prefix')).toHaveStyle({ minHeight: sizes.field, borderColor: lightPalette.border });
+  });
+
   it('is not editable when disabled', async () => {
     await render(<TextField label="Teléfono" disabled />);
 

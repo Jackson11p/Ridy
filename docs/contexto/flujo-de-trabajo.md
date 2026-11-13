@@ -9,7 +9,7 @@ corepack enable
 pnpm install
 pnpm db:start                      # Docker Desktop abierto, backend WSL2
 pnpm db:reset                      # migraciones + seed
-Copy-Item .env.example .env.local  # pegar Publishable key de `pnpm db:status`
+Copy-Item apps/mobile/.env.example apps/mobile/.env.local  # pegar Publishable key de `pnpm db:status`
 ```
 
 Studio: http://127.0.0.1:54323 · API: http://127.0.0.1:54321 · Mailpit: http://127.0.0.1:54324.
