@@ -141,6 +141,38 @@ isOneToOne: false
                   Relationships: [
                     
                   ]
+                },"route_stops": {
+                  Row: {
+                    "active": boolean,"created_at": string,"id": string,"location": unknown,"notify_radius_m": number,"operator_id": string,"route_id": string,"stop_order": number,"student_id": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "active"?: boolean,"created_at"?: string,"id"?: string,"location": unknown,"notify_radius_m"?: number,"operator_id": string,"route_id": string,"stop_order": number,"student_id": string,"updated_at"?: string
+                  }
+                  Update: {
+                    "active"?: boolean,"created_at"?: string,"id"?: string,"location"?: unknown,"notify_radius_m"?: number,"operator_id"?: string,"route_id"?: string,"stop_order"?: number,"student_id"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "route_stops_operator_id_fkey"
+      columns: ["operator_id"]
+isOneToOne: false
+      referencedRelation: "operators"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "route_stops_route_id_operator_id_fkey"
+      columns: ["route_id","operator_id"]
+isOneToOne: false
+      referencedRelation: "routes"
+      referencedColumns: ["id","operator_id"]
+    },{
+      foreignKeyName: "route_stops_student_id_operator_id_fkey"
+      columns: ["student_id","operator_id"]
+isOneToOne: false
+      referencedRelation: "students"
+      referencedColumns: ["id","operator_id"]
+    }
+                  ]
                 },"routes": {
                   Row: {
                     "active": boolean,"code": string,"created_at": string,"id": string,"operator_id": string,"school_id": string,"shift": Database["public"]['Enums']["route_shift"],"updated_at": string,"vehicle_id": string
