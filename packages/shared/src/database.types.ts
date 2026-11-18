@@ -254,8 +254,14 @@ isOneToOne: false
             "_meta_wa_otp_body":
 { Args: { "otp": string,"phone": string,"template": string }; Returns: Json
                            },
+"add_self_as_driver":
+{ Args: { "operator_id": string }; Returns: string
+                           },
 "create_operator":
 { Args: { "country": string,"currency": string,"name": string,"timezone": string }; Returns: string
+                           },
+"invite_driver":
+{ Args: { "operator_id": string,"phone": string }; Returns: string
                            },
 "send_sms_hook":
 { Args: { "event": Json }; Returns: Json

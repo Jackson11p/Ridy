@@ -1,7 +1,7 @@
 -- ATDE-8-T03: create_operator crea empresa + membership owner en un paso.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(9);
+select plan(11);
 
 insert into auth.users (id, phone) values ('00000000-0000-0000-0000-0000000000c1', '50660000001');
 
@@ -35,6 +35,19 @@ select is((select profile_id from public.memberships), '00000000-0000-0000-0000-
 select throws_ok($$select public.create_operator('y', 'cr', 'CRC', 'UTC')$$,
   '23514', null, 'país inválido se rechaza');
 reset role;
+
+-- ATDE-17-T01: si falla la membership owner, no queda empresa huérfana (una sola transacción)
+create function pg_temp.fail_membership() returns trigger language plpgsql as
+  $$begin raise exception 'membership forzada a fallar' using errcode = 'P0001'; end$$;
+create trigger fail_membership before insert on public.memberships
+  for each row execute function pg_temp.fail_membership();
+set local role authenticated;
+set local request.jwt.claims = '{"sub":"00000000-0000-0000-0000-0000000000c1","role":"authenticated"}';
+select throws_ok($$select public.create_operator('Huérfana', 'CR', 'CRC', 'UTC')$$,
+  'P0001', null, 'fallo en la membership aborta el alta');
+reset role;
+select is((select count(*) from public.operators where name = 'Huérfana'), 0::bigint,
+  'no queda empresa sin dueño');
 
 select * from finish();
 rollback;
