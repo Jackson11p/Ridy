@@ -21,7 +21,7 @@ Tras `git pull` con migraciones nuevas → `pnpm db:reset`.
 2. **Spec**: `docs/specs/RIDY-NNNN-nombre/spec.md` (qué, 10–30 líneas). [IMPL]
 3. **Plan**: `plan.md` (cómo, 20–50 líneas, sin código). [IMPL]
 4. **Tareas**: `task.md` con `- [ ] RIDY-NNNN-Tnn …`. [IMPL]
-5. **Agentes**: solo si el dev lo pide. Grande (varias capas, reglas de negocio, 4+ tareas) → `planner` → `coder` → `reviwer`. Pequeño → directo. [IMPL]
+5. **Agentes**: solo si el dev lo pide. Grande (varias capas, reglas de negocio, 4+ tareas) → `planner` → `coder` → `reviwer` → `test-adversarial` (contexto limpio, ver `Claude.md`). Pequeño → directo. [IMPL]
 6. **Rama**: [PENDIENTE: convención de ramas; hoy todo va directo a `main`]
 7. **Por tarea**: test rojo → cambio mínimo → verde → refactor → marcar `[x]` → un commit `<tipo>(<ámbito>): RIDY-NNNN-Tnn <desc>`. [IMPL: `pnpm test`]
 8. **BD**: `pnpm db:migration <nombre>` → escribir SQL con RLS + prueba RLS → `pnpm db:reset` → `pnpm db:types` y commitear `packages/shared/src/database.types.ts` (CI falla si queda desfasado). Si se tocó Studio: `pnpm db:diff <nombre>`. [IMPL scripts; PLAN pruebas]
@@ -40,7 +40,7 @@ Tras `git pull` con migraciones nuevas → `pnpm db:reset`.
 - [ ] Textos de UI en i18n (es/en).
 - [ ] Datos de niños mínimos (sin fotos, sin fecha de nacimiento, sin cédula).
 - [ ] Docs afectados actualizados (`docs/arquitectura-sistema.md`, `docs/contexto/`).
-- [ ] Revisión aprobada por el otro socio (y `reviwer` si se usaron agentes).
+- [ ] Revisión aprobada por el otro socio (y `reviwer` + `test-adversarial` sin hallazgos si se usaron agentes).
 
 ## CI [IMPL]
 
