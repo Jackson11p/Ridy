@@ -26,8 +26,16 @@ No se genera código, tickets ni tareas sin una spec. Las specs viven en `docs/s
 
 Ningún paso empieza sin que el anterior exista. Si falta la spec, se crea antes de cualquier otra cosa.
 
-## Agentes (`planner` → `coder` → `reviwer`)
+## Agentes (`planner` → `coder` → `reviwer` → `test-adversarial`)
 
 - **Tareas pequeñas:** no hace falta usar los agentes. Se sigue el flujo de spec, pero se trabaja directamente.
-- **Tareas grandes y complejas:** se recomienda la secuencia `planner` → `coder` → `reviwer`. Criterios: toca varias capas o módulos, cambia reglas de negocio, o sale en 4+ tareas (detalle en `.claude/agents/planner.md` → *Cuándo se usa*).
+- **Tareas grandes y complejas:** se recomienda la secuencia `planner` → `coder` → `reviwer` → `test-adversarial`. Criterios: toca varias capas o módulos, cambia reglas de negocio, o sale en 4+ tareas (detalle en `.claude/agents/planner.md` → *Cuándo se usa*).
 - **Quién decide:** el dev indica en su prompt si quiere usar los agentes o no. Si no lo dice, no se lanzan.
+
+### Regla `test-adversarial`
+
+- **Obligatorio** siempre que se usen los agentes: corre después de que `reviwer` dé APROBADO. Lo lanza planner (o el orquestador).
+- **Contexto limpio:** se lanza como agente nuevo y recibe solo la carpeta de la spec y el rango de commits; nunca la entrega ni el razonamiento de `coder`.
+- **Ataca, no corrige:** escribe pruebas propias `*.adversarial.test.*` (pgTAP o `jest-expo`) contra RLS, roles, filas inactivas, límites y datos de menores. No toca producción, spec ni pruebas de `coder`.
+- **Resultado:** pruebas que pasan → un commit de regresión. Pruebas que fallan → hallazgo con reproductor a `planner` → tarea de corrección → `coder` → `reviwer` → `test-adversarial` otra vez.
+- **Cierre:** una spec hecha con agentes se cierra solo con veredicto `SIN HALLAZGOS` (o hallazgos de mejora aceptados) de `test-adversarial`. Detalle en `.claude/agents/test-adversarial.md`.
