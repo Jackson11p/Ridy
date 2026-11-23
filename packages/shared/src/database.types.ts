@@ -257,6 +257,11 @@ isOneToOne: false
 "create_operator":
 { Args: { "country": string,"currency": string,"name": string,"timezone": string }; Returns: string
                            },
+"my_links":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "kind": string,"operator_id": string,"operator_name": string,"role": Database["public"]['Enums']["membership_role"],"student_id": string,"student_name": string
+            }[]
+                           },
 "send_sms_hook":
 { Args: { "event": Json }; Returns: Json
                            }
