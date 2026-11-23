@@ -17,6 +17,8 @@ describe('theme tokens', () => {
 
   it('exposes typography, spacing, radius and sizes from the prototype', () => {
     expect(typography.display).toEqual({ fontSize: 40, lineHeight: 48, fontWeight: '700' });
+    expect(typography.title).toEqual({ fontSize: 28, lineHeight: 34, fontWeight: '700' });
+    expect(typography.heading).toEqual({ fontSize: 20, lineHeight: 28, fontWeight: '600' });
     expect(typography.caption).toEqual({ fontSize: 13, lineHeight: 20, fontWeight: '400' });
     expect(spacing).toEqual({ xs: 4, sm: 8, md: 12, lg: 16, xl: 20, xxl: 24, xxxl: 32 });
     expect(radius.control).toBe(14);

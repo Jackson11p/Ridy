@@ -37,10 +37,10 @@ Versiones exactas: constitución §2 y `apps/mobile/package.json`. Libs futuras:
 │  ├─ constitution.md           reglas no negociables
 │  ├─ specs/RIDY-0001-…, RIDY-0002-…
 │  └─ contexto/                 estos docs
-├─ apps/mobile/           Expo: app/ rutas (auth|parent|driver|manage), src/ capas ADR-0001
+├─ apps/mobile/           Expo: app/ rutas (auth|parent|driver|manage), src/ capas ADR-0001, .env.example
 ├─ packages/shared/       `@ridy/shared`: tipos Supabase generados + esquemas zod
 ├─ supabase/config.toml, seed.sql (vacío)
-├─ package.json, pnpm-workspace.yaml, pnpm-lock.yaml, .npmrc, .env.example
+├─ package.json, pnpm-workspace.yaml, pnpm-lock.yaml, .npmrc
 └─ README.md
 ```
 

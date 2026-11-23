@@ -17,6 +17,7 @@
 - Scripts BD: prefijo `db:` (`db:start`, `db:reset`, …). [IMPL]
 - Migraciones: `supabase/migrations/<timestamp>_<nombre>.sql` vía `pnpm db:migration`. [IMPL ATDE-8]
 - Componentes: [PENDIENTE: convención de archivos/componentes React Native]
+- Custom hooks (`use-*.ts`) siempre en un directorio `hooks/`: del feature en `src/features/<f>/ui/hooks/`, genéricos en `src/hooks/` (`useTheme` se reexporta desde `@/theme`). [IMPL ATDE-15-T16]
 
 ## Patrones que usamos
 

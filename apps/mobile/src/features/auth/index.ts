@@ -1,0 +1,13 @@
+export type { AuthErrorCode } from './domain/auth-error';
+export type { AuthGateway, Session } from './domain/auth-gateway';
+export { parseCostaRicaPhone } from './domain/phone';
+export { formatPhone } from './domain/rules';
+export { createSupabaseAuthGateway } from './infrastructure/supabase-auth-gateway';
+export { AuthGatewayProvider } from './ui/auth-gateway-context';
+export { AuthScreen } from './ui/auth-screen';
+export { CodeField } from './ui/code-field';
+export { ResendAction } from './ui/resend-action';
+export { useCodeForm } from './ui/hooks/use-code-form';
+export { useErrorText } from './ui/hooks/use-error-text';
+export { usePhoneForm } from './ui/hooks/use-phone-form';
+export { useSession } from './ui/hooks/use-session';

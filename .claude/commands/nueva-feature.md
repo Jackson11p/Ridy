@@ -1,5 +1,5 @@
 ---
-description: Feature nueva sin human in the loop. Codex investiga; si es grande planner → coder → reviwer, si es chica directo.
+description: Feature nueva sin human in the loop. Codex investiga; si es grande planner → coder → reviwer → test-adversarial, si es chica directo.
 argument-hint: TICKET contexto; solución
 ---
 Pedido: $ARGUMENTS
@@ -26,7 +26,8 @@ docs/specs/ (RIDY-01 si no hay ninguno); nombre = 2–4 palabras kebab-case del 
    consistente con docs/constitution.md y README.md, y anótalo en una sección "Supuestos" de
    spec.md. Escribe spec.md → plan.md → task.md en docs/specs/<TICKET>-<nombre>/ (tareas <TICKET>-Tnn).
 3. GRANDE: sigue directo con coder (Opus) → reviwer (Sonnet; Opus si la tarea toca migración,
-   RLS, Auth o ubicación GPS de menores) hasta que no queden hallazgos bloqueantes.
+   RLS, Auth o ubicación GPS de menores) → test-adversarial (Opus, agente nuevo con contexto limpio:
+   solo carpeta de spec y rango de commits) hasta que no queden hallazgos bloqueantes de ninguno.
    CHICA: implementa tú las tareas con TDD, un commit por tarea, y corre tsc, lint y tests.
 4. Detente y pregúntame SOLO si el pedido obliga a:
    - romper una regla de docs/constitution.md (RLS en toda tabla, esquema solo por migraciones,
@@ -34,7 +35,7 @@ docs/specs/ (RIDY-01 si no hay ninguno); nombre = 2–4 palabras kebab-case del 
    - decidir un [POR DEFINIR] de la constitución, agregar dependencia o usar API de pago;
    - implementar algo fuera del MVP de la constitución (§1), o borrar datos.
 5. Nunca push, supabase db push ni cambios en Supabase remoto (MCP incluido). Al final: resumen
-   con supuestos tomados y tabla por tarea (commit, review, estado).
+   con supuestos tomados y tabla por tarea (commit, review, adversarial, estado).
 6. Jira al terminar todas las tareas: pasa el ticket a **Reviwer** (columna de revisión) y deja un comentario con
    rama, commits y supuestos. **Done** nunca lo pone Claude: llega al mergear el PR. En Jira solo
    transiciones y comentarios del ticket trabajado; nada más.
