@@ -30,15 +30,14 @@ select throws_ok($$select push_token from public.profiles where id = '00000000-0
 select throws_ok($$select * from public.profiles$$, '42501', null, 'contrato: listar columnas, nunca select *');
 reset role;
 
--- M1: actualiza su token
+-- M1: actualiza su token (solo por RPC desde ATDE-39)
 set local role authenticated;
 set local request.jwt.claims = '{"sub":"00000000-0000-0000-0000-0000000000d2","role":"authenticated"}';
-select lives_ok($$update public.profiles set push_token = 'tok'
-  where id = '00000000-0000-0000-0000-0000000000d2'$$, 'usuario sigue actualizando su push_token');
+select lives_ok($$select public.set_push_token('ExpoPushToken[tok]')$$, 'usuario sigue actualizando su push_token');
 reset role;
 
 select is((select push_token from public.profiles where id = '00000000-0000-0000-0000-0000000000d2'),
-  'tok', 'push_token persistido');
+  'ExpoPushToken[tok]', 'push_token persistido');
 
 select * from finish();
 rollback;
