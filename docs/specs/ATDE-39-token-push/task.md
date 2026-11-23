@@ -6,7 +6,8 @@
   - Rojo: tipos sin `set_push_token` (desalineados con la BD). Verde: +3 líneas en `Functions`; `pnpm typecheck` OK. Nota: el generador tipa `token` como `string` no nulo.
 - [x] ATDE-39-T03 `packages/shared`: `expoPushTokenSchema` (zod) + test, reexportado en `index.ts`
   - Rojo: 12/12 fallan (`expoPushTokenSchema` no exportado). Verde: 12/12 PASS; typecheck OK.
-- [ ] ATDE-39-T04 Dep `expo-notifications` (SDK 58) en `apps/mobile` + plugin en `app.json`; constitución §2 deps aprobadas
+- [x] ATDE-39-T04 Dep `expo-notifications` (SDK 58) en `apps/mobile` + plugin en `app.json`; constitución §2 deps aprobadas
+  - Config sin prueba nueva: `expo install` fijó `expo-notifications` ~58.1.9 (con pnpm). Verde: typecheck OK; `pnpm test` 23 suites / 155 PASS.
 - [ ] ATDE-39-T05 `features/notifications` domain + application: contratos, `PushStatus`, `registerPushToken`/`unregisterPushToken` con dobles en `testing/`; tests
 - [ ] ATDE-39-T06 `features/notifications/infrastructure`: provider Expo (canal Android, `projectId`, web/emulador → `unavailable`) y store Supabase (RPC); tests con módulos inyectados
 - [ ] ATDE-39-T07 `features/notifications/ui`: contexto, `usePushRegistration(session)` (registro + cambios de token), `PushDeniedNotice` i18n es/en; wiring en `app/_layout.tsx`; tests de hook y ruta
