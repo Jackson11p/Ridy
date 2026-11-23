@@ -295,6 +295,11 @@ isOneToOne: false
 "invite_driver":
 { Args: { "operator_id": string,"phone": string }; Returns: string
                            },
+"my_links":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "kind": string,"operator_id": string,"operator_name": string,"role": Database["public"]['Enums']["membership_role"],"student_id": string,"student_name": string
+            }[]
+                           },
 "send_sms_hook":
 { Args: { "event": Json }; Returns: Json
                            }
