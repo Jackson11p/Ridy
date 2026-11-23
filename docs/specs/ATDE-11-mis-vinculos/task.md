@@ -1,0 +1,6 @@
+# ATDE-11 — Tareas
+
+- [x] ATDE-11-T01 RPC `public.my_links()` (membresías + hijos de `auth.uid()`); prueba `supabase/tests/my-links.test.sql` con los 5 casos, aislamiento, `anon`, sin usuario y perfil inactivo
+  - Rojo: 12/12 fallan (`function "public.my_links()" does not exist`). Verde: `pnpm test:db` 20 archivos / 372 PASS.
+- [ ] ATDE-11-T02 `pnpm db:types`: regenerar `packages/shared/src/database.types.ts` con `my_links`; tsc, lint y tests de `packages/shared` en verde
+- [ ] ATDE-11-T03 `docs/contexto/convenciones.md`: permisos se preguntan a la BD vía RPC → [IMPL ATDE-11]
