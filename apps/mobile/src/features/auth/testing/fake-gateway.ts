@@ -16,6 +16,7 @@ export function createFakeGateway(initial: Session | null = null) {
       return next;
     }),
     getSession: jest.fn(async () => session),
+    signOut: jest.fn(async () => emit(null)),
     onSessionChange: jest.fn((listener: SessionListener) => {
       listeners.add(listener);
       return () => listeners.delete(listener);

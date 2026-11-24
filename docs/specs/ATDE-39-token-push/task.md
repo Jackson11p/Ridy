@@ -15,5 +15,6 @@
   - Rojo: 2 suites fallan (`Cannot find module './expo-push-token-provider'` y `'./supabase-push-token-store'`). Verde: 12 casos nuevos, feature 23/23 PASS; tsc y eslint OK. Borrar = `rpc('set_push_token', {})`.
 - [x] ATDE-39-T07 `features/notifications/ui`: contexto, `usePushRegistration(session)` (registro + cambios de token), `PushDeniedNotice` i18n es/en; wiring en `app/_layout.tsx`; tests de hook y ruta
   - Rojo: suites de hook y aviso fallan (`Cannot find module`); rutas 3 nuevas fallan (sin `@/features/notifications`). Verde: hook 6/6, aviso 5/5, rutas 11/11 (2.ª corrida; la 1.ª en frío dio timeout de 5 s en el primer caso); tsc y eslint OK.
-- [ ] ATDE-39-T08 Auth: `AuthGateway.signOut` + Supabase, caso de uso `signOut` que borra el token primero (best effort) y hook `useSignOut`; tests
+- [x] ATDE-39-T08 Auth: `AuthGateway.signOut` + Supabase, caso de uso `signOut` que borra el token primero (best effort) y hook `useSignOut`; tests
+  - Rojo: 3 suites sin módulo (`sign-out`, `use-sign-out`, `use-clear-push-token`) y `gateway.signOut is not a function`. Verde: 17/17 PASS; tsc y eslint OK. Dirección: `useSignOut(beforeSignOut)` en auth recibe la limpieza; `useClearPushToken()` en notificaciones la da; `app/` las compone.
 - [ ] ATDE-39-T09 `docs/contexto/convenciones.md`: token push solo por RPC y un dueño por token → [IMPL ATDE-39]

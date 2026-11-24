@@ -14,6 +14,7 @@ function fakeAuth() {
     signInWithOtp: jest.fn(() => ok(null)),
     verifyOtp: jest.fn(() => ok(supabaseSession)),
     getSession: jest.fn(() => ok(supabaseSession)),
+    signOut: jest.fn(() => Promise.resolve({ error: null as AuthApiError | null })),
     onAuthStateChange: jest.fn((_cb: (event: string, session: SupabaseSession | null) => void) => ({
       data: { subscription: { unsubscribe } },
     })),
@@ -66,6 +67,16 @@ describe('supabaseAuthGateway', () => {
     await expect(gateway.getSession()).resolves.toEqual({ userId: 'user-1', phone: '+50670000001' });
     auth.getSession.mockReturnValueOnce(ok(null));
     await expect(gateway.getSession()).resolves.toBeNull();
+  });
+
+  it('signs out and maps a failure', async () => {
+    const { auth, gateway } = fakeAuth();
+
+    await gateway.signOut();
+    expect(auth.signOut).toHaveBeenCalled();
+
+    auth.signOut.mockResolvedValueOnce({ error: new AuthApiError('boom', 500, 'unexpected_failure') });
+    await expect(gateway.signOut()).rejects.toEqual(new AuthError('unknown'));
   });
 
   it('forwards session changes and unsubscribes', () => {

@@ -9,5 +9,6 @@ export interface AuthGateway {
   requestCode(phone: Phone): Promise<void>;
   verifyCode(phone: Phone, code: string): Promise<Session>;
   getSession(): Promise<Session | null>;
+  signOut(): Promise<void>;
   onSessionChange(listener: SessionListener): () => void;
 }

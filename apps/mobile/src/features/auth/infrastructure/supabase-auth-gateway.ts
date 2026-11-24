@@ -42,6 +42,10 @@ export function createSupabaseAuthGateway(getAuth: () => SupabaseAuth = () => ge
       const { data } = await getAuth().getSession();
       return toSession(data.session);
     },
+    async signOut() {
+      const { error } = await getAuth().signOut();
+      if (error) throw toAuthError(error);
+    },
     onSessionChange(listener) {
       const { data } = getAuth().onAuthStateChange((_event, session) => listener(toSession(session)));
       return () => data.subscription.unsubscribe();

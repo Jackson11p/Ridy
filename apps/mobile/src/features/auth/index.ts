@@ -11,3 +11,4 @@ export { useCodeForm } from './ui/hooks/use-code-form';
 export { useErrorText } from './ui/hooks/use-error-text';
 export { usePhoneForm } from './ui/hooks/use-phone-form';
 export { useSession } from './ui/hooks/use-session';
+export { useSignOut } from './ui/hooks/use-sign-out';
