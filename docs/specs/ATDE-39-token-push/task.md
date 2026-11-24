@@ -11,7 +11,8 @@
   - Config sin prueba nueva: `expo install` fijó `expo-notifications` ~58.1.9 (con pnpm). Verde: typecheck OK; `pnpm test` 23 suites / 155 PASS.
 - [x] ATDE-39-T05 `features/notifications` domain + application: contratos, `PushStatus`, `registerPushToken`/`unregisterPushToken` con dobles en `testing/`; tests
   - Rojo: suite falla (`Cannot find module '../testing/fake-push'`, casos de uso inexistentes). Verde: 11/11 PASS; tsc y eslint OK. Extra: `savePushToken` (valida y guarda un token rotado).
-- [ ] ATDE-39-T06 `features/notifications/infrastructure`: provider Expo (canal Android, `projectId`, web/emulador → `unavailable`) y store Supabase (RPC); tests con módulos inyectados
+- [x] ATDE-39-T06 `features/notifications/infrastructure`: provider Expo (canal Android, `projectId`, web/emulador → `unavailable`) y store Supabase (RPC); tests con módulos inyectados
+  - Rojo: 2 suites fallan (`Cannot find module './expo-push-token-provider'` y `'./supabase-push-token-store'`). Verde: 12 casos nuevos, feature 23/23 PASS; tsc y eslint OK. Borrar = `rpc('set_push_token', {})`.
 - [ ] ATDE-39-T07 `features/notifications/ui`: contexto, `usePushRegistration(session)` (registro + cambios de token), `PushDeniedNotice` i18n es/en; wiring en `app/_layout.tsx`; tests de hook y ruta
 - [ ] ATDE-39-T08 Auth: `AuthGateway.signOut` + Supabase, caso de uso `signOut` que borra el token primero (best effort) y hook `useSignOut`; tests
 - [ ] ATDE-39-T09 `docs/contexto/convenciones.md`: token push solo por RPC y un dueño por token → [IMPL ATDE-39]
