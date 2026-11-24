@@ -21,7 +21,8 @@
   - Solo docs (sin prueba): nueva regla en "Patrones que usamos".
 
 ## Correcciones de review
-- [ ] ATDE-39-T10 BD: índice único parcial `profiles(push_token) where push_token is not null` (un token nunca en dos perfiles ante concurrencia); prueba de duplicado → `23505`
+- [x] ATDE-39-T10 BD: índice único parcial `profiles(push_token) where push_token is not null` (un token nunca en dos perfiles ante concurrencia); prueba de duplicado → `23505`
+  - Rojo: 1/19 falla ("mismo token en dos perfiles se rechaza": el update duplicado pasa). Verde: migración `atde39_push_token_unique`; `test db` 25 archivos / 461 PASS.
 - [ ] ATDE-39-T11 BD: `set_push_token(null)` permitido con perfil inactivo (borrar sí, guardar no); prueba; convenciones: `notify` debe filtrar `profiles.active`
 - [ ] ATDE-39-T12 Provider Expo: en Android crear canal `default` antes de pedir/consultar permiso (Android 13+); ajustar prueba de orden
 - [ ] ATDE-39-T13 `usePushRegistration`: estado vuelve a null al cambiar de `userId`; `PushDeniedNotice` también en `unavailable` (spec req. 3) con su texto i18n; pruebas A → B y aviso

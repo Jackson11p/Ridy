@@ -2,7 +2,7 @@
 -- A y B activos; I inactivo.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(17);
+select plan(19);
 
 insert into auth.users (id, phone) values
   ('00000000-0000-0000-0000-0000000039a1', '50639000001'),
@@ -71,6 +71,13 @@ select public.set_push_token('ExpoPushToken[ccc]');
 select lives_ok($$select public.set_push_token()$$, 'B borra su token sin argumento');
 reset role;
 select is(pg_temp.token_of('00000000-0000-0000-0000-0000000039a2'), null, 'token de B borrado sin argumento');
+
+-- T10: ni con dos llamadas concurrentes un token queda en dos perfiles (índice único parcial)
+update public.profiles set push_token = 'ExpoPushToken[dup]' where id = '00000000-0000-0000-0000-0000000039a1';
+select throws_ok($$update public.profiles set push_token = 'ExpoPushToken[dup]'
+  where id = '00000000-0000-0000-0000-0000000039a2'$$, '23505', null, 'mismo token en dos perfiles se rechaza');
+select lives_ok($$update public.profiles set push_token = null where id <> '00000000-0000-0000-0000-0000000039a1'$$,
+  'varios perfiles sin token no chocan');
 
 select * from finish();
 rollback;
