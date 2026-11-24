@@ -54,9 +54,9 @@ describe('usePushRegistration', () => {
 
   it('saves a rotated token and stops listening when the session ends', async () => {
     const { emitToken, listeners, store, wrapper } = setup();
-    const { rerender } = await renderHook(({ session }) => usePushRegistration(session), {
+    const { rerender } = await renderHook(({ session }: { session: typeof SESSION | null }) => usePushRegistration(session), {
       wrapper,
-      initialProps: { session: SESSION as typeof SESSION | null },
+      initialProps: { session: SESSION },
     });
 
     await act(async () => emitToken('ExpoPushToken[rotated]'));
