@@ -25,6 +25,7 @@
 - Seguridad en BD, no en app: RLS en toda tabla desde su migración creadora. [IMPL ATDE-8]
 - La app no calcula permisos: los pregunta a la BD. Vista según vínculos vía `public.my_links()` (sin parámetros, filtra por `auth.uid()`). [IMPL ATDE-11]
 - `profiles`: clientes listan columnas, nunca `select *` (falla con 42501: `push_token` no se lee). [IMPL ATDE-8]
+- Token push solo se escribe por `public.set_push_token(token)` (sin argumento lo borra): un dueño por token (lo quita de otros perfiles), sin update directo y nadie lo lee desde la app. [IMPL ATDE-39]
 - Escrituras sensibles (aprobar solicitudes, mover estudiantes, cambiar chofer) por **funciones SQL** o del servidor, no inserts directos. [PLAN; IMPL ATDE-10: vínculos `guardians` sin insert desde el cliente; invitaciones de rol solo desde el servidor; `invited_by` y vencimiento los pone la BD]
 - Nada se borra físicamente: se desactiva (`active`). [IMPL ATDE-8: sin grants ni políticas delete]
 - Toda tabla de operación lleva `operator_id`; RLS filtra por él. [IMPL ATDE-9]

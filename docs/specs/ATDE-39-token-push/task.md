@@ -17,4 +17,5 @@
   - Rojo: suites de hook y aviso fallan (`Cannot find module`); rutas 3 nuevas fallan (sin `@/features/notifications`). Verde: hook 6/6, aviso 5/5, rutas 11/11 (2.ª corrida; la 1.ª en frío dio timeout de 5 s en el primer caso); tsc y eslint OK.
 - [x] ATDE-39-T08 Auth: `AuthGateway.signOut` + Supabase, caso de uso `signOut` que borra el token primero (best effort) y hook `useSignOut`; tests
   - Rojo: 3 suites sin módulo (`sign-out`, `use-sign-out`, `use-clear-push-token`) y `gateway.signOut is not a function`. Verde: 17/17 PASS; tsc y eslint OK. Dirección: `useSignOut(beforeSignOut)` en auth recibe la limpieza; `useClearPushToken()` en notificaciones la da; `app/` las compone.
-- [ ] ATDE-39-T09 `docs/contexto/convenciones.md`: token push solo por RPC y un dueño por token → [IMPL ATDE-39]
+- [x] ATDE-39-T09 `docs/contexto/convenciones.md`: token push solo por RPC y un dueño por token → [IMPL ATDE-39]
+  - Solo docs (sin prueba): nueva regla en "Patrones que usamos".
