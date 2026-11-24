@@ -19,3 +19,10 @@
   - Rojo: 3 suites sin módulo (`sign-out`, `use-sign-out`, `use-clear-push-token`) y `gateway.signOut is not a function`. Verde: 17/17 PASS; tsc y eslint OK. Dirección: `useSignOut(beforeSignOut)` en auth recibe la limpieza; `useClearPushToken()` en notificaciones la da; `app/` las compone.
 - [x] ATDE-39-T09 `docs/contexto/convenciones.md`: token push solo por RPC y un dueño por token → [IMPL ATDE-39]
   - Solo docs (sin prueba): nueva regla en "Patrones que usamos".
+
+## Correcciones de review
+- [ ] ATDE-39-T10 BD: índice único parcial `profiles(push_token) where push_token is not null` (un token nunca en dos perfiles ante concurrencia); prueba de duplicado → `23505`
+- [ ] ATDE-39-T11 BD: `set_push_token(null)` permitido con perfil inactivo (borrar sí, guardar no); prueba; convenciones: `notify` debe filtrar `profiles.active`
+- [ ] ATDE-39-T12 Provider Expo: en Android crear canal `default` antes de pedir/consultar permiso (Android 13+); ajustar prueba de orden
+- [ ] ATDE-39-T13 `usePushRegistration`: estado vuelve a null al cambiar de `userId`; `PushDeniedNotice` también en `unavailable` (spec req. 3) con su texto i18n; pruebas A → B y aviso
+- [ ] ATDE-39-T14 Cierre de sesión sin carrera: la limpieza corta el listener y espera el guardado pendiente antes de `clear()`; prueba de save en curso al cerrar sesión
