@@ -2,6 +2,8 @@ import { fireEvent, renderRouter, screen } from 'expo-router/testing-library';
 
 import type { AuthGateway, Session } from '@/features/auth';
 import { createFakeGateway } from '@/features/auth/testing/fake-gateway';
+import type { PushPermission, PushTokenProvider, PushTokenStore } from '@/features/notifications';
+import { createFakePushProvider, createFakePushStore } from '@/features/notifications/testing/fake-push';
 import { i18n } from '@/i18n';
 
 const SESSION: Session = { userId: 'user-1', phone: '+50670000001' };
@@ -12,8 +14,19 @@ jest.mock('@/features/auth/infrastructure/supabase-auth-gateway', () => ({
   createSupabaseAuthGateway: () => mockGateway.current,
 }));
 
-function renderApp(initialUrl: string, session: Session | null = null) {
+// igual con notificaciones: nunca se llama nativo ni Supabase
+const mockPush: { provider?: PushTokenProvider; store?: PushTokenStore } = {};
+jest.mock('@/features/notifications/infrastructure/expo-push-token-provider', () => ({
+  createExpoPushTokenProvider: () => mockPush.provider,
+}));
+jest.mock('@/features/notifications/infrastructure/supabase-push-token-store', () => ({
+  createSupabasePushTokenStore: () => mockPush.store,
+}));
+
+function renderApp(initialUrl: string, session: Session | null = null, permission: PushPermission = 'granted') {
   mockGateway.current = createFakeGateway(session).gateway;
+  mockPush.provider = createFakePushProvider({ permission }).provider;
+  mockPush.store = createFakePushStore();
   return renderRouter('./app', { initialUrl });
 }
 
@@ -43,6 +56,26 @@ describe('app routes', () => {
 
     expect(router.getPathname()).toBe('/children');
     expect(screen.getByRole('header', { name: i18n.t('parent.title') })).toBeTruthy();
+  });
+
+  it('registers the push token of a signed-in user without showing the notice', async () => {
+    await renderApp('/children', SESSION);
+
+    expect(mockPush.store?.save).toHaveBeenCalledWith('ExpoPushToken[fake]');
+    expect(screen.queryByText(i18n.t('notifications.denied'))).toBeNull();
+  });
+
+  it('keeps working and shows the notice when push permission is denied', async () => {
+    await renderApp('/children', SESSION, 'denied');
+
+    expect(screen.getByRole('header', { name: i18n.t('parent.title') })).toBeTruthy();
+    expect(screen.getByText(i18n.t('notifications.denied'))).toBeTruthy();
+  });
+
+  it('does not ask for push permission without a session', async () => {
+    await renderApp('/');
+
+    expect(mockPush.provider?.requestPermission).not.toHaveBeenCalled();
   });
 
   it.each([
