@@ -2,6 +2,7 @@
 
 - [x] ATDE-39-T01 Migración `atde39_push_token`: `check` de formato, RPC `public.set_push_token(token)` con traspaso entre perfiles, revoke de update directo; prueba `supabase/tests/push-token.test.sql`
   - Rojo: 15/15 fallan (`function "public.set_push_token(text)" does not exist`). Verde: `pnpm test:db` 25 archivos / 457 PASS. `profiles.test.sql` y `profiles-members.test.sql` ajustados: el token ya no se edita por update directo.
+  - Corrección (migración `atde39_set_push_token_default_null` + tipos): `token default null` para borrar sin argumento (el generador tipaba `token` como `string` no nulo). Rojo: 2/17 fallan (`set_push_token()` no existe). Verde: 25 archivos / 459 PASS; tipos `"token"?: string`.
 - [x] ATDE-39-T02 `pnpm db:types`: regenerar `packages/shared/src/database.types.ts` con `set_push_token`
   - Rojo: tipos sin `set_push_token` (desalineados con la BD). Verde: +3 líneas en `Functions`; `pnpm typecheck` OK. Nota: el generador tipa `token` como `string` no nulo.
 - [x] ATDE-39-T03 `packages/shared`: `expoPushTokenSchema` (zod) + test, reexportado en `index.ts`

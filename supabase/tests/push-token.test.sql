@@ -2,7 +2,7 @@
 -- A y B activos; I inactivo.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(15);
+select plan(17);
 
 insert into auth.users (id, phone) values
   ('00000000-0000-0000-0000-0000000039a1', '50639000001'),
@@ -63,6 +63,14 @@ set local request.jwt.claims = '{"sub":"00000000-0000-0000-0000-0000000039a2","r
 select lives_ok($$select public.set_push_token(null)$$, 'B borra su token');
 reset role;
 select is(pg_temp.token_of('00000000-0000-0000-0000-0000000039a2'), null, 'token de B borrado');
+
+-- T06: sin argumento también borra (la app no manda null tipado: el generador tipa token como string)
+set local role authenticated;
+set local request.jwt.claims = '{"sub":"00000000-0000-0000-0000-0000000039a2","role":"authenticated"}';
+select public.set_push_token('ExpoPushToken[ccc]');
+select lives_ok($$select public.set_push_token()$$, 'B borra su token sin argumento');
+reset role;
+select is(pg_temp.token_of('00000000-0000-0000-0000-0000000039a2'), null, 'token de B borrado sin argumento');
 
 select * from finish();
 rollback;

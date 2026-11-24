@@ -304,7 +304,7 @@ isOneToOne: false
 { Args: { "event": Json }; Returns: Json
                            },
 "set_push_token":
-{ Args: { "token": string }; Returns: undefined
+{ Args: { "token"?: string }; Returns: undefined
                            }
           }
           Enums: {
