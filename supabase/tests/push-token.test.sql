@@ -2,7 +2,7 @@
 -- A y B activos; I inactivo.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(19);
+select plan(21);
 
 insert into auth.users (id, phone) values
   ('00000000-0000-0000-0000-0000000039a1', '50639000001'),
@@ -78,6 +78,14 @@ select throws_ok($$update public.profiles set push_token = 'ExpoPushToken[dup]'
   where id = '00000000-0000-0000-0000-0000000039a2'$$, '23505', null, 'mismo token en dos perfiles se rechaza');
 select lives_ok($$update public.profiles set push_token = null where id <> '00000000-0000-0000-0000-0000000039a1'$$,
   'varios perfiles sin token no chocan');
+
+-- T11: perfil inactivo borra su token (guardar sigue prohibido) para no seguir recibiendo avisos
+update public.profiles set push_token = 'ExpoPushToken[ina]' where id = '00000000-0000-0000-0000-0000000039a3';
+set local role authenticated;
+set local request.jwt.claims = '{"sub":"00000000-0000-0000-0000-0000000039a3","role":"authenticated"}';
+select lives_ok($$select public.set_push_token()$$, 'perfil inactivo borra su token');
+reset role;
+select is(pg_temp.token_of('00000000-0000-0000-0000-0000000039a3'), null, 'token del perfil inactivo borrado');
 
 select * from finish();
 rollback;
