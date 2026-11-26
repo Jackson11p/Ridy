@@ -1,9 +1,15 @@
 import type { AuthGateway } from '../domain/auth-gateway';
 
-export type BeforeSignOut = () => Promise<void>;
+// la limpieza puede devolver cómo deshacerse si la sesión no llega a cerrarse
+export type BeforeSignOut = () => Promise<(() => void) | void>;
 
 // best effort: si limpiar falla (p. ej. sin red), igual se cierra la sesión
 export async function signOut(gateway: AuthGateway, beforeSignOut: BeforeSignOut): Promise<void> {
-  await beforeSignOut().catch(() => undefined);
-  await gateway.signOut();
+  const undo = await beforeSignOut().catch(() => undefined);
+  try {
+    await gateway.signOut();
+  } catch (error) {
+    undo?.();
+    throw error;
+  }
 }

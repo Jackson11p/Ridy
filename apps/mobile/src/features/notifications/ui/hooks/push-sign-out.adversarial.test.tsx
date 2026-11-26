@@ -35,6 +35,23 @@ function setup() {
 }
 
 describe('push + sign-out adversarial', () => {
+  it('keeps saving rotated tokens when sign-out fails and the session stays open', async () => {
+    const { gateway, fake, store, wrapper } = setup();
+    gateway.signOut.mockRejectedValueOnce(new Error('offline'));
+    const { result } = await renderHook(() => useApp(), { wrapper });
+    expect(result.current.session).not.toBeNull();
+
+    await act(async () => {
+      await result.current.signOut().catch(() => undefined);
+    });
+    expect(result.current.session).not.toBeNull();
+    store.save.mockClear();
+
+    await act(async () => fake.emitToken('ExpoPushToken[rotated]'));
+
+    expect(store.save).toHaveBeenCalledWith('ExpoPushToken[rotated]');
+  });
+
   it('registers again when the same user signs back in after sign-out', async () => {
     const { emit, fake, store, wrapper } = setup();
     const { result } = await renderHook(() => useApp(), { wrapper });

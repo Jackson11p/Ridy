@@ -80,6 +80,22 @@ describe('usePushRegistration', () => {
 
     expect(result.current.status).toBeNull();
   });
+
+  // tras cerrar sesión A, la siguiente persona en el teléfono sí guarda su token
+  it('registers the token again for the next user after a sign-out', async () => {
+    const { store, wrapper } = setup();
+    const { result, rerender } = await renderHook(
+      ({ session }: { session: typeof SESSION | null }) => ({ push: usePushRegistration(session), registry: usePushRegistry() }),
+      { wrapper, initialProps: { session: SESSION } },
+    );
+    await act(async () => result.current.registry.store.clear());
+    await rerender({ session: null });
+    store.save.mockClear();
+
+    await rerender({ session: { userId: 'user-2' } });
+
+    expect(store.save).toHaveBeenCalledWith('ExpoPushToken[fake]');
+  });
 });
 
 describe('push registry context', () => {

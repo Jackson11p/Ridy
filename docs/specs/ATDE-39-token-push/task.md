@@ -31,3 +31,8 @@
   - Rojo: 3/14 fallan (B hereda `denied` de A; sin aviso ni texto `notifications.unavailable`). Verde: estado guardado con su `userId` (sin setState en el effect, regla lint); feature + rutas 50/50 PASS (rutas: 1.ª corrida timeout en frío); tsc y eslint OK.
 - [x] ATDE-39-T14 Cierre de sesión sin carrera: la limpieza corta el listener y espera el guardado pendiente antes de `clear()`; prueba de save en curso al cerrar sesión
   - Rojo: suite `serial-push-store` sin módulo; 2 casos de `useClearPushToken` fallan (save tardío tras el borrado; clear sin esperar). Verde: `createSerialPushStore` (cola en orden; tras `clear` descarta saves hasta `open()` de sesión nueva), montado en `PushRegistryProvider`; 19 suites / 137 PASS; tsc y eslint OK.
+
+## Correcciones de re-review y test-adversarial
+- [x] ATDE-39-T15 Si `signOut` falla tras borrar el token, la limpieza se deshace (reabre store y re-registra, también si borrar falló); prueba de `open()` para la siguiente persona
+  - Rojo: 3 fallan (`signOut` sin undo; `useClearPushToken` sin undo; caso adversarial "keeps saving rotated tokens when sign-out fails"). Mutación: sin `store.open()` falla "registers the token again for the next user". Verde: `BeforeSignOut` devuelve undo opcional; 18 suites / 140 PASS; tsc OK.
+- [ ] ATDE-39-T16 Provider: `onTokenChange` no lanza si `addPushTokenListener` falla en nativo (contrato de domain)

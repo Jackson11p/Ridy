@@ -50,7 +50,7 @@ describe('useClearPushToken', () => {
     const { result } = await renderHook(() => useSignedInPush(), { wrapper: pushWrapper({ provider: fake.provider, store }) });
     expect(store.save).toHaveBeenCalled();
 
-    let clearing: Promise<void> = Promise.resolve();
+    let clearing: Promise<unknown> = Promise.resolve();
     await act(async () => {
       clearing = result.current();
     });
@@ -61,5 +61,30 @@ describe('useClearPushToken', () => {
       await clearing;
     });
     expect(store.clear).toHaveBeenCalled();
+  });
+
+  it('gives back an undo that registers the token again and listens to rotations', async () => {
+    const fake = createFakePushProvider();
+    const store = createFakePushStore();
+    const { result } = await renderHook(() => useSignedInPush(), { wrapper: pushWrapper({ provider: fake.provider, store }) });
+    store.save.mockClear();
+
+    await act(async () => {
+      const undo = await result.current();
+      undo();
+    });
+    await act(async () => fake.emitToken('ExpoPushToken[rotated]'));
+
+    expect(store.save).toHaveBeenCalledWith('ExpoPushToken[fake]');
+    expect(store.save).toHaveBeenLastCalledWith('ExpoPushToken[rotated]');
+  });
+
+  it('still gives back the undo when clearing fails', async () => {
+    const store = createFakePushStore();
+    store.clear.mockRejectedValueOnce(new Error('offline'));
+    const wrapper = pushWrapper({ provider: createFakePushProvider().provider, store });
+    const { result } = await renderHook(() => useClearPushToken(), { wrapper });
+
+    await expect(result.current()).resolves.toEqual(expect.any(Function));
   });
 });
