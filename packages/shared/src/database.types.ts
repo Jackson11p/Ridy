@@ -302,6 +302,9 @@ isOneToOne: false
                            },
 "send_sms_hook":
 { Args: { "event": Json }; Returns: Json
+                           },
+"set_push_token":
+{ Args: { "token"?: string }; Returns: undefined
                            }
           }
           Enums: {

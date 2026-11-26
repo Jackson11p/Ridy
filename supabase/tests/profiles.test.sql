@@ -27,8 +27,8 @@ reset role;
 set local role authenticated;
 set local request.jwt.claims = '{"sub":"00000000-0000-0000-0000-00000000000a","role":"authenticated"}';
 select is((select count(*) from public.profiles), 1::bigint, 'A ve solo su perfil');
-select lives_ok($$update public.profiles set full_name = 'Ana M', push_token = 't', locale = 'en'
-  where id = '00000000-0000-0000-0000-00000000000a'$$, 'A edita nombre, token e idioma');
+select lives_ok($$update public.profiles set full_name = 'Ana M', locale = 'en'
+  where id = '00000000-0000-0000-0000-00000000000a'$$, 'A edita nombre e idioma (token solo por RPC, ATDE-39)');
 select throws_ok($$update public.profiles set phone = '1' where id = '00000000-0000-0000-0000-00000000000a'$$,
   '42501', null, 'A no cambia su teléfono');
 select throws_ok($$update public.profiles set active = false where id = '00000000-0000-0000-0000-00000000000a'$$,

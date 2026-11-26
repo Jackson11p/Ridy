@@ -13,6 +13,7 @@ Reglas no negociables. Todo agente (`planner`, `coder`, `reviwer`) y persona las
 - Deps aprobadas (ATDE-64-T10, solo previsualizar en navegador durante el desarrollo; la app sigue siendo móvil): `react-native-web` ^0.21.4, `react-dom` 19.3.0, `@expo/metro-runtime` ~58.0.17.
 - Deps aprobadas (ATDE-13, solo `packages/shared`): `zod` ^4 (validación en los límites; aprobado 2026-11-10). Repite `typescript` ~6.0.3 y `@types/jest` ^30.0.0.
 - Deps aprobadas (ATDE-15, `apps/mobile`; aprobado 2026-11-11): `@supabase/supabase-js` ^2.118.0 (cliente Auth/datos) y `@react-native-async-storage/async-storage` 2.2.0 (fijada por `expo install`; persiste la sesión).
+- Deps aprobadas (ATDE-39, `apps/mobile`): `expo-notifications` ~58.1.9 (token push; aprobado 2026-11-23).
 ## 3. Spec y código
 - Sin spec no hay código (flujo y longitudes en `Claude.md`). Cada tarea = test + cambio mínimo = un commit. Si algo no encaja → se actualiza la spec primero; con agentes, `reviwer` verifica cada commit contra su spec.
 ## 4. Capas
