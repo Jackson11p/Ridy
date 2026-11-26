@@ -50,6 +50,24 @@ describe('expoPushTokenProvider permission', () => {
     await expect(provider.requestPermission()).resolves.toBe('denied');
   });
 
+  // Android 13+: sin canal el sistema no muestra el diálogo de permiso
+  it('creates the Android default channel before checking or asking permission', async () => {
+    const { notifications, provider } = setup('android');
+
+    await expect(provider.requestPermission()).resolves.toBe('granted');
+    expect(notifications.setNotificationChannelAsync).toHaveBeenCalledWith('default', expect.objectContaining({ importance: 5 }));
+    const channelOrder = notifications.setNotificationChannelAsync.mock.invocationCallOrder[0];
+    expect(channelOrder).toBeLessThan(notifications.getPermissionsAsync.mock.invocationCallOrder[0]);
+  });
+
+  it('does not create a channel on iOS', async () => {
+    const { notifications, provider } = setup('ios');
+
+    await provider.requestPermission();
+
+    expect(notifications.setNotificationChannelAsync).not.toHaveBeenCalled();
+  });
+
   it('reports unavailable on web and when the module fails', async () => {
     await expect(setup('web').provider.requestPermission()).resolves.toBe('unavailable');
     const { notifications, provider } = setup();
@@ -67,13 +85,11 @@ describe('expoPushTokenProvider token', () => {
     expect(notifications.setNotificationChannelAsync).not.toHaveBeenCalled();
   });
 
-  it('creates the Android default channel before the token', async () => {
+  it('gets the token on Android with the projectId from easConfig', async () => {
     const { notifications, provider } = setup('android', { easConfig: { projectId: PROJECT_ID } });
 
     await expect(provider.getToken()).resolves.toBe(TOKEN);
-    expect(notifications.setNotificationChannelAsync).toHaveBeenCalledWith('default', expect.objectContaining({ importance: 5 }));
-    const channelOrder = notifications.setNotificationChannelAsync.mock.invocationCallOrder[0];
-    expect(channelOrder).toBeLessThan(notifications.getExpoPushTokenAsync.mock.invocationCallOrder[0]);
+    expect(notifications.getExpoPushTokenAsync).toHaveBeenCalledWith({ projectId: PROJECT_ID });
   });
 
   it('returns null on web, without projectId or when the device has no push', async () => {

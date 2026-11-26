@@ -25,19 +25,20 @@ function projectIdOf(constants: AppConstants): string | undefined {
   return constants.expoConfig?.extra?.eas?.projectId ?? constants.easConfig?.projectId ?? undefined;
 }
 
-async function askPermission(notifications: NotificationsModule): Promise<PushPermission> {
-  const current = await notifications.getPermissionsAsync();
-  const final = current.granted ? current : await notifications.requestPermissionsAsync();
-  return final.granted ? 'granted' : 'denied';
-}
-
-async function fetchToken(notifications: NotificationsModule, os: string, projectId: string): Promise<string> {
+// Android 13+: el canal va antes del permiso o el sistema no muestra el diálogo
+async function askPermission(notifications: NotificationsModule, os: string): Promise<PushPermission> {
   if (os === 'android') {
     await notifications.setNotificationChannelAsync(ANDROID_CHANNEL, {
       name: ANDROID_CHANNEL,
       importance: notifications.AndroidImportance.DEFAULT,
     });
   }
+  const current = await notifications.getPermissionsAsync();
+  const final = current.granted ? current : await notifications.requestPermissionsAsync();
+  return final.granted ? 'granted' : 'denied';
+}
+
+async function fetchToken(notifications: NotificationsModule, projectId: string): Promise<string> {
   const { data } = await notifications.getExpoPushTokenAsync({ projectId });
   return data;
 }
@@ -52,12 +53,12 @@ export function createExpoPushTokenProvider({
   const getToken = async () => {
     const projectId = projectIdOf(constants);
     if (isWeb || !projectId) return null;
-    return fetchToken(notifications, platform.OS, projectId).catch(() => null);
+    return fetchToken(notifications, projectId).catch(() => null);
   };
   return {
     async requestPermission() {
       if (isWeb) return 'unavailable';
-      return askPermission(notifications).catch((): PushPermission => 'unavailable');
+      return askPermission(notifications, platform.OS).catch((): PushPermission => 'unavailable');
     },
     getToken,
     onTokenChange(listener) {
