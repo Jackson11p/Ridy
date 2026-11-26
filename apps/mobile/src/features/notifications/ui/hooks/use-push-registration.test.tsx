@@ -65,6 +65,21 @@ describe('usePushRegistration', () => {
     await rerender({ session: null });
     expect(listeners.size).toBe(0);
   });
+
+  // otra persona en el mismo teléfono no hereda el estado de la anterior mientras registra
+  it('resets the status when the signed-in user changes', async () => {
+    const { provider, wrapper } = setup({ permission: 'denied' });
+    const { result, rerender } = await renderHook(({ session }: { session: typeof SESSION }) => usePushRegistration(session), {
+      wrapper,
+      initialProps: { session: SESSION },
+    });
+    expect(result.current.status).toBe('denied');
+
+    provider.requestPermission.mockImplementationOnce(() => new Promise(() => undefined));
+    await rerender({ session: { userId: 'user-2' } });
+
+    expect(result.current.status).toBeNull();
+  });
 });
 
 describe('push registry context', () => {

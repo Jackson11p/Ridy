@@ -11,14 +11,21 @@ describe('PushDeniedNotice', () => {
     expect(screen.getByText(i18n.t('notifications.denied'))).toBeTruthy();
   });
 
-  it.each(['registered', 'unavailable', null] as const)('stays hidden when the status is %p', async (status) => {
+  it('tells the user they will not get alerts when the device has no push', async () => {
+    await render(<PushDeniedNotice status="unavailable" />);
+
+    expect(screen.getByText(i18n.t('notifications.unavailable'))).toBeTruthy();
+  });
+
+  it.each(['registered', null] as const)('stays hidden when the status is %p', async (status) => {
     await render(<PushDeniedNotice status={status} />);
 
     expect(screen.queryByText(i18n.t('notifications.denied'))).toBeNull();
+    expect(screen.queryByText(i18n.t('notifications.unavailable'))).toBeNull();
   });
 
-  it('has the text in Spanish and English', () => {
-    expect(i18n.getFixedT('es')('notifications.denied')).not.toBe('notifications.denied');
-    expect(i18n.getFixedT('en')('notifications.denied')).not.toBe('notifications.denied');
+  it.each(['notifications.denied', 'notifications.unavailable'])('has %p in Spanish and English', (key) => {
+    expect(i18n.getFixedT('es')(key)).not.toBe(key);
+    expect(i18n.getFixedT('en')(key)).not.toBe(key);
   });
 });

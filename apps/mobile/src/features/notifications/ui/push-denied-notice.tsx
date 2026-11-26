@@ -9,10 +9,17 @@ import type { PushStatus } from '../domain/push-token';
 
 type PushDeniedNoticeProps = { status: PushStatus | null };
 
+const MESSAGES: Partial<Record<PushStatus, string>> = {
+  denied: 'notifications.denied',
+  unavailable: 'notifications.unavailable',
+};
+
+// sin permiso o sin push en el dispositivo: aviso discreto, la app sigue
 export function PushDeniedNotice({ status }: PushDeniedNoticeProps) {
   const { t } = useTranslation();
   const { colors, spacing } = useTheme();
-  if (status !== 'denied') return null;
+  const message = status ? MESSAGES[status] : undefined;
+  if (!message) return null;
   return (
     <SafeAreaView
       edges={['bottom']}
@@ -20,7 +27,7 @@ export function PushDeniedNotice({ status }: PushDeniedNoticeProps) {
       style={[styles.bar, { backgroundColor: colors.surface, borderTopColor: colors.border, padding: spacing.md }]}
     >
       <AppText variant="caption" tone="muted">
-        {t('notifications.denied')}
+        {t(message)}
       </AppText>
     </SafeAreaView>
   );

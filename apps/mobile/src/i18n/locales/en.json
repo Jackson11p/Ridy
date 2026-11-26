@@ -38,6 +38,7 @@
     "title": "Manage"
   },
   "notifications": {
-    "denied": "Notifications are off: you will not get route alerts. You can turn them on in Settings."
+    "denied": "Notifications are off: you will not get route alerts. You can turn them on in Settings.",
+    "unavailable": "This device cannot get notifications: you will not get route alerts."
   }
 }

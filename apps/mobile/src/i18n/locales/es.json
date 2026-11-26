@@ -38,6 +38,7 @@
     "title": "Administrar"
   },
   "notifications": {
-    "denied": "Las notificaciones están desactivadas: no recibirás avisos de la ruta. Puedes activarlas en Ajustes."
+    "denied": "Las notificaciones están desactivadas: no recibirás avisos de la ruta. Puedes activarlas en Ajustes.",
+    "unavailable": "Este dispositivo no puede recibir notificaciones: no recibirás avisos de la ruta."
   }
 }
