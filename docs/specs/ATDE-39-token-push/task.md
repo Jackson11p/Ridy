@@ -29,4 +29,5 @@
   - Rojo: 1/11 falla (canal se creaba después del permiso, al pedir token). Verde: provider 12/12, feature 37/37 PASS; tsc y eslint OK.
 - [x] ATDE-39-T13 `usePushRegistration`: estado vuelve a null al cambiar de `userId`; `PushDeniedNotice` también en `unavailable` (spec req. 3) con su texto i18n; pruebas A → B y aviso
   - Rojo: 3/14 fallan (B hereda `denied` de A; sin aviso ni texto `notifications.unavailable`). Verde: estado guardado con su `userId` (sin setState en el effect, regla lint); feature + rutas 50/50 PASS (rutas: 1.ª corrida timeout en frío); tsc y eslint OK.
-- [ ] ATDE-39-T14 Cierre de sesión sin carrera: la limpieza corta el listener y espera el guardado pendiente antes de `clear()`; prueba de save en curso al cerrar sesión
+- [x] ATDE-39-T14 Cierre de sesión sin carrera: la limpieza corta el listener y espera el guardado pendiente antes de `clear()`; prueba de save en curso al cerrar sesión
+  - Rojo: suite `serial-push-store` sin módulo; 2 casos de `useClearPushToken` fallan (save tardío tras el borrado; clear sin esperar). Verde: `createSerialPushStore` (cola en orden; tras `clear` descarta saves hasta `open()` de sesión nueva), montado en `PushRegistryProvider`; 19 suites / 137 PASS; tsc y eslint OK.

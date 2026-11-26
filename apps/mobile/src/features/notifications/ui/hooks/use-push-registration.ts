@@ -19,6 +19,7 @@ export function usePushRegistration(session: SignedIn): PushRegistrationState {
   useEffect(() => {
     if (!userId) return;
     let active = true;
+    store.open();
     registerPushToken(provider, store)
       .catch((): PushStatus => 'unavailable')
       .then((status) => active && setOwned({ userId, status }));
