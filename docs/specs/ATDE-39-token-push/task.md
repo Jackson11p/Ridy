@@ -35,4 +35,5 @@
 ## Correcciones de re-review y test-adversarial
 - [x] ATDE-39-T15 Si `signOut` falla tras borrar el token, la limpieza se deshace (reabre store y re-registra, también si borrar falló); prueba de `open()` para la siguiente persona
   - Rojo: 3 fallan (`signOut` sin undo; `useClearPushToken` sin undo; caso adversarial "keeps saving rotated tokens when sign-out fails"). Mutación: sin `store.open()` falla "registers the token again for the next user". Verde: `BeforeSignOut` devuelve undo opcional; 18 suites / 140 PASS; tsc OK.
-- [ ] ATDE-39-T16 Provider: `onTokenChange` no lanza si `addPushTokenListener` falla en nativo (contrato de domain)
+- [x] ATDE-39-T16 Provider: `onTokenChange` no lanza si `addPushTokenListener` falla en nativo (contrato de domain)
+  - Rojo: 1/21 falla (`native missing` sube al effect). Verde: sin módulo, suscripción vacía; infrastructure 21/21 PASS; eslint OK.

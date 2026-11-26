@@ -116,6 +116,16 @@ describe('expoPushTokenProvider token changes', () => {
     expect(remove).toHaveBeenCalled();
   });
 
+  // contrato de domain: infrastructure no lanza; sin módulo nativo no hay rotaciones
+  it('does not throw when subscribing to token changes fails natively', () => {
+    const { notifications, provider } = setup('ios');
+    notifications.addPushTokenListener.mockImplementationOnce(() => {
+      throw new Error('native missing');
+    });
+
+    expect(() => provider.onTokenChange(jest.fn())()).not.toThrow();
+  });
+
   it('does not listen on web', () => {
     const { notifications, provider } = setup('web');
 

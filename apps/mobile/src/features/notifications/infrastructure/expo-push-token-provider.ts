@@ -63,10 +63,14 @@ export function createExpoPushTokenProvider({
     getToken,
     onTokenChange(listener) {
       if (isWeb) return () => undefined;
-      const subscription = notifications.addPushTokenListener(() => {
-        void getToken().then((token) => token && listener(token));
-      });
-      return () => subscription.remove();
+      try {
+        const subscription = notifications.addPushTokenListener(() => {
+          void getToken().then((token) => token && listener(token));
+        });
+        return () => subscription.remove();
+      } catch {
+        return () => undefined;
+      }
     },
   };
 }
